@@ -184,7 +184,7 @@ class EmbeddingBasedNarrowing(NarrowingStrategyBase):
             The narrowed categories.
         """
         return self._narrow_with_embedding_similarity(text, categories, settings.max_narrowed_categories)
-    
+
     def narrow_with_stages(self, text: str, categories: list[Category]) -> dict:
         """Narrow categories using embedding similarity, returning stage information.
 
@@ -195,11 +195,13 @@ class EmbeddingBasedNarrowing(NarrowingStrategyBase):
         Returns:
             Dictionary containing stage results and final candidates.
         """
-        embedding_candidates = self._narrow_with_embedding_similarity(text, categories, settings.max_narrowed_categories)
+        embedding_candidates = self._narrow_with_embedding_similarity(
+            text, categories, settings.max_narrowed_categories
+        )
         return {
-            'embedding_candidates': embedding_candidates,
-            'llm_candidates': [],  # No LLM stage in embedding-only
-            'final_candidates': embedding_candidates
+            "embedding_candidates": embedding_candidates,
+            "llm_candidates": [],  # No LLM stage in embedding-only
+            "final_candidates": embedding_candidates,
         }
 
 
@@ -274,7 +276,7 @@ class HybridNarrowing(NarrowingStrategyBase):
             return self._narrow_with_embedding_only(text, categories)
         embedding_candidates = self._narrow_with_embedding(text, categories)
         return self._narrow_with_llm_stage(text, embedding_candidates)
-    
+
     def narrow_with_stages(self, text: str, categories: list[Category]) -> dict:
         """Use embedding first to get candidates, then LLM to refine, returning stage info.
 
@@ -286,31 +288,27 @@ class HybridNarrowing(NarrowingStrategyBase):
             Dictionary containing stage results and final candidates.
         """
         if not categories:
-            return {
-                'embedding_candidates': [],
-                'llm_candidates': [],
-                'final_candidates': []
-            }
-        
+            return {"embedding_candidates": [], "llm_candidates": [], "final_candidates": []}
+
         # If hybrid settings are invalid, fall back to embedding-only strategy
         if not self._use_hybrid:
             embedding_candidates = self._narrow_with_embedding_only(text, categories)
             return {
-                'embedding_candidates': embedding_candidates,
-                'llm_candidates': [],  # No LLM stage in embedding-only
-                'final_candidates': embedding_candidates
+                "embedding_candidates": embedding_candidates,
+                "llm_candidates": [],  # No LLM stage in embedding-only
+                "final_candidates": embedding_candidates,
             }
-        
+
         # Get embedding stage results
         embedding_candidates = self._narrow_with_embedding(text, categories)
-        
+
         # Get LLM stage results
         llm_candidates = self._narrow_with_llm_stage(text, embedding_candidates)
-        
+
         return {
-            'embedding_candidates': embedding_candidates,
-            'llm_candidates': llm_candidates,
-            'final_candidates': llm_candidates
+            "embedding_candidates": embedding_candidates,
+            "llm_candidates": llm_candidates,
+            "final_candidates": llm_candidates,
         }
 
     def _narrow_with_embedding_only(self, text: str, categories: list[Category]) -> list[Category]:
@@ -383,7 +381,7 @@ class CategoryNarrower:
         strategy_class = self._strategy_map[settings.narrowing_strategy]
         strategy = strategy_class()
         return strategy.narrow(text, categories)
-    
+
     def narrow_categories_with_stages(self, text: str, categories: list[Category]) -> dict:
         """Narrow categories using the configured strategy, returning stage information.
 
@@ -396,15 +394,15 @@ class CategoryNarrower:
         """
         strategy_class = self._strategy_map[settings.narrowing_strategy]
         strategy = strategy_class()
-        
+
         # Check if strategy supports stage information
-        if hasattr(strategy, 'narrow_with_stages'):
+        if hasattr(strategy, "narrow_with_stages"):
             return strategy.narrow_with_stages(text, categories)
         else:
             # Fallback for strategies that don't support stages
             final_candidates = strategy.narrow(text, categories)
             return {
-                'embedding_candidates': final_candidates,  # Assume all came from embedding
-                'llm_candidates': [],  # No LLM stage
-                'final_candidates': final_candidates
+                "embedding_candidates": final_candidates,  # Assume all came from embedding
+                "llm_candidates": [],  # No LLM stage
+                "final_candidates": final_candidates,
             }

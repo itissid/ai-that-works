@@ -15,7 +15,7 @@ function PickBestCategories(text: string, count: int) -> Category[] {
 }
 
 function PickBestCategory(text: string) -> Category {
-    client "openai/gpt-4o-mini"
+    client "openai/gpt-4o"
     prompt #"
         Which category best describes the following text?
 

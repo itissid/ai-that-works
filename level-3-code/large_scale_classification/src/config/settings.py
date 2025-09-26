@@ -21,11 +21,11 @@ class Settings(BaseSettings):
     max_narrowed_categories: int = 50
     # Hybrid narrowing specific settings
     max_embedding_candidates: int = 100  # How many categories embedding stage returns
-    max_final_categories: int = 15  # How many categories LLM stage returns3
+    max_final_categories: int = 25  # How many categories LLM stage returns
     # Data
     categories_file_path: pathlib.Path = CWD.parents[1] / C.DATA / C.CATEGORIES_TXT
     # Expanded text
-    expand_user_query: bool = True
+    expand_user_query: bool = False
 
     # Config
     class Config:

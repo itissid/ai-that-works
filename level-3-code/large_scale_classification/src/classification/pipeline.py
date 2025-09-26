@@ -2,7 +2,6 @@
 
 import time
 
-
 from src.classification import expander
 from src.classification.embeddings import EmbeddingService
 from src.classification.narrowing import CategoryNarrower
@@ -11,9 +10,9 @@ from src.classification.vector_store import CategoryVectorStore
 from src.config.settings import settings
 from src.data.category_loader import CategoryLoader
 from src.data.models import Category, ClassificationResult
-
 from src.shared import constants as C
 from src.shared.logger import get_logger
+
 
 class ClassificationPipeline:
     """Orchestrates the full classification process."""
@@ -72,7 +71,7 @@ class ClassificationPipeline:
         self.logger.info(f"Classifying text with {len(categories)} total categories")
         narrowing_start = time.time()
         narrowing_results = self.narrower.narrow_categories_with_stages(text, categories)
-        narrowed_categories = narrowing_results['final_candidates']
+        narrowed_categories = narrowing_results["final_candidates"]
         narrowing_time_ms = (time.time() - narrowing_start) * 1000
         if max_candidates and len(narrowed_categories) > max_candidates:
             narrowed_categories = narrowed_categories[:max_candidates]
@@ -100,6 +99,6 @@ class ClassificationPipeline:
                 C.NARROWING_STRATEGY: settings.narrowing_strategy.value,
                 C.VECTOR_STORE_ENABLED: self.embedding_service.vector_store is not None,
             },
-            embedding_candidates=narrowing_results.get('embedding_candidates', []),
-            llm_candidates=narrowing_results.get('llm_candidates', []),
+            embedding_candidates=narrowing_results.get("embedding_candidates", []),
+            llm_candidates=narrowing_results.get("llm_candidates", []),
         )
