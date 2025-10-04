@@ -8,10 +8,6 @@
 
 Links:
 
-## Whiteboards
-
-<img width="2964" height="2290" alt="image" src="https://github.com/user-attachments/assets/12a3f216-60b5-4c0e-883e-f9ec49649348" />
-
 ## Episode Overview
 
 This episode dives deep into the practical challenges of building AI systems ready for production. The hosts explore large-scale classification systems handling 1000+ categories, demonstrating how to evaluate and tune these systems for real-world use.
