@@ -3,7 +3,7 @@
 
 class AgentTool {
   action "Agent" @description(#"
-    Launch a new agent that has access to the following tools: Bash, Glob, Grep, LS, exit_plan_mode, Read, Edit, MultiEdit, Write, NotebookRead, NotebookEdit, WebFetch, TodoRead, TodoWrite, WebSearch. When you are searching for a keyword or file and are not confident that you will find the right match in the first few tries, use the Agent tool to perform the search for you.
+    Launch a new agent that has access to the following tools: Bash, Glob, Grep, LS, exit_plan_mode, Read, WebFetch, TodoRead, TodoWrite. When you are searching for a keyword or file and are not confident that you will find the right match in the first few tries, use the Agent tool to perform the search for you.
 
     When to use the Agent tool:
     - If you are searching for a keyword like "config" or "logger", or for questions like "which file does X?", the Agent tool is strongly recommended
@@ -116,7 +116,6 @@ class ReadTool {
     - Any lines longer than 2000 characters will be truncated
     - Results are returned using cat -n format, with line numbers starting at 1
     - This tool allows Claude Code to read images (eg PNG, JPG, etc). When reading an image file the contents are presented visually as Claude Code is a multimodal LLM.
-    - For Jupyter notebooks (.ipynb files), use the NotebookRead instead
     - You have the capability to call multiple tools in a single response. It is always better to speculatively read multiple files as a batch that are potentially useful. 
     - You will regularly be asked to read screenshots. If the user provides a path to a screenshot ALWAYS use this tool to view the file at the path. This tool will work with all temporary file paths like /var/folders/123/abc/T/TemporaryItems/NSIRD_screencaptureui_ZfB1tD/Screenshot.png
     - If you read a file that exists but has empty contents you will receive a system reminder warning in place of file contents.
@@ -355,4 +354,6 @@ class WebSearchTool {
 }
 
 // Union type for all tools
-type AgentTools = AgentTool | BashTool | GlobTool | GrepTool | LSTool | ExitPlanModeTool | ReadTool | EditTool | MultiEditTool | WriteTool | NotebookReadTool | NotebookEditTool | WebFetchTool | TodoReadTool | TodoWriteTool | WebSearchTool
+type ScaryTools =  EditTool | MultiEditTool | WriteTool | NotebookEditTool | TodoWriteTool
+type AgentTools = SubAgentTools | AgentTool
+type SubAgentTools = BashTool | GlobTool | GrepTool | LSTool | ExitPlanModeTool | ReadTool | WebFetchTool | TodoReadTool | TodoWriteTool | WebSearchTool
