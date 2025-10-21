@@ -12,11 +12,11 @@
 
 <div align="center">
 <h2>🦄 <strong>Next Episode</strong></h2>
-<h3><strong>Agentic RAG + Context Engineering</strong></h3>
-<p><strong>Tuesday, October 21, 2025 at 10 AM PST</strong></p>
-<p><em>RAG vs. Agentic RAG is the hot new debate at the forefront of AI Engineering. On this week's episode we'll dive deep on the differences, why it matters, and cut through the buzzword hype with hands-on whiteboarding and live working code. We'll talk about the tradeoffs between deterministic retrieval and curated context engineering vs. the benefits of letting models assemble their context with tools.</em></p>
+<h3><strong>Ralph Wiggum under the hood: Coding Agent Power Tools</strong></h3>
+<p><strong>Tuesday, October 28, 2025 at 10 AM PST</strong></p>
+<p><em>We've talked a lot about how to use context engineering to get more out of coding agents. In this week's episode, we're going to dive deep on the Ralph Wiggum Technique and why this totally different approach to coding agents can change the way you code. We'll explore using ralph for Greenfield projects, Refactoring projects, Generating specifications. Surprise surprise, the answer is better context engineering.</em></p>
 
-<a href="https://lu.ma/febfzi72" target="_blank">
+<a href="https://lu.ma/ralphloop" target="_blank">
 <img src="https://img.shields.io/badge/🦄_REGISTER_NOW-Join_Live_Session-ff4444?style=for-the-badge&logo=calendar" alt="Register Now">
 </a>
 
@@ -100,13 +100,26 @@ Before joining, get familiar with our toolkit:
         <div style="margin-bottom: 2px;">
           <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">UPCOMING</span>
         </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2025-10-28</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#30</strong>: Ralph Wiggum under the hood: Coding Agent Power Tools</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="./2025-10-28-ralph-wiggum-coding-agent-power-tools">code</a> • <a href="https://lu.ma/ralphloop">register</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We've talked a lot about how to use context engineering to get more out of coding agents. In this week's episode, we're going to dive deep on the Ralph Wiggum Technique and why this totally different approach to coding agents can change the way you code. We'll explore using ralph for Greenfield projects, Refactoring projects, Generating specifications. Surprise surprise, the answer is better context engineering.</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
         <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2025-10-21</div>
         <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#29</strong>: Agentic RAG + Context Engineering</div>
         <div style="font-size: 13px; color: #666;">
-          <a href="./2025-10-21-agentic-rag-context-engineering">code</a> • <a href="https://lu.ma/febfzi72">register</a>
+          <a href="https://youtu.be/grGSFfyejA0">watch</a> • <a href="./2025-10-21-agentic-rag-context-engineering">code</a>
         </div>
       </div>
-    </td><td><div style="padding: 8px 0; line-height: 1.5;">RAG vs. Agentic RAG is the hot new debate at the forefront of AI Engineering. On this week's episode we'll dive deep on the differences, why it matters, and cut through the buzzword hype with hands-on whiteboarding and live working code. We'll talk about the tradeoffs between deterministic retrieval and curated context engineering vs. the benefits of letting models assemble their context with tools.</div></td></tr>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In this conversation, Vaibhav Gupta and Dex explore the intricacies of building an Agentic Retrieval-Augmented Generation (RAG) system. They discuss the differences between traditional RAG and Agentic RAG, emphasizing the flexibility and decision-making capabilities of the latter. The conversation includes a live demo of a coding agent, insights into the coding architecture, challenges faced during tool implementation, and the iterative process of refining the system. They also touch on the integration of web search functionalities and the evaluation of tool effectiveness, providing a comprehensive overview of the development process and the underlying principles of Agentic RAG systems. In this conversation, Vaibhav Gupta and Dex discuss the intricacies of building dynamic AI systems, focusing on tool implementation, user interface optimization, and model performance. They explore the importance of reinforcement learning in training models, the challenges of debugging AI systems, and the significance of writing code to enhance understanding and efficiency in AI development. The dialogue emphasizes the balance between different AI approaches and the necessity of real use cases in building effective solutions.
+</div></td></tr>
 <tr><td>
       <div style="padding: 8px 0;">
         <div style="margin-bottom: 2px;">

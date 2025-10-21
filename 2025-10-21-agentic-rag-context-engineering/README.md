@@ -1,4 +1,178 @@
-# Agentic RAG Context Engineering
+# 🦄 ai that works: Agentic RAG + Context Engineering
+
+> Exploring the intricacies of building an Agentic Retrieval-Augmented Generation (RAG) system, emphasizing the flexibility and decision-making capabilities that distinguish it from traditional RAG approaches.
+
+[Video](https://www.youtube.com/watch?v=grGSFfyejA0) (1h18m)
+
+[![Agentic RAG + Context Engineering](https://img.youtube.com/vi/grGSFfyejA0/0.jpg)](https://www.youtube.com/watch?v=grGSFfyejA0)
+
+## Episode Summary
+
+Vaibhav Gupta demonstrates building a complete Agentic RAG system from scratch in just 3 hours, showing the crucial difference between deterministic RAG pipelines and agent-driven context assembly. The live coding session reveals that while the agent loop itself is straightforward, the real complexity lies in tool implementation details - from handling relative paths in grep results to managing working directories and truncation notices.
+
+## Key Insights
+
+### Agentic RAG vs Traditional RAG
+
+> "RAG is a system that takes in a user query and looks into some database... Traditional RAG uses vector search 100% of the time. Agentic RAG lets the model decide if it needs to RAG anything at all."
+
+- **Traditional RAG**: Deterministic code fetches context based on vector similarity every time
+- **Agentic RAG**: Model decides which tools to use and what context to retrieve
+- Trade-off: Flexibility and capability vs speed and predictability
+
+### The 3-Hour Build Breakdown
+
+- **Hour 1**: Basic agent loop and tool definitions (30% hand-written, 70% AI-generated)
+- **Hour 2**: Building UI/TUI for effective iteration and debugging
+- **Hour 3**: Refining tool implementations based on testing
+
+> "Most of the time actually came from UI time, not from anything else."
+
+### Critical Tool Implementation Details
+
+**What Actually Mattered:**
+- Using relative paths instead of absolute paths in grep results
+- Tracking and injecting current working directory into prompts
+- Adding clear truncation notices with line numbers
+- Implementing proper timeouts for all subprocess calls
+- Using ripgrep (rg) instead of standard grep
+
+**What Didn't Matter:**
+- Tool definition prompts (never changed after initial write)
+- Complex retry logic
+- Structured tool response formats
+
+### The Architecture Pattern
+
+```
+User Query → [Agent Loop with Tools] → Response
+           ↓
+    Iterations (tool calls)
+           ↓
+    Tool Results → Back to Agent
+```
+
+Each iteration can call tools or respond to user. Sub-agents spawn fresh contexts but can't spawn more sub-agents (preventing infinite recursion).
+
+### Context Engineering Lessons
+
+> "That's context engineering. How do you make it more context efficient? Every single token counts. When you save 20 tokens per call and you're gonna grep 30 times, that makes a huge difference."
+
+**Key Optimizations:**
+- Render tools in simplified format, not full JSON
+- Use `[Dir]` and `[File]` prefixes in ls output
+- Truncate file reads at 20K chars or 5K lines with clear instructions
+- Strip HTML to text in web fetch, save full content to file if needed
+
+### Error Handling Philosophy
+
+Instead of forcing models to retry on parse errors, detect intent:
+- If response starts with backticks but not JSON → probably meant for user
+- Keep error corrections temporary, don't pollute context history
+- Add "invalid response" feedback but remove after correction
+
+### When to Use Agentic RAG
+
+**Use Agentic RAG When:**
+- Problem scope is unbounded
+- User queries vary widely
+- You need web search + code search + docs
+- Flexibility matters more than speed
+
+**Avoid Agentic RAG When:**
+- Problem scope is well-defined
+- Speed is critical
+- Most queries follow similar patterns
+- You can predict needed context
+
+> "Most people should not build agentic RAG systems for their workflows. If you're building a software stack, most problems are not so wide that you need an agentic rag system."
+
+### Model Considerations
+
+- GPT-4o works well out of the box
+- Smaller models (GPT-4o-mini) struggle with complex tool orchestration
+- Line numbers in file reads work without special training
+- RL/fine-tuning helps but isn't required for basic functionality
+
+### The Build Philosophy
+
+> "Writing the code helps me understand how it works. If I use a Claude Agent SDK, I don't actually understand what a system is doing."
+
+Build from first principles to understand:
+- System design trade-offs
+- Where complexity actually lives
+- What optimizations matter
+- How to debug when things fail
+
+## Practical Implementation Tips
+
+1. **Start with a baseline**: Build deterministic RAG first, then add agent capabilities
+2. **Invest in UI early**: Good debugging UI is crucial for iteration
+3. **Test with consistent queries**: Use the same 10 queries repeatedly during development
+4. **Track tool sequences**: Focus on which tools are called in what order, not just final output
+5. **Handle state carefully**: Preserve working directory, track file modifications
+6. **Optimize for context**: Every token saved in tool responses compounds across iterations
+
+## The Bottom Line
+
+Agentic RAG isn't technically complex - you can build one in 3 hours. The challenge is making tools context-efficient and deciding if you actually need the flexibility versus a faster, deterministic pipeline. As Dex summarizes: "The answer is what solves your user's problem."
+
+## Running the Code
+
+### Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/ai-that-works/ai-that-works.git
+cd ai-that-works/2025-10-21-agentic-rag-context-engineering
+
+# Install dependencies
+uv sync
+
+# Generate BAML client
+uv run baml-cli generate
+
+# Set your API keys
+export OPENAI_API_KEY="your-key-here"
+export EXA_API_KEY="your-exa-key-here"  # Optional, for WebSearch tool
+
+# Run the agent (CLI mode)
+uv run python main.py "What files are in this directory?"
+
+# Run in beautiful TUI mode (recommended)
+uv run python main.py "Start" --tui
+
+# Interactive mode
+uv run python main.py "Start" --interactive
+```
+
+### Available Commands
+
+```bash
+# Single query
+uv run python main.py "What does the fern folder do?"
+
+# Work in a specific directory
+uv run python main.py "Find all Python files" --dir /path/to/project
+
+# TUI with specific directory
+uv run python main.py "Start" --tui --dir ~/myproject
+```
+
+## Whiteboards
+
+_To be added during the session_
+
+## Links
+
+- [Episode Recording](https://www.youtube.com/watch?v=grGSFfyejA0)
+- [Source Code](https://github.com/ai-that-works/ai-that-works/tree/main/2025-10-21-agentic-rag-context-engineering)
+- [BAML Language](https://github.com/BoundaryML/baml)
+- [Discord Community](https://boundaryml.com/discord)
+
+---
+
+## Code Demo: Agent System Built with BAML
 
 An agent system built with BAML that can execute various tools using pattern matching.
 
