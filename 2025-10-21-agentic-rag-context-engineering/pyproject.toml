@@ -1,0 +1,9 @@
+[project]
+name = "2025-10-21-agentic-rag-context-engineering"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "baml-py>=0.211.2",
+]
