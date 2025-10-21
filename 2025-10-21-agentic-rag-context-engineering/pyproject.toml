@@ -1,0 +1,16 @@
+[project]
+name = "2025-10-21-agentic-rag-context-engineering"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "baml-py>=0.211.2",
+    "typing-extensions>=4.0.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.1.1",
+    "textual>=0.47.0",
+    "rich>=13.0.0",
+    "exa-py>=1.16.1",
+    "beautifulsoup4>=4.14.2",
+]
