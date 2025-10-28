@@ -2,7 +2,7 @@
 
 A BAML language implementation in Zig.
 
-## Project Status: PHASE 10 - CLI & File I/O (COMPLETED ✅)
+## Project Status: PHASE 11 - Multi-file Support (COMPLETED ✅)
 
 ---
 
@@ -623,7 +623,64 @@ $ minibaml generate test.baml
 
 ---
 
-## Current Milestone: PHASE 10 - COMPLETED ✅
+---
+
+### ✅ PHASE 11: Multi-file Support
+**Status**: ✅ COMPLETED
+**Goal**: Support multi-file BAML projects with automatic namespace merging
+
+#### Tasks Completed:
+- [x] 11.1: Create MultiFileProject module for managing multiple files
+- [x] 11.2: Implement directory scanning (recursive .baml file discovery)
+- [x] 11.3: Parse multiple files into separate ASTs
+- [x] 11.4: Merge declarations from all files into single namespace
+- [x] 11.5: Validate cross-file type references
+- [x] 11.6: Detect duplicate definitions across files
+- [x] 11.7: Update CLI to accept directory paths
+- [x] 11.8: Add directory support to check, parse, and generate commands
+- [x] 11.9: Fix memory management for multi-file projects
+- [x] 11.10: Test with real multi-file BAML projects
+
+**Validation**: ✅ PASSED - Successfully loads, validates, and generates code from multi-file projects.
+
+**Implementation Details**:
+- Created `src/multifile.zig` (165 lines) with multi-file project support
+- MultiFileProject scans directories recursively for .baml files
+- Keeps source code alive to preserve AST string references
+- Merges all declarations into single namespace (BAML design)
+- Updated `main.zig` to support both files and directories:
+  - `isDirectory()` helper function
+  - `checkDirectory()` for multi-file validation
+  - `parseDirectory()` for multi-file AST display
+  - Updated `generateCommand()` for directory support
+- Comprehensive multi-file test structure:
+  - test_baml_src/models/person.baml - Person and Address classes
+  - test_baml_src/models/status.baml - Status and Priority enums
+  - test_baml_src/functions.baml - Greet and ExtractPerson functions
+  - test_baml_src/clients.baml - OpenAI and Anthropic clients
+- All tests pass (`zig build test`)
+- No memory leaks (verified with GPA)
+
+**Sample Output**:
+```
+$ minibaml check test_baml_src
+Loading BAML files from 'test_baml_src'...
+Loaded 4 file(s)
+
+  - test_baml_src/functions.baml (2 declarations)
+  - test_baml_src/clients.baml (2 declarations)
+  - test_baml_src/models/status.baml (2 declarations)
+  - test_baml_src/models/person.baml (2 declarations)
+
+Validating merged AST...
+✓ test_baml_src is valid (total 8 declarations)
+```
+
+**Test Results**: ✅ All tests pass - Build Summary: 5/5 steps succeeded; 2/2 tests passed
+
+---
+
+## Current Milestone: PHASE 11 - COMPLETED ✅
 
 **Achievements**:
 - ✅ Complete lexer with 150+ test cases
@@ -631,24 +688,27 @@ $ minibaml generate test.baml
 - ✅ Comprehensive parser for all BAML syntax
 - ✅ Complete type system with validation
 - ✅ Circular dependency detection
-- ✅ Duplicate definition checking
+- ✅ Duplicate definition checking (single and multi-file)
 - ✅ Type reference validation
+- ✅ Cross-file type references (automatic namespace)
 - ✅ Pretty printer and formatter with full BAML support
 - ✅ Python code generator with Pydantic support
+- ✅ Multi-file project support with recursive directory scanning
 - ✅ Complete CLI tool with all essential commands:
   - `minibaml <file>` - Tokenize
-  - `minibaml parse <file>` - Parse and show AST
-  - `minibaml check <file>` - Validate with detailed errors
+  - `minibaml parse <path>` - Parse and show AST (file or directory)
+  - `minibaml check <path>` - Validate (file or directory)
   - `minibaml fmt <file>` - Format
-  - `minibaml generate <file>` - Generate Python code
+  - `minibaml generate <path>` - Generate Python code (file or directory)
   - `--version` and `--help` flags
 - ✅ Zig 0.15.1 full compatibility (ArrayList API, recursive error sets)
 - ✅ Error handling with line/column info throughout
 - ✅ Refactored codebase with no duplication
 - ✅ All tests passing
 - ✅ Generated Python code is syntactically valid
+- ✅ Memory-safe multi-file processing
 
-**Next Steps** (PHASE 11 - Optional):
-- Multi-file support with imports
-- Cross-file type references
-- Handle multiple input files in one command
+**Next Steps** (PHASE 12 - Optional):
+- Advanced Jinja template parsing and validation
+- Dynamic types support (@@dynamic attribute)
+- Additional code generators (TypeScript, Go, Ruby)

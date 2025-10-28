@@ -63,23 +63,24 @@ fn printUsage() void {
         \\minibaml - BAML language tool
         \\
         \\Usage:
-        \\  minibaml <file.baml>           Tokenize a BAML file
-        \\  minibaml parse <file.baml>     Parse and show AST
-        \\  minibaml check <file.baml>     Validate BAML file
-        \\  minibaml fmt <file.baml>       Format a BAML file
-        \\  minibaml generate <file.baml>  Generate Python code from BAML
-        \\  minibaml gen <file.baml>       Alias for generate
+        \\  minibaml <file.baml>              Tokenize a BAML file
+        \\  minibaml parse <path>             Parse and show AST (file or directory)
+        \\  minibaml check <path>             Validate BAML file or directory
+        \\  minibaml fmt <file.baml>          Format a BAML file
+        \\  minibaml generate <path>          Generate Python code from BAML
+        \\  minibaml gen <path>               Alias for generate
         \\
         \\Options:
-        \\  --help, -h                     Show this help message
-        \\  --version, -v                  Show version information
+        \\  --help, -h                        Show this help message
+        \\  --version, -v                     Show version information
         \\
         \\Examples:
-        \\  minibaml test.baml             # Show tokens
-        \\  minibaml parse test.baml       # Show parsed AST
-        \\  minibaml check test.baml       # Validate file
-        \\  minibaml fmt test.baml         # Format and print
-        \\  minibaml generate test.baml    # Generate Python code
+        \\  minibaml test.baml                # Show tokens
+        \\  minibaml parse test.baml          # Show parsed AST (single file)
+        \\  minibaml parse baml_src           # Show parsed AST (directory)
+        \\  minibaml check baml_src           # Validate directory
+        \\  minibaml fmt test.baml            # Format and print
+        \\  minibaml generate baml_src        # Generate Python code
         \\
     ) catch {};
 }
@@ -98,6 +99,21 @@ const ParseResult = struct {
         self.parser.deinit();
     }
 };
+
+fn isDirectory(path: []const u8) bool {
+    const stat = std.fs.cwd().statFile(path) catch |err| {
+        if (err == error.FileNotFound) {
+            // Try as directory
+            var dir = std.fs.cwd().openDir(path, .{}) catch {
+                return false;
+            };
+            dir.close();
+            return true;
+        }
+        return false;
+    };
+    return stat.kind == .directory;
+}
 
 fn parseFile(allocator: std.mem.Allocator, filename: []const u8) !ParseResult {
     const file = std.fs.cwd().openFile(filename, .{}) catch |err| {
@@ -191,7 +207,15 @@ fn tokenizeCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
     }
 }
 
-fn parseCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
+fn parseCommand(allocator: std.mem.Allocator, path: []const u8) !void {
+    if (isDirectory(path)) {
+        try parseDirectory(allocator, path);
+    } else {
+        try parseSingleFile(allocator, path);
+    }
+}
+
+fn parseSingleFile(allocator: std.mem.Allocator, filename: []const u8) !void {
     var result = try parseFile(allocator, filename);
     defer result.deinit();
 
@@ -214,7 +238,47 @@ fn parseCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
     std.debug.print("\n", .{});
 }
 
-fn checkCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
+fn parseDirectory(allocator: std.mem.Allocator, dir_path: []const u8) !void {
+    var project = minibaml.MultiFileProject.init(allocator);
+    defer project.deinit();
+
+    std.debug.print("Loading BAML files from '{s}'...\n\n", .{dir_path});
+    try project.loadDirectory(dir_path);
+
+    const files = project.getFiles();
+    std.debug.print("Successfully parsed {d} file(s):\n\n", .{files.len});
+
+    for (files) |file| {
+        std.debug.print("  {s}\n", .{file.path});
+        std.debug.print("    Declarations: {d}\n", .{file.tree.declarations.items.len});
+        for (file.tree.declarations.items) |decl| {
+            switch (decl) {
+                .class_decl => |class| std.debug.print("      - class {s}\n", .{class.name}),
+                .enum_decl => |enum_decl| std.debug.print("      - enum {s}\n", .{enum_decl.name}),
+                .function_decl => |func| std.debug.print("      - function {s}\n", .{func.name}),
+                .client_decl => |client| std.debug.print("      - client<llm> {s}\n", .{client.name}),
+                .test_decl => |test_decl| std.debug.print("      - test {s}\n", .{test_decl.name}),
+                .generator_decl => |gen| std.debug.print("      - generator {s}\n", .{gen.name}),
+                .template_string_decl => |template| std.debug.print("      - template_string {s}\n", .{template.name}),
+                .type_alias_decl => |alias| std.debug.print("      - type {s}\n", .{alias.name}),
+            }
+        }
+        std.debug.print("\n", .{});
+    }
+
+    const merged_ast = project.getMergedAst();
+    std.debug.print("Merged AST: {d} total declarations\n", .{merged_ast.declarations.items.len});
+}
+
+fn checkCommand(allocator: std.mem.Allocator, path: []const u8) !void {
+    if (isDirectory(path)) {
+        try checkDirectory(allocator, path);
+    } else {
+        try checkFile(allocator, path);
+    }
+}
+
+fn checkFile(allocator: std.mem.Allocator, filename: []const u8) !void {
     var result = try parseFile(allocator, filename);
     defer result.deinit();
 
@@ -247,6 +311,55 @@ fn checkCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
     }
 }
 
+fn checkDirectory(allocator: std.mem.Allocator, dir_path: []const u8) !void {
+    var project = minibaml.MultiFileProject.init(allocator);
+    defer project.deinit();
+
+    std.debug.print("Loading BAML files from '{s}'...\n", .{dir_path});
+    project.loadDirectory(dir_path) catch |err| {
+        std.debug.print("Error loading directory: {s}\n", .{@errorName(err)});
+        return err;
+    };
+
+    const files = project.getFiles();
+    std.debug.print("Loaded {d} file(s)\n\n", .{files.len});
+
+    for (files) |file| {
+        std.debug.print("  - {s} ({d} declarations)\n", .{ file.path, file.tree.declarations.items.len });
+    }
+
+    std.debug.print("\nValidating merged AST...\n", .{});
+
+    var validator = minibaml.Validator.init(allocator);
+    defer validator.deinit();
+
+    const merged_ast = project.getMergedAst();
+    validator.validate(merged_ast) catch |err| {
+        std.debug.print("Validation failed: {s}\n", .{@errorName(err)});
+    };
+
+    if (validator.diagnostics.items.len == 0) {
+        std.debug.print("✓ {s} is valid (total {d} declarations)\n", .{ dir_path, merged_ast.declarations.items.len });
+    } else {
+        std.debug.print("Validation errors:\n\n", .{});
+        for (validator.diagnostics.items) |diag| {
+            const severity = switch (diag.severity) {
+                .err => "error",
+                .warning => "warning",
+                .info => "info",
+            };
+            std.debug.print("  [{s}] Line {d}, Col {d}: {s}\n", .{
+                severity,
+                diag.line,
+                diag.column,
+                diag.message,
+            });
+        }
+        std.debug.print("\nFound {d} error(s)\n", .{validator.diagnostics.items.len});
+        std.process.exit(1);
+    }
+}
+
 fn formatCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
     var result = try parseFile(allocator, filename);
     defer result.deinit();
@@ -260,15 +373,24 @@ fn formatCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
     try std.fs.File.stdout().writeAll(buffer.items);
 }
 
-fn generateCommand(allocator: std.mem.Allocator, filename: []const u8) !void {
-    var result = try parseFile(allocator, filename);
-    defer result.deinit();
-
+fn generateCommand(allocator: std.mem.Allocator, path: []const u8) !void {
     var buffer = std.ArrayList(u8){};
     defer buffer.deinit(allocator);
 
     var gen = minibaml.PythonGenerator.init(allocator, &buffer);
-    try gen.generate(&result.tree);
+
+    if (isDirectory(path)) {
+        var project = minibaml.MultiFileProject.init(allocator);
+        defer project.deinit();
+
+        try project.loadDirectory(path);
+        const merged_ast = project.getMergedAst();
+        try gen.generate(merged_ast);
+    } else {
+        var result = try parseFile(allocator, path);
+        defer result.deinit();
+        try gen.generate(&result.tree);
+    }
 
     try std.fs.File.stdout().writeAll(buffer.items);
 }
