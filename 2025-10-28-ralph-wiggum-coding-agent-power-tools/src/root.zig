@@ -13,6 +13,7 @@ pub const ast = @import("ast.zig");
 pub const parser = @import("parser.zig");
 pub const validator = @import("validator.zig");
 pub const formatter = @import("formatter.zig");
+pub const codegen = @import("codegen.zig");
 
 // Convenience exports for common types
 pub const Token = lexer.Token;
@@ -26,6 +27,7 @@ pub const Validator = validator.Validator;
 pub const TypeRegistry = validator.TypeRegistry;
 pub const Diagnostic = validator.Diagnostic;
 pub const Formatter = formatter.Formatter;
+pub const PythonGenerator = codegen.PythonGenerator;
 
 pub fn getVersion() []const u8 {
     return version;

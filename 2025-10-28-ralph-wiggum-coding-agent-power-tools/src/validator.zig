@@ -308,7 +308,7 @@ pub const Validator = struct {
         visited: *std.StringHashMap(void),
         visiting: *std.StringHashMap(void),
         location: ast.Location,
-    ) !void {
+    ) ValidationError!void {
         if (visited.contains(class_name)) {
             return;
         }
@@ -348,7 +348,7 @@ pub const Validator = struct {
         visited: *std.StringHashMap(void),
         visiting: *std.StringHashMap(void),
         location: ast.Location,
-    ) !void {
+    ) ValidationError!void {
         switch (type_expr.*) {
             .named => |name| {
                 // Only check class types for circular dependencies
@@ -380,7 +380,7 @@ pub const Validator = struct {
     /// Add an error diagnostic
     fn addError(self: *Validator, comptime fmt: []const u8, args: anytype, location: ast.Location) !void {
         const message = try std.fmt.allocPrint(self.allocator, fmt, args);
-        try self.diagnostics.append(Diagnostic{
+        try self.diagnostics.append(self.allocator, Diagnostic{
             .message = message,
             .line = location.line,
             .column = location.column,
@@ -391,7 +391,7 @@ pub const Validator = struct {
     /// Add a warning diagnostic
     fn addWarning(self: *Validator, comptime fmt: []const u8, args: anytype, location: ast.Location) !void {
         const message = try std.fmt.allocPrint(self.allocator, fmt, args);
-        try self.diagnostics.append(Diagnostic{
+        try self.diagnostics.append(self.allocator, Diagnostic{
             .message = message,
             .line = location.line,
             .column = location.column,
