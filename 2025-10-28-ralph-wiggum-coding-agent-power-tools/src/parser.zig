@@ -27,13 +27,13 @@ pub const Parser = struct {
             .tokens = tokens,
             .index = 0,
             .allocator = allocator,
-            .errors = std.ArrayList(ParserError).init(allocator),
+            .errors = std.ArrayList(ParserError){},
         };
     }
 
     /// Clean up parser resources
     pub fn deinit(self: *Parser) void {
-        self.errors.deinit();
+        self.errors.deinit(self.allocator);
     }
 
     /// Peek at the current token without consuming it
@@ -154,7 +154,7 @@ pub const Parser = struct {
     /// Add a parser error
     fn addError(self: *Parser, comptime fmt: []const u8, args: anytype, line: usize, column: usize) !void {
         const msg = try std.fmt.allocPrint(self.allocator, fmt, args);
-        try self.errors.append(ParserError{
+        try self.errors.append(self.allocator, ParserError{
             .message = msg,
             .line = line,
             .column = column,
@@ -177,27 +177,27 @@ pub const Parser = struct {
         const left = try self.parsePostfixType();
 
         // Check for union operator |
-        var types = std.ArrayList(*ast.TypeExpr).init(self.allocator);
+        var types = std.ArrayList(*ast.TypeExpr){};
         errdefer {
             for (types.items) |t| {
                 t.deinit(self.allocator);
                 self.allocator.destroy(t);
             }
-            types.deinit();
+            types.deinit(self.allocator);
         }
 
-        try types.append(left);
+        try types.append(self.allocator, left);
 
         while (self.match(.pipe)) |_| {
             self.skipTrivia();
             const right = try self.parsePostfixType();
-            try types.append(right);
+            try types.append(self.allocator, right);
         }
 
         // If we only have one type, return it directly
         if (types.items.len == 1) {
             const single = types.items[0];
-            types.deinit();
+            types.deinit(self.allocator);
             return single;
         }
 
@@ -397,12 +397,12 @@ pub const Parser = struct {
         // Get attribute name
         const name_token = try self.expect(.identifier);
 
-        var args = std.ArrayList(ast.Value).init(self.allocator);
+        var args = std.ArrayList(ast.Value){};
         errdefer {
             for (args.items) |*arg| {
                 arg.deinit(self.allocator);
             }
-            args.deinit();
+            args.deinit(self.allocator);
         }
 
         self.skipTrivia();
@@ -425,7 +425,7 @@ pub const Parser = struct {
             while (true) {
                 self.skipTrivia();
                 const arg = try self.parseValue();
-                try args.append(arg);
+                try args.append(self.allocator, arg);
 
                 self.skipTrivia();
                 if (self.match(.rparen)) |_| {
@@ -504,12 +504,12 @@ pub const Parser = struct {
         _ = try self.expect(.lbracket);
         self.skipTrivia();
 
-        var items = std.ArrayList(ast.Value).init(self.allocator);
+        var items = std.ArrayList(ast.Value){};
         errdefer {
             for (items.items) |*item| {
                 item.deinit(self.allocator);
             }
-            items.deinit();
+            items.deinit(self.allocator);
         }
 
         // Empty array
@@ -521,7 +521,7 @@ pub const Parser = struct {
         while (true) {
             self.skipTrivia();
             const item = try self.parseValue();
-            try items.append(item);
+            try items.append(self.allocator, item);
 
             self.skipTrivia();
             if (self.match(.rbracket)) |_| {
@@ -534,7 +534,7 @@ pub const Parser = struct {
         return ast.Value{ .array = items };
     }
 
-    /// Parse object value: { key: val, ... }
+    /// Parse object value: { key val, ... } (BAML uses space-separated, not colon-separated)
     fn parseObjectValue(self: *Parser) ParseError!ast.Value {
         _ = try self.expect(.lbrace);
         self.skipTrivia();
@@ -554,9 +554,15 @@ pub const Parser = struct {
             return ast.Value{ .object = obj };
         }
 
-        // Parse key-value pairs
+        // Parse key-value pairs (space-separated, no colons or commas required)
         while (true) {
             self.skipTrivia();
+
+            // Check if we've reached the end
+            if (self.check(.rbrace)) {
+                _ = self.advance();
+                break;
+            }
 
             // Key can be identifier or string
             const key = if (self.match(.identifier)) |tok|
@@ -573,18 +579,10 @@ pub const Parser = struct {
             };
 
             self.skipTrivia();
-            _ = try self.expect(.colon);
-            self.skipTrivia();
-
             const value = try self.parseValue();
             try obj.put(key, value);
 
-            self.skipTrivia();
-            if (self.match(.rbrace)) |_| {
-                break;
-            }
-
-            _ = try self.expect(.comma);
+            // No comma required in BAML syntax, just continue to next key-value pair or closing brace
         }
 
         return ast.Value{ .object = obj };
@@ -595,8 +593,12 @@ pub const Parser = struct {
         _ = try self.expect(.env);
 
         // In BAML, env variables are written as env.VAR_NAME
-        // We need to handle this as two tokens: "env" and identifier
-        // For now, we'll store just the identifier part
+        // The dot between env and the identifier is tokenized as `.unknown`
+        // Skip it
+        if (self.check(.unknown)) {
+            _ = self.advance();
+        }
+
         const var_name = try self.expect(.identifier);
         return ast.Value{ .env_var = var_name.lexeme };
     }
@@ -632,13 +634,13 @@ pub const Parser = struct {
             // Check for class-level attribute (@@)
             if (self.check(.double_at)) {
                 const attr = try self.parseAttribute();
-                try class_decl.attributes.append(attr);
+                try class_decl.attributes.append(self.allocator, attr);
                 continue;
             }
 
             // Otherwise, parse property
             const prop = try self.parseProperty();
-            try class_decl.properties.append(prop);
+            try class_decl.properties.append(self.allocator, prop);
         }
 
         self.skipTrivia();
@@ -665,19 +667,19 @@ pub const Parser = struct {
             self.allocator.destroy(type_expr);
         }
 
-        var attributes = std.ArrayList(ast.Attribute).init(self.allocator);
+        var attributes = std.ArrayList(ast.Attribute){};
         errdefer {
             for (attributes.items) |*attr| {
                 attr.deinit(self.allocator);
             }
-            attributes.deinit();
+            attributes.deinit(self.allocator);
         }
 
         // Parse property-level attributes
         while (self.check(.at)) {
             self.skipTrivia();
             const attr = try self.parseAttribute();
-            try attributes.append(attr);
+            try attributes.append(self.allocator, attr);
             self.skipTrivia();
         }
 
@@ -721,13 +723,13 @@ pub const Parser = struct {
             // Check for enum-level attribute (@@)
             if (self.check(.double_at)) {
                 const attr = try self.parseAttribute();
-                try enum_decl.attributes.append(attr);
+                try enum_decl.attributes.append(self.allocator, attr);
                 continue;
             }
 
             // Otherwise, parse enum value
             const val = try self.parseEnumValue();
-            try enum_decl.values.append(val);
+            try enum_decl.values.append(self.allocator, val);
         }
 
         self.skipTrivia();
@@ -747,19 +749,19 @@ pub const Parser = struct {
             .column = name_token.column,
         };
 
-        var attributes = std.ArrayList(ast.Attribute).init(self.allocator);
+        var attributes = std.ArrayList(ast.Attribute){};
         errdefer {
             for (attributes.items) |*attr| {
                 attr.deinit(self.allocator);
             }
-            attributes.deinit();
+            attributes.deinit(self.allocator);
         }
 
         // Parse value-level attributes
         while (self.check(.at)) {
             self.skipTrivia();
             const attr = try self.parseAttribute();
-            try attributes.append(attr);
+            try attributes.append(self.allocator, attr);
             self.skipTrivia();
         }
 
@@ -801,7 +803,7 @@ pub const Parser = struct {
             if (self.check(.rparen)) break;
 
             const param = try self.parseParameter();
-            try function_decl.parameters.append(param);
+            try function_decl.parameters.append(self.allocator, param);
 
             self.skipTrivia();
             if (self.match(.comma)) |_| {
@@ -842,7 +844,7 @@ pub const Parser = struct {
             // Check for function-level attribute (@)
             if (self.check(.at)) {
                 const attr = try self.parseAttribute();
-                try function_decl.attributes.append(attr);
+                try function_decl.attributes.append(self.allocator, attr);
                 continue;
             }
 
@@ -857,7 +859,7 @@ pub const Parser = struct {
             // Check for 'prompt' keyword
             if (self.match(.keyword_prompt)) |_| {
                 self.skipTrivia();
-                const prompt_token = try self.expect(.block_string);
+                const prompt_token = try self.expect(.string_literal);
                 function_decl.prompt = prompt_token.lexeme;
                 continue;
             }
@@ -1018,7 +1020,7 @@ pub const Parser = struct {
             if (self.check(.rparen)) break;
 
             const param = try self.parseParameter();
-            try template_decl.parameters.append(param);
+            try template_decl.parameters.append(self.allocator, param);
 
             self.skipTrivia();
             if (self.match(.comma)) |_| {
@@ -1074,7 +1076,7 @@ pub const Parser = struct {
             // Check for test-level attribute (@@)
             if (self.check(.double_at)) {
                 const attr = try self.parseAttribute();
-                try test_decl.attributes.append(attr);
+                try test_decl.attributes.append(self.allocator, attr);
                 continue;
             }
 
@@ -1092,7 +1094,7 @@ pub const Parser = struct {
                         if (self.check(.rbracket)) break;
 
                         const func_name = try self.expect(.identifier);
-                        try test_decl.functions.append(func_name.lexeme);
+                        try test_decl.functions.append(self.allocator, func_name.lexeme);
 
                         self.skipTrivia();
                         if (self.match(.comma)) |_| {

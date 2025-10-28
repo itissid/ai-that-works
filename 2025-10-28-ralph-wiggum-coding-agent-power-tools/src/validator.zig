@@ -151,7 +151,7 @@ pub const Validator = struct {
             .allocator = allocator,
             .type_registry = TypeRegistry.init(allocator),
             .function_registry = FunctionRegistry.init(allocator),
-            .diagnostics = std.ArrayList(Diagnostic).init(allocator),
+            .diagnostics = std.ArrayList(Diagnostic){},
         };
     }
 
@@ -159,7 +159,7 @@ pub const Validator = struct {
         for (self.diagnostics.items) |*diag| {
             diag.deinit(self.allocator);
         }
-        self.diagnostics.deinit();
+        self.diagnostics.deinit(self.allocator);
         self.type_registry.deinit();
         self.function_registry.deinit();
     }
@@ -511,13 +511,13 @@ test "Validator: Validate simple class" {
     const name_prop = ast.Property{
         .name = "name",
         .type_expr = name_type,
-        .attributes = std.ArrayList(ast.Attribute).init(allocator),
+        .attributes = std.ArrayList(ast.Attribute){},
         .docstring = null,
         .location = .{ .line = 2, .column = 3 },
     };
-    try class.properties.append(name_prop);
+    try class.properties.append(allocator, name_prop);
 
-    try tree.declarations.append(ast.Declaration{ .class_decl = class });
+    try tree.declarations.append(allocator, ast.Declaration{ .class_decl = class });
 
     try validator.validate(&tree);
     try std.testing.expect(!validator.hasErrors());
@@ -541,13 +541,13 @@ test "Validator: Detect undefined type" {
     const address_prop = ast.Property{
         .name = "address",
         .type_expr = address_type,
-        .attributes = std.ArrayList(ast.Attribute).init(allocator),
+        .attributes = std.ArrayList(ast.Attribute){},
         .docstring = null,
         .location = .{ .line = 2, .column = 3 },
     };
-    try class.properties.append(address_prop);
+    try class.properties.append(allocator, address_prop);
 
-    try tree.declarations.append(ast.Declaration{ .class_decl = class });
+    try tree.declarations.append(allocator, ast.Declaration{ .class_decl = class });
 
     try validator.validate(&tree);
     try std.testing.expect(validator.hasErrors());
@@ -564,9 +564,9 @@ test "Validator: Detect undefined function in test" {
 
     // Create a test that references undefined function
     var test_decl = ast.TestDecl.init(allocator, "TestGreet", .{ .line = 1, .column = 1 });
-    try test_decl.functions.append("UndefinedFunction");
+    try test_decl.functions.append(allocator, "UndefinedFunction");
 
-    try tree.declarations.append(ast.Declaration{ .test_decl = test_decl });
+    try tree.declarations.append(allocator, ast.Declaration{ .test_decl = test_decl });
 
     try validator.validate(&tree);
     try std.testing.expect(validator.hasErrors());
@@ -587,11 +587,11 @@ test "Validator: Detect circular dependency" {
     const b_prop = ast.Property{
         .name = "b",
         .type_expr = b_type,
-        .attributes = std.ArrayList(ast.Attribute).init(allocator),
+        .attributes = std.ArrayList(ast.Attribute){},
         .docstring = null,
         .location = .{ .line = 2, .column = 3 },
     };
-    try class_a.properties.append(b_prop);
+    try class_a.properties.append(allocator, b_prop);
 
     var class_b = ast.ClassDecl.init(allocator, "B", .{ .line = 5, .column = 1 });
     const a_type = try allocator.create(ast.TypeExpr);
@@ -599,14 +599,14 @@ test "Validator: Detect circular dependency" {
     const a_prop = ast.Property{
         .name = "a",
         .type_expr = a_type,
-        .attributes = std.ArrayList(ast.Attribute).init(allocator),
+        .attributes = std.ArrayList(ast.Attribute){},
         .docstring = null,
         .location = .{ .line = 6, .column = 3 },
     };
-    try class_b.properties.append(a_prop);
+    try class_b.properties.append(allocator, a_prop);
 
-    try tree.declarations.append(ast.Declaration{ .class_decl = class_a });
-    try tree.declarations.append(ast.Declaration{ .class_decl = class_b });
+    try tree.declarations.append(allocator, ast.Declaration{ .class_decl = class_a });
+    try tree.declarations.append(allocator, ast.Declaration{ .class_decl = class_b });
 
     try validator.validate(&tree);
     try std.testing.expect(validator.hasErrors());
@@ -622,7 +622,7 @@ test "Validator: Complex types are valid" {
 
     // Register Address class first
     const addr_class = ast.ClassDecl.init(allocator, "Address", .{ .line = 1, .column = 1 });
-    try tree.declarations.append(ast.Declaration{ .class_decl = addr_class });
+    try tree.declarations.append(allocator, ast.Declaration{ .class_decl = addr_class });
 
     // Create Person class with complex types
     var class = ast.ClassDecl.init(allocator, "Person", .{ .line = 5, .column = 1 });
@@ -636,13 +636,13 @@ test "Validator: Complex types are valid" {
     const addresses_prop = ast.Property{
         .name = "addresses",
         .type_expr = array_type,
-        .attributes = std.ArrayList(ast.Attribute).init(allocator),
+        .attributes = std.ArrayList(ast.Attribute){},
         .docstring = null,
         .location = .{ .line = 6, .column = 3 },
     };
-    try class.properties.append(addresses_prop);
+    try class.properties.append(allocator, addresses_prop);
 
-    try tree.declarations.append(ast.Declaration{ .class_decl = class });
+    try tree.declarations.append(allocator, ast.Declaration{ .class_decl = class });
 
     try validator.validate(&tree);
     try std.testing.expect(!validator.hasErrors());

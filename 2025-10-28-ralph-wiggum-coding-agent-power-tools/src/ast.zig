@@ -14,7 +14,7 @@ pub const Ast = struct {
 
     pub fn init(allocator: std.mem.Allocator) Ast {
         return Ast{
-            .declarations = std.ArrayList(Declaration).init(allocator),
+            .declarations = std.ArrayList(Declaration){},
             .allocator = allocator,
         };
     }
@@ -23,7 +23,7 @@ pub const Ast = struct {
         for (self.declarations.items) |*decl| {
             decl.deinit(self.allocator);
         }
-        self.declarations.deinit();
+        self.declarations.deinit(self.allocator);
     }
 };
 
@@ -73,10 +73,11 @@ pub const ClassDecl = struct {
     location: Location,
 
     pub fn init(allocator: std.mem.Allocator, name: []const u8, location: Location) ClassDecl {
+        _ = allocator;
         return ClassDecl{
             .name = name,
-            .properties = std.ArrayList(Property).init(allocator),
-            .attributes = std.ArrayList(Attribute).init(allocator),
+            .properties = std.ArrayList(Property){},
+            .attributes = std.ArrayList(Attribute){},
             .docstring = null,
             .location = location,
         };
@@ -86,11 +87,11 @@ pub const ClassDecl = struct {
         for (self.properties.items) |*prop| {
             prop.deinit(allocator);
         }
-        self.properties.deinit();
+        self.properties.deinit(allocator);
         for (self.attributes.items) |*attr| {
             attr.deinit(allocator);
         }
-        self.attributes.deinit();
+        self.attributes.deinit(allocator);
     }
 };
 
@@ -103,10 +104,11 @@ pub const EnumDecl = struct {
     location: Location,
 
     pub fn init(allocator: std.mem.Allocator, name: []const u8, location: Location) EnumDecl {
+        _ = allocator;
         return EnumDecl{
             .name = name,
-            .values = std.ArrayList(EnumValue).init(allocator),
-            .attributes = std.ArrayList(Attribute).init(allocator),
+            .values = std.ArrayList(EnumValue){},
+            .attributes = std.ArrayList(Attribute){},
             .docstring = null,
             .location = location,
         };
@@ -116,11 +118,11 @@ pub const EnumDecl = struct {
         for (self.values.items) |*val| {
             val.deinit(allocator);
         }
-        self.values.deinit();
+        self.values.deinit(allocator);
         for (self.attributes.items) |*attr| {
             attr.deinit(allocator);
         }
-        self.attributes.deinit();
+        self.attributes.deinit(allocator);
     }
 };
 
@@ -136,13 +138,14 @@ pub const FunctionDecl = struct {
     location: Location,
 
     pub fn init(allocator: std.mem.Allocator, name: []const u8, location: Location) FunctionDecl {
+        _ = allocator;
         return FunctionDecl{
             .name = name,
-            .parameters = std.ArrayList(Parameter).init(allocator),
+            .parameters = std.ArrayList(Parameter){},
             .return_type = undefined, // Must be set by parser
             .client = null,
             .prompt = null,
-            .attributes = std.ArrayList(Attribute).init(allocator),
+            .attributes = std.ArrayList(Attribute){},
             .docstring = null,
             .location = location,
         };
@@ -152,13 +155,13 @@ pub const FunctionDecl = struct {
         for (self.parameters.items) |*param| {
             param.deinit(allocator);
         }
-        self.parameters.deinit();
+        self.parameters.deinit(allocator);
         self.return_type.deinit(allocator);
         allocator.destroy(self.return_type);
         for (self.attributes.items) |*attr| {
             attr.deinit(allocator);
         }
-        self.attributes.deinit();
+        self.attributes.deinit(allocator);
     }
 };
 
@@ -201,15 +204,15 @@ pub const TestDecl = struct {
     pub fn init(allocator: std.mem.Allocator, name: []const u8, location: Location) TestDecl {
         return TestDecl{
             .name = name,
-            .functions = std.ArrayList([]const u8).init(allocator),
+            .functions = std.ArrayList([]const u8){},
             .args = std.StringHashMap(Value).init(allocator),
-            .attributes = std.ArrayList(Attribute).init(allocator),
+            .attributes = std.ArrayList(Attribute){},
             .location = location,
         };
     }
 
     pub fn deinit(self: *TestDecl, allocator: std.mem.Allocator) void {
-        self.functions.deinit();
+        self.functions.deinit(allocator);
         var it = self.args.iterator();
         while (it.next()) |entry| {
             var value = entry.value_ptr.*;
@@ -219,7 +222,7 @@ pub const TestDecl = struct {
         for (self.attributes.items) |*attr| {
             attr.deinit(allocator);
         }
-        self.attributes.deinit();
+        self.attributes.deinit(allocator);
     }
 };
 
@@ -255,9 +258,10 @@ pub const TemplateStringDecl = struct {
     location: Location,
 
     pub fn init(allocator: std.mem.Allocator, name: []const u8, location: Location) TemplateStringDecl {
+        _ = allocator;
         return TemplateStringDecl{
             .name = name,
-            .parameters = std.ArrayList(Parameter).init(allocator),
+            .parameters = std.ArrayList(Parameter){},
             .template = "",
             .location = location,
         };
@@ -267,7 +271,7 @@ pub const TemplateStringDecl = struct {
         for (self.parameters.items) |*param| {
             param.deinit(allocator);
         }
-        self.parameters.deinit();
+        self.parameters.deinit(allocator);
     }
 };
 
@@ -315,11 +319,11 @@ pub const TypeExpr = union(TypeExprTag) {
                 allocator.destroy(inner);
             },
             .union_type => |*u| {
-                for (u.types.items) |*t| {
-                    t.deinit(allocator);
+                for (u.types.items) |t| {
+                    t.*.deinit(allocator);
                     allocator.destroy(t);
                 }
-                u.types.deinit();
+                u.types.deinit(allocator);
             },
             .map => |*m| {
                 m.key_type.deinit(allocator);
@@ -379,7 +383,7 @@ pub const Property = struct {
         for (self.attributes.items) |*attr| {
             attr.deinit(allocator);
         }
-        self.attributes.deinit();
+        self.attributes.deinit(allocator);
     }
 };
 
@@ -394,7 +398,7 @@ pub const EnumValue = struct {
         for (self.attributes.items) |*attr| {
             attr.deinit(allocator);
         }
-        self.attributes.deinit();
+        self.attributes.deinit(allocator);
     }
 };
 
@@ -421,7 +425,7 @@ pub const Attribute = struct {
         for (self.args.items) |*arg| {
             arg.deinit(allocator);
         }
-        self.args.deinit();
+        self.args.deinit(allocator);
     }
 };
 
@@ -454,7 +458,7 @@ pub const Value = union(ValueTag) {
                 for (arr.items) |*item| {
                     item.deinit(allocator);
                 }
-                arr.deinit();
+                arr.deinit(allocator);
             },
             .object => |*obj| {
                 var it = obj.iterator();
