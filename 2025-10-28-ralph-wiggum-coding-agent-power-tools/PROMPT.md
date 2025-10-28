@@ -5,7 +5,7 @@ the specifications of the BAML language.
 
 0b. familiarize yourself with the source code in this directory
 
-1. read @IMPLEMENTATION_PLAN.md and implement the single highest priority feature using up to 50 subagents
+1. read @IMPLEMENTATION_PLAN.md and implement the single highest priority TASK using up to 50 subagents
 
 2. ensure all tests and linting passes, then update IMPLEMENTATION_PLAN.md with your progress
 

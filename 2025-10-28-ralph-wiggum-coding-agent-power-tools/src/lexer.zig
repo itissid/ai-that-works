@@ -728,12 +728,12 @@ pub const Lexer = struct {
 
     /// Tokenize the entire source and return a list of tokens
     pub fn tokenize(self: *Lexer, allocator: std.mem.Allocator) !std.ArrayList(Token) {
-        var tokens = std.ArrayList(Token).init(allocator);
-        errdefer tokens.deinit();
+        var tokens: std.ArrayList(Token) = .{};
+        errdefer tokens.deinit(allocator);
 
         while (true) {
             const token = self.scanToken();
-            try tokens.append(token);
+            try tokens.append(allocator, token);
             if (token.tag == .eof) {
                 break;
             }
@@ -1522,7 +1522,7 @@ test "tokenize - empty source" {
     const source = "";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     try std.testing.expectEqual(@as(usize, 1), tokens.items.len);
     try std.testing.expectEqual(TokenTag.eof, tokens.items[0].tag);
@@ -1532,7 +1532,7 @@ test "tokenize - source with only whitespace" {
     const source = "   \t  \t   ";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     try std.testing.expectEqual(@as(usize, 1), tokens.items.len);
     try std.testing.expectEqual(TokenTag.eof, tokens.items[0].tag);
@@ -1542,7 +1542,7 @@ test "tokenize - simple BAML snippet" {
     const source = "class MyClass { name string }";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     const expected_tags = [_]TokenTag{
         .keyword_class,
@@ -1564,7 +1564,7 @@ test "tokenize - function declaration snippet" {
     const source = "function GetData(id: int) -> string";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     const expected_tags = [_]TokenTag{
         .keyword_function,
@@ -1590,7 +1590,7 @@ test "tokenize - mixed symbols and identifiers" {
     const source = "@prompt(var: string | int)";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     const expected_tags = [_]TokenTag{
         .at,
@@ -1615,7 +1615,7 @@ test "tokenize - array type syntax" {
     const source = "items: string[]";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     const expected_tags = [_]TokenTag{
         .identifier,
@@ -1636,7 +1636,7 @@ test "tokenize - optional and map types" {
     const source = "field?: map<string, int>";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     const expected_tags = [_]TokenTag{
         .identifier,
@@ -1661,7 +1661,7 @@ test "tokenize - with newlines" {
     const source = "class Foo\n{\nname string\n}";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     const expected_tags = [_]TokenTag{
         .keyword_class,
@@ -1686,7 +1686,7 @@ test "tokenize - preserves line and column information" {
     const source = "a\nb";
     var lexer = Lexer.init(source);
     var tokens = try lexer.tokenize(std.testing.allocator);
-    defer tokens.deinit();
+    defer tokens.deinit(std.testing.allocator);
 
     try std.testing.expectEqual(@as(usize, 4), tokens.items.len);
     
