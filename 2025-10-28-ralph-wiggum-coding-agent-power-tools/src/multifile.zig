@@ -49,6 +49,18 @@ pub const MultiFileProject = struct {
         try self.mergeDeclarations();
     }
 
+    /// Load multiple individual .baml files and merge them
+    pub fn loadFiles(self: *MultiFileProject, file_paths: []const []const u8) !void {
+        for (file_paths) |file_path| {
+            // Duplicate the path string since parseAndAddFile takes ownership
+            const path_copy = try self.allocator.dupe(u8, file_path);
+            errdefer self.allocator.free(path_copy);
+
+            try self.parseAndAddFile(path_copy);
+        }
+        try self.mergeDeclarations();
+    }
+
     /// Recursively scan directory for .baml files
     fn scanDirectoryRecursive(self: *MultiFileProject, dir: std.fs.Dir, base_path: []const u8) !void {
         var iter = dir.iterate();

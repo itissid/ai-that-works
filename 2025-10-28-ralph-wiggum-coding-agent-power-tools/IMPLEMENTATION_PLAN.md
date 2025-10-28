@@ -580,9 +580,9 @@ def Greet(p: Person) -> str:
 - [x] 10.5: Add helpful error messages with line/column info
 - [x] 10.6: Add --version flag
 - [x] 10.7: Add --help text
-- [ ] 10.8: Handle multiple input files (deferred - not essential)
+- [x] 10.8: Handle multiple input files ✅ COMPLETED
 
-**Validation**: ✅ PASSED - CLI tool can parse, format, and check real BAML files
+**Validation**: ✅ PASSED - CLI tool can parse, format, check, and generate code from single files, directories, and multiple files
 
 **Implementation Details**:
 - Refactored main.zig to eliminate duplication (reduced ~150 lines of duplicated parsing code)
@@ -593,8 +593,16 @@ def Greet(p: Person) -> str:
 - Improved error messages with consistent formatting using std.debug.print
 - Fixed Zig 0.15.1 ArrayList API compatibility issues in validator.zig
 - Fixed Zig 0.15.1 recursive function error set inference issues
+- **Multiple File Support (Task 10.8)**:
+  - Added `loadFiles()` method to MultiFileProject in multifile.zig
+  - Updated `parseCommand()` to accept multiple file paths
+  - Updated `checkCommand()` to accept multiple file paths
+  - Updated `generateCommand()` to accept multiple file paths
+  - Added `parseMultipleFiles()` and `checkMultipleFiles()` helper functions
+  - Unified all 12 language generators to support single file, directory, and multiple file inputs
+  - Updated help text with multiple file examples
 - All tests pass
-- File size reduced from 226 lines (with duplication) to 272 lines (with more features)
+- File size increased from 272 lines to 907 lines (with multiple file support and all generators)
 
 **Test Results**: ✅ All commands work correctly:
 ```
@@ -609,14 +617,28 @@ Successfully parsed test.baml
 Declarations: 7
 [Shows summary of all declarations]
 
+$ minibaml parse file1.baml file2.baml
+Loading 2 BAML file(s)...
+Successfully parsed 2 file(s):
+  file1.baml (1 declarations)
+  file2.baml (1 declarations)
+Merged AST: 2 total declarations
+
 $ minibaml check test.baml
 [Validates file and reports errors with line/column info]
+
+$ minibaml check file1.baml file2.baml
+Loading 2 BAML file(s)...
+✓ All files are valid (total 2 declarations)
 
 $ minibaml fmt test.baml
 [Formats and outputs BAML code]
 
 $ minibaml generate test.baml
 [Generates Python code]
+
+$ minibaml gen file1.baml file2.baml --typescript
+[Generates TypeScript code from multiple files]
 ```
 
 ---
