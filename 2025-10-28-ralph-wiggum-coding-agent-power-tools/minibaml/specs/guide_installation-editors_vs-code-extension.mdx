@@ -1,0 +1,77 @@
+# VSCode Extension
+
+We provide a BAML VSCode extension:     [https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension](https://marketplace.visualstudio.com/items?itemName=Boundary.baml-extension)
+
+| Feature                                                   | Supported |
+| --------------------------------------------------------- | --------- |
+| Syntax highlighting for BAML files                        | ✅         |
+| Code snippets for BAML                                    | ✅         |
+| LLM playground for testing BAML functions                 | ✅         |
+| Jump to definition for BAML files                         | ✅         |
+| Jump to definition between Python/TS files and BAML files | ✅         |
+| Auto generate `baml_client` on save                       | ✅         |
+| BAML formatter                                            | ❌         |
+
+## Opening BAML Playground
+
+Once you open a `.baml` file, in VSCode, you should see a small button over every BAML function: `Open Playground`.
+
+<img src="file:73602d0f-26c4-4f18-a161-e3c6b006e9fe" />
+
+Or type `BAML Playground` in the VSCode Command Bar (`CMD + Shift + P` or `CTRL + Shift + P`) to open the playground.
+
+<img src="file:06d990e4-8865-411e-81c0-5e3de491b12f" />
+
+## Setting Env Variables
+
+Click on the `Settings` button in top right of the playground and set the environment variables.
+
+It should have an indicator if any unset variables are there.
+
+<img src="file:8486b1de-8022-4241-8b50-53a4e35d7878" />
+
+The playground should persist the environment variables between closing and opening VSCode.
+
+<Tip>
+  You can set environment variables lazily. If anything is unset you'll get an error when you run the function.
+</Tip>
+
+<Info>
+  Environment Variables are stored in VSCode's local storage! We don't save any additional data to disk, or send them across the network.
+</Info>
+
+## Running Tests
+
+* Click on `Run tests below` in the right pane of the playground to run all tests.
+
+<img src="file:6cfe2dee-e3d5-43c7-bd70-46c51fe6a009" />
+
+* Press the `▶️` button next to an individual test case to run that just that test case.
+
+## Reviewing Tests
+
+* Click the numbers on the left to switch between test results.
+
+* Press the `▶️` button next to the drop-down to re-run your tests.
+
+<img src="file:499e57be-63f4-4c43-b5d9-7b8ccce9ed75" />
+
+<Tip>
+  * Toggle the `🚀` to enable running the tests in parallel.
+</Tip>
+
+## Switching Functions
+
+The playground will automatically switch to the function you're currently editing.
+
+To manually change it, click on the current function name in the playground (next to the dropdown) and search for your desired function.
+
+## Switching Test Cases
+
+You can switch between test cases by selecting it in the results pane or the test selection pane on the right.
+
+<img src="file:97184d7e-998c-43e1-87c8-614a34016f78" />
+
+You can customize what you see in the Table View, or switch to the Detailed view:
+
+<img src="file:452d93f9-f828-41f6-a244-d409bff58042" />

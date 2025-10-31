@@ -1,0 +1,340 @@
+# openai
+
+The `openai` provider supports the OpenAI `/chat` endpoint, setting OpenAI-specific
+default configuration options.
+
+<Tip>
+  For Azure, we recommend using [`azure-openai`](azure) instead.
+
+  For all other OpenAI-compatible API providers, such as Groq, HuggingFace,
+  Ollama, OpenRouter, Together AI, and others, we recommend using
+  [`openai-generic`](openai-generic) instead.
+</Tip>
+
+Example:
+
+```baml BAML
+client<llm> MyClient {
+  provider "openai"
+  options {
+    api_key env.MY_OPENAI_KEY
+    model "gpt-5-mini"
+    temperature 0.1
+  }
+}
+```
+
+## BAML-specific request `options`
+
+These unique parameters (aka `options`) are modify the API request sent to the provider.
+
+You can use this to modify the `headers` and `base_url` for example.
+
+<ParamField path="api_key" type="string" default="env.OPENAI_API_KEY">
+  Will be used to build the `Authorization` header, like so: `Authorization: Bearer $api_key`
+
+  **Default: `env.OPENAI_API_KEY`**
+</ParamField>
+
+<ParamField path="base_url" type="string">
+  The base URL for the API.
+
+  **Default: `https://api.openai.com/v1`**
+</ParamField>
+
+<ParamField path="headers" type="object">
+  Additional headers to send with the request.
+
+  Example:
+
+  ```baml BAML
+  client<llm> MyClient {
+    provider openai
+    options {
+      api_key env.MY_OPENAI_KEY
+      model "gpt-5-mini"
+      headers {
+        "X-My-Header" "my-value"
+      }
+    }
+  }
+  ```
+</ParamField>
+
+<ParamField path="default_role" type="string">
+  The role to use if the role is not in the allowed\_roles. **Default: `"user"` usually, but some models like OpenAI's `gpt-5` will use `"system"`**
+
+  Picked the first role in `allowed_roles` if not "user", otherwise "user".
+</ParamField>
+
+<ParamField path="allowed_roles" type="string[]">
+  Which roles should we forward to the API? **Default: `["system", "user", "assistant"]` usually, but some models like OpenAI's `o1-mini` will use `["user", "assistant"]`**
+
+  When building prompts, any role not in this list will be set to the `default_role`.
+</ParamField>
+
+<ParamField path="remap_roles" type="map<string, string>">
+  A mapping to transform role names before sending to the API. **Default: `{}`** (no remapping)
+
+  For google-ai provider, the default is: `{ "assistant": "model" }`
+
+  This allows you to use standard role names in your prompts (like "user", "assistant", "system") but send different role names to the API. The remapping happens after role validation and default role assignment.
+
+  **Example:**
+
+  ```json
+  {
+    "user": "human",
+    "assistant": "ai",
+  }
+  ```
+
+  With this configuration, `{{ _.role("user") }}` in your prompt will result in a message with role "human" being sent to the API.
+</ParamField>
+
+<ParamField path="allowed_role_metadata" type="string[]">
+  Which role metadata should we forward to the API? **Default: `[]`**
+
+  For example you can set this to `["foo", "bar"]` to forward the cache policy to the API.
+
+  If you do not set `allowed_role_metadata`, we will not forward any role metadata to the API even if it is set in the prompt.
+
+  Then in your prompt you can use something like:
+
+  ```baml
+  client<llm> Foo {
+    provider openai
+    options {
+      allowed_role_metadata: ["foo", "bar"]
+    }
+  }
+
+  client<llm> FooWithout {
+    provider openai
+    options {
+    }
+  }
+  template_string Foo() #"
+    {{ _.role('user', foo={"type": "ephemeral"}, bar="1", cat=True) }}
+    This will be have foo and bar, but not cat metadata. But only for Foo, not FooWithout.
+    {{ _.role('user') }}
+    This will have none of the role metadata for Foo or FooWithout.
+  "#
+  ```
+
+  You can use the playground to see the raw curl request to see what is being sent to the API.
+</ParamField>
+
+<ParamField path="supports_streaming" type="boolean">
+  Whether the internal LLM client should use the streaming API. **Default: `<auto>`**
+
+  | Model        | Supports Streaming |
+  | ------------ | ------------------ |
+  | `o1-preview` | false              |
+  | `o1-mini`    | false              |
+  | `o1-*`       | false              |
+  | `gpt-5`      | true               |
+  | `gpt-5-mini` | true               |
+  | `*`          | true               |
+
+  Then in your prompt you can use something like:
+
+  ```baml
+  client<llm> MyClientWithoutStreaming {
+    provider openai
+    options {
+      model gpt-5
+      api_key env.OPENAI_API_KEY
+      supports_streaming false 
+    }
+  }
+
+  function MyFunction() -> string {
+    client MyClientWithoutStreaming
+    prompt #"Write a short story"#
+  }
+  ```
+
+  ```python
+  # This will be streamed from your python code perspective, 
+  # but under the hood it will call the non-streaming HTTP API
+  # and then return a streamable response with a single event
+  b.stream.MyFunction()
+
+  # This will work exactly the same as before
+  b.MyFunction()
+  ```
+</ParamField>
+
+<ParamField path="finish_reason_allow_list" type="string[]">
+  Which finish reasons are allowed? **Default: `null`**
+
+  <Warning>
+    version 0.73.0 onwards: This is case insensitive.
+  </Warning>
+
+  Will raise a `BamlClientFinishReasonError` if the finish reason is not in the allow list. See [Exceptions](/guide/baml-basics/error-handling#bamlclientfinishreasonerror) for more details.
+
+  Note, only one of `finish_reason_allow_list` or `finish_reason_deny_list` can be set.
+
+  For example you can set this to `["stop"]` to only allow the stop finish reason, all other finish reasons (e.g. `length`) will treated as failures that PREVENT fallbacks and retries (similar to parsing errors).
+
+  Then in your code you can use something like:
+
+  ```baml
+  client<llm> MyClient {
+    provider "openai"
+    options {
+      model "gpt-5-mini"
+      api_key env.OPENAI_API_KEY
+      // Finish reason allow list will only allow the stop finish reason
+      finish_reason_allow_list ["stop"]
+    }
+  }
+  ```
+</ParamField>
+
+<ParamField path="finish_reason_deny_list" type="string[]">
+  Which finish reasons are denied? **Default: `null`**
+
+  <Warning>
+    version 0.73.0 onwards: This is case insensitive.
+  </Warning>
+
+  Will raise a `BamlClientFinishReasonError` if the finish reason is in the deny list. See [Exceptions](/guide/baml-basics/error-handling#bamlclientfinishreasonerror) for more details.
+
+  Note, only one of `finish_reason_allow_list` or `finish_reason_deny_list` can be set.
+
+  For example you can set this to `["length"]` to stop the function from continuing if the finish reason is `length`. (e.g. LLM was cut off because it was too long).
+
+  Then in your code you can use something like:
+
+  ```baml
+  client<llm> MyClient {
+    provider "openai"
+    options {
+      model "gpt-5-mini"
+      api_key env.OPENAI_API_KEY
+      // Finish reason deny list will allow all finish reasons except length
+      finish_reason_deny_list ["length"]
+    }
+  }
+  ```
+</ParamField>
+
+<ParamField path="client_response_type" type="openai | anthropic | google | vertex" default="openai">
+  <Warning>
+    Please let [us know on Discord](https://www.boundaryml.com/discord) if you have this use case! This is in alpha and we'd like to make sure we continue to cover your use cases.
+  </Warning>
+
+  The type of response to return from the client.
+
+  Sometimes you may expect a different response format than the provider default.
+  For example, using Azure you may be proxying to an endpoint that returns a different format than the OpenAI default.
+
+  **Default: `openai`**
+</ParamField>
+
+### `media_url_handler`
+
+Controls how media URLs are processed before sending to the provider. This allows you to override the default behavior for handling images, audio, PDFs, and videos.
+
+```baml
+client<llm> MyClient {
+  provider openai
+  options {
+    media_url_handler {
+      image "send_base64"                    // Options: send_base64 | send_url | send_url_add_mime_type | send_base64_unless_google_url
+      audio "send_url"
+      pdf "send_url_add_mime_type"
+      video "send_url"
+    }
+  }
+}
+```
+
+#### Options
+
+Each media type can be configured with one of these modes:
+
+* **`send_base64`** - Always download URLs and convert to base64 data URIs
+* **`send_url`** - Pass URLs through unchanged to the provider
+* **`send_url_add_mime_type`** - Ensure MIME type is present (may require downloading to detect)
+* **`send_base64_unless_google_url`** - Only process non-gs\:// URLs (keep Google Cloud Storage URLs as-is)
+
+#### Provider Defaults
+
+If not specified, each provider uses these defaults:
+
+| Provider     | Image                           | Audio                    | PDF           | Video      |
+| ------------ | ------------------------------- | ------------------------ | ------------- | ---------- |
+| OpenAI       | `send_url`                      | `send_base64`            | `send_url`    | `send_url` |
+| Anthropic    | `send_url`                      | `send_url`               | `send_base64` | `send_url` |
+| Google AI    | `send_base64_unless_google_url` | `send_url`               | `send_url`    | `send_url` |
+| Vertex AI    | `send_url_add_mime_type`        | `send_url_add_mime_type` | `send_url`    | `send_url` |
+| AWS Bedrock  | `send_base64`                   | `send_base64`            | `send_base64` | `send_url` |
+| Azure OpenAI | `send_url`                      | `send_base64`            | `send_url`    | `send_url` |
+
+#### When to Use
+
+* **Use `send_base64`** when your provider doesn't support external URLs and you need to embed media content
+* **Use `send_url`** when your provider handles URL fetching and you want to avoid the overhead of base64 conversion
+* **Use `send_url_add_mime_type`** when your provider requires MIME type information (e.g., Vertex AI)
+* **Use `send_base64_unless_google_url`** when working with Google Cloud Storage and want to preserve gs\:// URLs
+
+<Warning>
+  URL fetching happens at request time and may add latency. Consider caching or pre-converting frequently used media when using `send_base64` mode.
+</Warning>
+
+## Provider request parameters
+
+These are other parameters that are passed through to the provider, without modification by BAML. For example if the request has a `temperature` field, you can define it in the client here so every call has that set.
+
+<Warning>
+  For reasoning models (like `o1` or `o1-mini`), you must use `max_completion_tokens` instead of `max_tokens`.
+  Please set `max_tokens` to `null` in order to get this to work.
+
+  See the [OpenAI API documentation](https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_completion_tokens) and [OpenAI Reasoning Docs](https://platform.openai.com/docs/guides/reasoning#controlling-costs) for more details about token handling.
+
+  Example:
+
+  ```baml BAML
+  client<llm> OpenAIo1 {
+    provider openai
+    options {
+      model "o1-mini"
+      max_tokens null
+    }
+  }
+  ```
+</Warning>
+
+Consult the specific provider's documentation for more information.
+
+<ParamField path="messages" type="DO NOT USE">
+  BAML will auto construct this field for you from the prompt
+</ParamField>
+
+<ParamField path="stream" type="DO NOT USE">
+  BAML will auto construct this field for you based on how you call the client in your code
+</ParamField>
+
+<ParamField path="model" type="string">
+  The model to use.
+
+  | Model            | Use Case                                | Context    | Key Features                           |
+  | ---------------- | --------------------------------------- | ---------- | -------------------------------------- |
+  | **gpt-5**        | Coding, agentic tasks, expert reasoning | 400K total | Built-in reasoning, 45% fewer errors   |
+  | **gpt-5-mini**   | Well-defined tasks, cost-efficient      | 400K total | Faster alternative to GPT-5            |
+  | **gpt-5-nano**   | Lightweight tasks, maximum efficiency   | 400K total | Most cost-effective GPT-5 variant      |
+  | **gpt-4.1**      | Large-scale technical work              | 1M         | Enhanced coding, instruction following |
+  | **gpt-4.1-mini** | Balanced performance and cost           | 1M         | Replaces GPT-4o mini                   |
+  | **gpt-4.1-nano** | Lightweight variant                     | 1M         | Budget-friendly option                 |
+  | **gpt-4o**       | General purpose, multimodal             | 200K       | Updated knowledge cutoff June 2024     |
+
+  Note: While GPT-5 is available through this provider, we recommend using the `openai-responses` provider for GPT-5 models to access enhanced response formatting features.
+
+  See openai docs for the list of openai models. You can pass any model name you wish, we will not check if it exists.
+</ParamField>
+
+For all other options, see the [official OpenAI API documentation](https://platform.openai.com/docs/api-reference/chat/create).
