@@ -1,0 +1,11 @@
+[project]
+name = "2025-11-11-dates-and-times"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "baml-py>=0.213.0",
+    "croniter>=6.0.0",
+    "pytz>=2025.2",
+]

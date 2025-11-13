@@ -14,7 +14,7 @@ description: |
 
   Come ready to dive deep into the architecture that powers complex interactive agents!
 event_link: https://luma.com/event-driven-agents
-eventDate: 2025-11-05T18:00:00.000Z
+eventDate: 2025-11-04T18:00:00.000Z
 media:
   url: null
   type: video/youtube
@@ -24,5 +24,7 @@ season: 2
 episode: 30
 event_type: episode
 ---
+
+
 
 
