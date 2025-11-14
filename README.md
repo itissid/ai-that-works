@@ -12,15 +12,22 @@
 
 <div align="center">
 <h2>🦄 <strong>Next Episode</strong></h2>
-<h3><strong>Dates, Times, and LLMs</strong></h3>
-<p><strong>Tuesday, November 11, 2025 at 10 AM PST</strong></p>
-<p><em>How do you make an LLM amazing at dates—relative ranges, timezone juggling, and calendar math? Let's talk dates, times, and all that goodness.</em></p>
+<h3><strong>Building an Animation Pipeline</strong></h3>
+<p><strong>Tuesday, November 18, 2025 at 10 AM PST</strong></p>
+<p><em>We do a lot of work with Excalidraw, and this session shows the AI-first workflow
+for turning any sketch into a finished animation.
+We'll blend Claude Code with custom TypeScript scripts, wire up interactive slash commands,
+and add browser automation to existing OSS tools to export polished WebM assets.
+</em></p>
 
-<a href="https://luma.com/xqezrl4g" target="_blank">
+<a href="https://luma.com/cc-animation-pipeline" target="_blank">
 <img src="https://img.shields.io/badge/🦄_REGISTER_NOW-Join_Live_Session-ff4444?style=for-the-badge&logo=calendar" alt="Register Now">
 </a>
 
 </div>
+
+---
+
 
 ---
 
@@ -97,13 +104,31 @@ Before joining, get familiar with our toolkit:
         <div style="margin-bottom: 2px;">
           <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">UPCOMING</span>
         </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2025-11-18</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#32</strong>: Building an Animation Pipeline</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="./2025-11-18-building-an-animation-pipeline">code</a> • <a href="https://luma.com/cc-animation-pipeline">register</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We do a lot of work with Excalidraw, and this session shows the AI-first workflow
+for turning any sketch into a finished animation.
+We'll blend Claude Code with custom TypeScript scripts, wire up interactive slash commands,
+and add browser automation to existing OSS tools to export polished WebM assets.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
         <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2025-11-11</div>
         <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#31</strong>: Dates, Times, and LLMs</div>
         <div style="font-size: 13px; color: #666;">
-          <a href="./2025-11-11-dates-and-times">code</a> • <a href="https://luma.com/xqezrl4g">register</a>
+          <a href="./2025-11-11-dates-and-times">code</a>
         </div>
       </div>
-    </td><td><div style="padding: 8px 0; line-height: 1.5;">How do you make an LLM amazing at dates—relative ranges, timezone juggling, and calendar math? We'll unpack date normalization pipelines, prompting tricks for temporal reasoning, and guardrails that keep scheduling agents grounded.</div></td></tr>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">How do you make an LLM amazing at dates? Relative dates, absolute dates, timezones, all that madness.
+Let's talk dates, times, and all that goodness.
+</div></td></tr>
 <tr><td>
       <div style="padding: 8px 0;">
         <div style="margin-bottom: 2px;">
@@ -115,7 +140,12 @@ Before joining, get familiar with our toolkit:
           <a href="https://www.youtube.com/watch?v=_VB9TT1Vus4">watch</a> • <a href="./2025-11-05-event-driven-agents">code</a>
         </div>
       </div>
-    </td><td><div style="padding: 8px 0; line-height: 1.5;">Treat agent interactions as an event log, not mutable state. Modeling user inputs, LLM chunks, tool calls, interrupts, and UI actions as a single event stream lets you project state for the UI, agent loop, and persistence without drift. We walk through effect-ts patterns for subscribing to the bus, deriving “current” state via pure projections, and deciding when to persist or replay events—plus trade-offs for queuing, cancelation, and tool orchestration in complex agent UX.</div></td></tr>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Key takeaway: treat agent interactions as an event log, not mutable state. Modeling user inputs, LLM chunks,
+tool calls, interrupts, and UI actions as a single event stream lets you project state for the UI, agent loop,
+and persistence without drift. We walk through effect-ts patterns for subscribing to the bus, deriving “current”
+state via pure projections, and deciding when to persist or replay events—plus trade-offs for queuing, cancelation,
+and tool orchestration in complex agent UX.
+</div></td></tr>
 <tr><td>
       <div style="padding: 8px 0;">
         <div style="margin-bottom: 2px;">
@@ -127,7 +157,11 @@ Before joining, get familiar with our toolkit:
           <a href="https://www.youtube.com/watch?v=fOPvAPdqgPo">watch</a> • <a href="./2025-10-28-ralph-wiggum-coding-agent-power-tools">code</a>
         </div>
       </div>
-    </td><td><div style="padding: 8px 0; line-height: 1.5;">We've talked a lot about how to use context engineering to get more out of coding agents. In this week's episode, we're going to dive deep on the Ralph Wiggum Technique and why this totally different approach to coding agents can change the way you code. We'll explore using ralph for Greenfield projects, Refactoring projects, Generating specifications. Surprise surprise, the answer is better context engineering.</div></td></tr>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We've talked a lot about how to use context engineering to get more out of coding agents. In this episode,
+we dive deep on the Ralph Wiggum technique and why this different approach can reshape your coding workflow.
+We explore how Ralph handles greenfield work, refactors, and spec generation—surprise: it's all about
+higher-quality context engineering.
+</div></td></tr>
 <tr><td>
       <div style="padding: 8px 0;">
         <div style="margin-bottom: 2px;">

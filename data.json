@@ -1,6 +1,26 @@
 {
   "episodes": [
     {
+      "folder": "2025-11-18-building-an-animation-pipeline",
+      "guid": "aitw-032",
+      "title": "Building an Animation Pipeline",
+      "description": "We do a lot of work with Excalidraw, and this session shows the AI-first workflow\nfor turning any sketch into a finished animation.\nWe'll blend Claude Code with custom TypeScript scripts, wire up interactive slash commands,\nand add browser automation to existing OSS tools to export polished WebM assets.\n",
+      "event_link": "https://luma.com/cc-animation-pipeline",
+      "eventDate": "2025-11-18T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": null,
+        "type": "video/youtube"
+      },
+      "links": {
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2025-11-18-building-an-animation-pipeline"
+      },
+      "season": 2,
+      "episode": 32,
+      "isPast": false,
+      "isWorkshop": false
+    },
+    {
       "folder": "2025-11-11-dates-and-times",
       "guid": "aitw-031",
       "title": "Dates, Times, and LLMs",
@@ -9,7 +29,7 @@
       "eventDate": "2025-11-11T18:00:00Z",
       "event_type": "episode",
       "media": {
-        "url": null,
+        "url": "https://www.youtube.com/watch?v=l7txtbgCFGU",
         "type": "video/youtube"
       },
       "links": {
@@ -45,7 +65,7 @@
       "folder": "2025-10-28-ralph-wiggum-coding-agent-power-tools",
       "guid": "aitw-029",
       "title": "Ralph Wiggum under the hood: Coding Agent Power Tools",
-      "description": "We've talked a lot about how to use context engineering to get more out of coding agents. In this week's episode, we're going to dive deep on the Ralph Wiggum Technique and why this totally different approach to coding agents can change the way you code. We'll explore using ralph for Greenfield projects, Refactoring projects, Generating specifications. Surprise surprise, the answer is better context engineering.",
+      "description": "We've talked a lot about how to use context engineering to get more out of coding agents. In this episode,\nwe dive deep on the Ralph Wiggum technique and why this different approach can reshape your coding workflow.\nWe explore how Ralph handles greenfield work, refactors, and spec generation—surprise: it's all about\nhigher-quality context engineering.\n",
       "event_link": "https://lu.ma/ralphloop",
       "eventDate": "2025-10-28T18:00:00Z",
       "event_type": "episode",
@@ -710,15 +730,15 @@
     }
   ],
   "meta": {
-    "totalEpisodes": 34,
+    "totalEpisodes": 35,
     "completedEpisodes": 30,
-    "upcomingEpisodes": 0,
+    "upcomingEpisodes": 1,
     "workshops": 3,
     "seasons": [
       1,
       2
     ],
-    "lastUpdated": "2025-11-13T16:51:57.333Z",
+    "lastUpdated": "2025-11-14T22:57:59.492Z",
     "generatedBy": "validate-metadata.ts"
   }
 }

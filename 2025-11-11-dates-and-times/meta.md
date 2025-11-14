@@ -7,7 +7,7 @@ description: |
 event_link: https://luma.com/xqezrl4g
 eventDate: 2025-11-11T18:00:00Z
 media:
-  url: null
+  url: https://www.youtube.com/watch?v=l7txtbgCFGU
   type: video/youtube
 links:
   code: https://github.com/ai-that-works/ai-that-works/tree/main/2025-11-11-dates-and-times

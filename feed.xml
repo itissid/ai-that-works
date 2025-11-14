@@ -16,7 +16,7 @@
       <link>https://github.com/ai-that-works/ai-that-works</link>
     </image>
     <atom:link href="https://github.com/ai-that-works/ai-that-works/raw/main/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Thu, 13 Nov 2025 16:51:57 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 14 Nov 2025 22:57:59 GMT</lastBuildDate>
     <ttl>1440</ttl>
     <item>
       <title><![CDATA[Event-driven agentic loops]]></title>
@@ -42,7 +42,11 @@ AI That Works - Weekly conversations about production-ready AI engineering with 
     </item>
     <item>
       <title><![CDATA[Ralph Wiggum under the hood: Coding Agent Power Tools]]></title>
-      <description><![CDATA[We've talked a lot about how to use context engineering to get more out of coding agents. In this week's episode, we're going to dive deep on the Ralph Wiggum Technique and why this totally different approach to coding agents can change the way you code. We'll explore using ralph for Greenfield projects, Refactoring projects, Generating specifications. Surprise surprise, the answer is better context engineering.
+      <description><![CDATA[We've talked a lot about how to use context engineering to get more out of coding agents. In this episode,
+we dive deep on the Ralph Wiggum technique and why this different approach can reshape your coding workflow.
+We explore how Ralph handles greenfield work, refactors, and spec generation—surprise: it's all about
+higher-quality context engineering.
+
 
 Watch: https://www.youtube.com/watch?v=fOPvAPdqgPo
 Code: https://github.com/ai-that-works/ai-that-works/tree/main/2025-10-28-ralph-wiggum-coding-agent-power-tools
