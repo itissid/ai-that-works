@@ -12,15 +12,13 @@
 
 <div align="center">
 <h2>🦄 <strong>Next Episode</strong></h2>
-<h3><strong>Building an Animation Pipeline</strong></h3>
-<p><strong>Tuesday, November 18, 2025 at 10 AM PST</strong></p>
-<p><em>We do a lot of work with Excalidraw, and this session shows the AI-first workflow
-for turning any sketch into a finished animation.
-We'll blend Claude Code with custom TypeScript scripts, wire up interactive slash commands,
-and add browser automation to existing OSS tools to export polished WebM assets.
+<h3><strong>No Vibes Allowed: Using CodeLayer to Build CodeLayer</strong></h3>
+<p><strong>Tuesday, November 25, 2025 at 10 AM PST</strong></p>
+<p><em>Live coding with CodeLayer, we'll use Research / Plan / Implement live
+to ship 3 new features to CodeLayer.
 </em></p>
 
-<a href="https://luma.com/cc-animation-pipeline" target="_blank">
+<a href="https://luma.com/nva-codelayer" target="_blank">
 <img src="https://img.shields.io/badge/🦄_REGISTER_NOW-Join_Live_Session-ff4444?style=for-the-badge&logo=calendar" alt="Register Now">
 </a>
 
@@ -104,10 +102,24 @@ Before joining, get familiar with our toolkit:
         <div style="margin-bottom: 2px;">
           <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">UPCOMING</span>
         </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2025-11-25</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#33</strong>: No Vibes Allowed: Using CodeLayer to Build CodeLayer</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="./2025-11-25-no-vibes-allowed-using-codelayer-to-build-codelayer">code</a> • <a href="https://luma.com/nva-codelayer">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Live coding with CodeLayer, we'll use Research / Plan / Implement live
+to ship 3 new features to CodeLayer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
         <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2025-11-18</div>
         <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#32</strong>: Building an Animation Pipeline</div>
         <div style="font-size: 13px; color: #666;">
-          <a href="./2025-11-18-building-an-animation-pipeline">code</a> • <a href="https://luma.com/cc-animation-pipeline">register</a>
+          <a href="./2025-11-18-building-an-animation-pipeline">code</a>
         </div>
       </div>
     </td><td><div style="padding: 8px 0; line-height: 1.5;">We do a lot of work with Excalidraw, and this session shows the AI-first workflow

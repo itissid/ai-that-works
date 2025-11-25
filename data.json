@@ -1,6 +1,26 @@
 {
   "episodes": [
     {
+      "folder": "2025-11-25-no-vibes-allowed-using-codelayer-to-build-codelayer",
+      "guid": "aitw-033",
+      "title": "No Vibes Allowed: Using CodeLayer to Build CodeLayer",
+      "description": "Live coding with CodeLayer, we'll use Research / Plan / Implement live\nto ship 3 new features to CodeLayer.\n",
+      "event_link": "https://luma.com/nva-codelayer",
+      "eventDate": "2025-11-25T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": null,
+        "type": "video/youtube"
+      },
+      "links": {
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2025-11-25-no-vibes-allowed-using-codelayer-to-build-codelayer"
+      },
+      "season": 2,
+      "episode": 33,
+      "isPast": false,
+      "isWorkshop": false
+    },
+    {
       "folder": "2025-11-18-building-an-animation-pipeline",
       "guid": "aitw-032",
       "title": "Building an Animation Pipeline",
@@ -17,7 +37,7 @@
       },
       "season": 2,
       "episode": 32,
-      "isPast": false,
+      "isPast": true,
       "isWorkshop": false
     },
     {
@@ -730,7 +750,7 @@
     }
   ],
   "meta": {
-    "totalEpisodes": 35,
+    "totalEpisodes": 36,
     "completedEpisodes": 30,
     "upcomingEpisodes": 1,
     "workshops": 3,
@@ -738,7 +758,7 @@
       1,
       2
     ],
-    "lastUpdated": "2025-11-14T22:57:59.492Z",
+    "lastUpdated": "2025-11-25T03:09:47.595Z",
     "generatedBy": "validate-metadata.ts"
   }
 }
