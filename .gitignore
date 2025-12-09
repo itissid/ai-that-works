@@ -137,3 +137,7 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+thoughts
+
+# Claude Code local settings
+.claude/settings.local.json
