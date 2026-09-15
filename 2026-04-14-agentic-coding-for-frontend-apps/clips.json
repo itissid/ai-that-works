@@ -1,0 +1,26 @@
+[
+  {
+    "rationale": "This clip directly addresses the 'AI-Native Design Workflow' and the 'ditch Figma altogether' concept, which is a core, provocative takeaway. It provides a clear, actionable vision for how AI changes frontend design, eliminating a major translation step and accelerating throughput. It's a strong, opinionated statement that challenges traditional design workflows, making it highly impactful for viewers looking for innovative approaches.",
+    "start_timestamp": "24:56.554",
+    "end_timestamp": "25:39.767",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (24:56.554) If you could get your designers, cause like Figma and code, it's all just markup and flexbox and like all this stuff, all these concepts are the same between like design systems and actually writing the React code at this point or writing the markup or whatever it is. And so I think like the thing that we see people doing is like kind of eliminating, like they still have a design step and they still review mockups, but the mockups are just the React components. And then when you go to implement it, there is no like translate the Figma into React. It's just already there implemented with your design system in code. And it just, it's, it's already like approved by everybody. All you have to do is like the front end engineers job is to then work with AI to wire up all that data.",
+    "hook": "Ditch Figma: Why your designers should be coding with AI."
+  },
+  {
+    "rationale": "This clip clearly explains the core benefit of Storybook as 'visual unit tests' for UI components, drawing a powerful analogy to backend unit tests. It highlights the problem of slow iteration in traditional UI development and offers a concrete solution for faster iteration, directly addressing the 'Visual Unit Testing with Storybook' takeaway. The comparison to backend unit tests makes the concept immediately understandable and actionable for developers.",
+    "start_timestamp": "28:28.046",
+    "end_timestamp": "29:20.000",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (28:28.046) And then the other thing is like the same way with unit tests, like if you want to test a logic change in your code, you have two options. You can go reproduce that state in your app, which may take a lot of clicking and running and running curls and things like that. Or if you can isolate it and reproduce it in a unit test, then all you have to do is make that test pass and then things are working again. And it's the same thing for this is like you don't have to go spin up the whole web app and click around and create the state that reproduces the bug. You just as long as you can figure out, OK, these are the props when this component is in XYZ state. this is what causes the crash or the ugly rendering or whatever it is, then you don't have to like go generate all the data. And it becomes really easy again with like unit tests, I can make a change to the component and I can click through the 20 other versions of it without having to go reproduce all those states. So it makes it really easy to iterate in the same way that unit tests make it really easy to iterate on problems or changes to backend.",
+    "hook": "Stop clicking! Unit test your UI with this simple trick."
+  },
+  {
+    "rationale": "This clip explains a fundamental architectural pattern ('Pure vs. Wired Components') that is crucial for enabling the AI-native design workflow and effective visual unit testing. It clearly defines the distinct roles of stateless 'pure' components (display logic) and 'wired' wrapper components (business logic/state), providing actionable advice for structuring frontend code in an AI-friendly manner. This separation of concerns is key to leveraging AI efficiently in UI development.",
+    "start_timestamp": "13:49.262",
+    "end_timestamp": "14:36.217",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (13:49.262) But if you come into, basically have pure components that just take props and render, and then we have the wired components. And so this has been for a while, like a pattern since, I don't want to say like 2014 or something, where you would take, you would create the wired version and this is where all your state and interactivity lives. In this case, it's pretty like small, but it's like, this is fetching data from an API and stuff. And so the separation that like the architecture thing here that I would like, Dex (14:18.392) have people take away is you have basically, okay, they pulled in some loading states and stuff like that, but then you have your table with all the information. And so the fetching of the information is in a wrapper component, and then you have this pure component that is just the display logic.",
+    "hook": "Unlock AI-powered UI: The secret to pure vs. wired components."
+  }
+]

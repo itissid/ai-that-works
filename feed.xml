@@ -16,8 +16,638 @@
       <link>https://github.com/ai-that-works/ai-that-works</link>
     </image>
     <atom:link href="https://github.com/ai-that-works/ai-that-works/raw/main/feed.xml" rel="self" type="application/rss+xml" />
-    <lastBuildDate>Fri, 23 Jan 2026 18:27:15 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 13:33:12 GMT</lastBuildDate>
     <ttl>1440</ttl>
+    <item>
+      <title><![CDATA[Code Mode for Extensible Software]]></title>
+      <description><![CDATA[Making software extensible has always involved designing good and flexible interfaces (e.g. vs code extensions, iphone apps). But the most flexible interface is code, and today Vaibhav's gonna share some very futuristic ideas on what the next generation of customizable tools looks like.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=IXe48aIw_X4
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-09-01-code-mode-extensible-software
+Event: https://luma.com/code-mode-extensible-software
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=IXe48aIw_X4</link>
+      <guid isPermaLink="false">aitw-072</guid>
+      <pubDate>Tue, 01 Sep 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=IXe48aIw_X4" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Software Factory Design Patterns]]></title>
+      <description><![CDATA[In this episode, we'll talk about key interfaces and how they fit together in the modern software factory, what you could buy vs build, what you should always own, across compute, dev environment, harness, and orchestration. We'll dig into how sessions / traces / artifacts / plans all become perrs of code in the new forge / system of record for software
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=tGbjIvvYuHE
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-25-software-factory-design-patterns
+Event: https://luma.com/software-factory-design
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=tGbjIvvYuHE</link>
+      <guid isPermaLink="false">aitw-071</guid>
+      <pubDate>Tue, 25 Aug 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=tGbjIvvYuHE" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[syncs and A/B testing 200 agents]]></title>
+      <description><![CDATA[We've got a special two-part episode for you this week! We brought on two guests to tackle two massive technical challenges in production AI:
+
+What actually happens when you spin up 200 agents in parallel to run real A/B tests?
+
+How do you cleanly sync data all the way from raw state, through your agent layer, down to the frontend?
+
+Tune in for practical takeaways on scaling agent infrastructure that works.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=GF7dnSlCM4U
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-18-syncs-and-ab-testing-200-agents
+Event: https://luma.com/syncs-and-ab-testing
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=GF7dnSlCM4U</link>
+      <guid isPermaLink="false">aitw-070</guid>
+      <pubDate>Tue, 18 Aug 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=GF7dnSlCM4U" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Unconference RECAP]]></title>
+      <description><![CDATA[On Saturday, August 8th, we are hosting another unconference bringing together some of the brighest minds in AI. This week on the podcast we will be recapping it! What were some of the best takeaways? What did we learn? If you aren't attending the unconference, definitely tune into this episode to see what you missed.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=fyZ0i4USjgc
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-11-unconference-recap
+Event: https://luma.com/unconf-recap
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=fyZ0i4USjgc</link>
+      <guid isPermaLink="false">aitw-069</guid>
+      <pubDate>Tue, 11 Aug 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=fyZ0i4USjgc" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[SlopCodeBench]]></title>
+      <description><![CDATA[On the podcast this week, we will examine a new AI coding benchmark called SlopCodeBench (SCBench), which aims to evaluate how software is truly developed. While typical benchmarks evaluate models using single-shot solutions against specifications, they fail to address the long-term difficulties of software development. Creating an initial solution is simple; the real challenge lies in extending, refactoring, and maintaining code over time. SCBench addresses this gap by requiring frontier models to continually build upon their own previously generated code across multi-checkpoint trajectories.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=Yh4eL60Ncxs
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-04-slop-code-bench
+Event: https://luma.com/slop-code-bench
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=Yh4eL60Ncxs</link>
+      <guid isPermaLink="false">aitw-068</guid>
+      <pubDate>Tue, 04 Aug 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=Yh4eL60Ncxs" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Your Model is Already Obsolete]]></title>
+      <description><![CDATA[In the last month alone: Opus 5, Sonnet 5, Grok 4.5, Kimi K3, GPT-5.6, Gemini 3.6. Any one of them might make your agent smarter or your system cheaper. That's the fun part. The less fun part is that every model you're running in production today just got a month closer to its retirement date.
+
+Model deprecation is one of the only outages you get advance notice of, and teams still manage to take it as a surprise. This week on the podcast we show you how to make model swaps into a non-event instead of a p0.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=Y-I9m5YsAcs
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-28-your-model-is-already-obsolete
+Event: https://luma.com/easy-model-swaps
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=Y-I9m5YsAcs</link>
+      <guid isPermaLink="false">aitw-067</guid>
+      <pubDate>Tue, 28 Jul 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=Y-I9m5YsAcs" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[No Vibes Allowed - July Edition]]></title>
+      <description><![CDATA[This week on the podcast we will be hosting another session of our No Vibes Allowed series. Join us to see how everyting we've talked about get implemented in real code to solve real problems in our codebases.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=rTn8Vhdt-Jo
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-21-no-vibes-july
+Event: https://luma.com/no-vibes-jul-26
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=rTn8Vhdt-Jo</link>
+      <guid isPermaLink="false">aitw-066</guid>
+      <pubDate>Tue, 21 Jul 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=rTn8Vhdt-Jo" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[SOTA Coding Agent Benchmarks]]></title>
+      <description><![CDATA[We've had a lot of benchmarks for coding agents for a long time. We'll talk about the past generation and the new generation, what they're doing differently, as well as... I don't know. come hang it will be good.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+
+
+Watch: https://www.youtube.com/watch?v=X5mI1ZVxaIc
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-14-sota-coding-agent-benchmarks
+Event: https://luma.com/sota-benchmarks
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=X5mI1ZVxaIc</link>
+      <guid isPermaLink="false">aitw-065</guid>
+      <pubDate>Tue, 14 Jul 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=X5mI1ZVxaIc" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[agent observability]]></title>
+      <description><![CDATA[In this episode, we will dive into AI agent observability and answer a question every production engineer eventually faces: how do you diagnose why an autonomous agent went off the rails three days ago?
+
+When you are dealing with non-deterministic tools, old-school debugging habits like inserting `print("here")` statements fails to scale. We will break down the essentials of modern agent tracking, from implementing structured logging for complex tool calls to establishing robust tracing that allows you to replay and reconstruct an agent's exact decision tree.
+
+
+Watch: https://www.youtube.com/watch?v=_WLVv1C6-VM
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-07-agent-observability
+Event: https://luma.com/aitw-agent-observability
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=_WLVv1C6-VM</link>
+      <guid isPermaLink="false">aitw-064</guid>
+      <pubDate>Tue, 07 Jul 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=_WLVv1C6-VM" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Software Factory for Agent Tools]]></title>
+      <description><![CDATA[Everyone's obsessed with software factories, and the core of a software factory is a persistent feedback loop - in this episode Vaibhav and Dhilan will showcase a loop they built to test new BAML language features 24/7 and improve the language based on feedback from coding agents trying to implement features.
+
+
+Watch: https://www.youtube.com/watch?v=485FGIq8LKM
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-06-23-software-factory-for-agent-tools
+Event: https://luma.com/agent-tools-software-factory
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=485FGIq8LKM</link>
+      <guid isPermaLink="false">aitw-063</guid>
+      <pubDate>Tue, 23 Jun 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=485FGIq8LKM" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Product Specs with AI]]></title>
+      <description><![CDATA[We've talked a lot about design discussions for planning work with AI and getting leverage before writing the code, but this process has a common pitfall: it combines product decisions (how does it work, what is the user experience) with technical decisions (how do we build it, what patterns do we follow).
+
+This complecting of concerns can cause important questions to be missed. On today's AI that works we'll dig into techniques to split out product vs. technical questions to enable less-technical folks to participate in product specification that is grounded in codebase research, and ensure technical depth is achieved without getting distracted by product questions.
+
+
+Watch: https://www.youtube.com/watch?v=0LPBw3NO3Jc
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-06-16-product-specs-with-ai
+Event: https://luma.com/ai-product-specs
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=0LPBw3NO3Jc</link>
+      <guid isPermaLink="false">aitw-062</guid>
+      <pubDate>Tue, 16 Jun 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=0LPBw3NO3Jc" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Hands-on with Fable 5]]></title>
+      <description><![CDATA[We had agent observability on the schedule, but Anthropic shipped Fable 5 about twenty minutes before we went live, so we tossed the plan and got hands-on with the new model instead. Zero prep, all live.
+
+This is an unscripted look at exactly how we kick the tires on a fresh model release: take the hardest problem you're already deep in, hand it over, and watch whether it finds leverage you didn't. Vaibhav ran it against an in-progress design doc for the BAML VM's observability layer, Dex ran it against an old race-condition benchmark he keeps around, and we talk through what the model caught, what it missed, and why most model releases are more hype than the value they deliver day to day.
+
+
+Watch: https://www.youtube.com/watch?v=hTkmSVuDMPg
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-06-09-agent-observability
+Event: https://luma.com/agent-observability
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=hTkmSVuDMPg</link>
+      <guid isPermaLink="false">aitw-061</guid>
+      <pubDate>Tue, 09 Jun 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=hTkmSVuDMPg" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[How to Build AI Agents that Work in Any Language]]></title>
+      <description><![CDATA[In this episode, we discuss the challenge of building multilingual AI applications that perform consistently whether your user is interacting in English, Spanish, French, whatever. Can you simply run an English prompt through a basic translator? Or will that break down in production? We'll be breaking down practical engineering strategies for designing flexible, cross-lingual prompt architectures that maintain semantic alignment without forcing you to build and manage separate pipelines for every language.
+
+
+Watch: https://www.youtube.com/watch?v=-gFdtc-HbOY
+Code: https://github.com/hellovai/ai-that-works/tree/main/2026-06-02-multilingual-ai-apps
+Event: https://luma.com/multilingual-ai-apps
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=-gFdtc-HbOY</link>
+      <guid isPermaLink="false">aitw-060</guid>
+      <pubDate>Tue, 02 Jun 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=-gFdtc-HbOY" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[How AI Agents Can Safely Ship Code to Production]]></title>
+      <description><![CDATA[This week, the top headline is vibe coders realizing that they can use feature flags to ship experimental (read: slop) features to production without impacting all customers.
+
+Shipping code is a lot harder when everything is changing all the time. Feature flags can be a good technique to test various things, but how do you set that up? Do you feature flag new models? New prompts? New harnesses? We'll dive into details here and see where feature flags improve your product delivery vs. just giving you an excuse to ship more slop.
+
+
+Watch: https://www.youtube.com/watch?v=gRqb7R4Pcrs
+Code: https://github.com/hellovai/ai-that-works/tree/main/2026-05-19-feature-flag-everything
+Event: https://luma.com/feature-flag-everything
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=gRqb7R4Pcrs</link>
+      <guid isPermaLink="false">aitw-058</guid>
+      <pubDate>Tue, 19 May 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=gRqb7R4Pcrs" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA["Code Mode" Deep Dive]]></title>
+      <description><![CDATA[On Monday, Pash from OpenAI shared that Codex has a secret "code mode" feature - an alternative to traditional tool calling. There's a lot of debate going on around the best way to give tools to models - skills vs. mcps, CLIs and bash vs custom tools, or letting the model write code for everything. In this episode we're going to cut through the hype and dive deep on the differences and tradeoffs between these methods.
+
+   • What is "code mode" and how does it work
+   • Tradeoffs between MCP vs. Bash+CLI vs. Code mode
+   • Why it matters to agent or harness builders
+
+
+Watch: https://www.youtube.com/watch?v=0dx3j4CmSFw
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-12-code-mode-deep-dive
+Event: https://luma.com/code-mode-deep-dive
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=0dx3j4CmSFw</link>
+      <guid isPermaLink="false">aitw-057</guid>
+      <pubDate>Tue, 12 May 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=0dx3j4CmSFw" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[OpenAI tells you not to build your own harness]]></title>
+      <description><![CDATA[Harness engineering is all the hype now, so on this week on the podcast we're looking back to an article written by OpenAI in February about harness engineering, "Harness engineering: leveraging Codex in an agent-first world". In this article, they claim that the era of "hand-written code" is officially over. We break down their experiment of shipping a million-line product with zero manual coding, shifting the human role from "coder" to "environment designer."
+
+
+Watch: https://www.youtube.com/watch?v=h99bTZTR_IU
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-05-openai-tells-you-not-to-build-your-own-harness
+Event: https://luma.com/harness-eng-article-discussion
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=h99bTZTR_IU</link>
+      <guid isPermaLink="false">aitw-056</guid>
+      <pubDate>Tue, 05 May 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=h99bTZTR_IU" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[No Vibes Allowed - Building Design Docs with AI]]></title>
+      <description><![CDATA[In this month's no vibes allowed episode, Vaibhav will show how he uses AI to make design docs for complicated tasks by building out an actual design doc for a feature in BAML. As always for our no vibes allowed series, we will be solving real problems in real production systems.
+
+
+Watch: https://www.youtube.com/watch?v=KCqsoXveqiI
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-28-no-vibes-design-docs
+Event: https://luma.com/no-vibes-design-docs
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=KCqsoXveqiI</link>
+      <guid isPermaLink="false">aitw-055</guid>
+      <pubDate>Tue, 28 Apr 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=KCqsoXveqiI" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Harness Engineering Without the Hype]]></title>
+      <description><![CDATA[This week on the pod we are going to cut through the hype around harness engineering and separate the signal from the noise. Join us to watch Dex crash out about this and expose the reality.
+
+
+Watch: https://www.youtube.com/watch?v=gX9WpYY61xA
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-21-harness-engineering-without-the-hype
+Event: https://luma.com/harness-eng-hype
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=gX9WpYY61xA</link>
+      <guid isPermaLink="false">aitw-054</guid>
+      <pubDate>Tue, 21 Apr 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=gX9WpYY61xA" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Agentic Coding for Frontend Apps]]></title>
+      <description><![CDATA[We do a lot of deep research and planning advice for building complex backend systems but in this week's episode, we're gonna talk about ways you can move faster and maintain quality for frontend code.
+
+While backend systems rely on good overall design and tend to be programatically verifiable, frontends require much tighter iteration loops and taste, and these explorations just don't suit themselves to complex up front planning. On the other hand, that shouldn't be an excuse to just regress to yoloing prompts. Good frontend code requires taste, judgement, and is just as vulnerable to a descent into chaotic spaghetti slop.
+
+Similar to our learning tests episode, this chat will cover small tactical side quests you can incorporate into your planning and development workflow to improve your frontend throughput. We'll primarily explore storybook as a vessel for interacting with and previewing UI, and approaches to separate presentation logic from business logic. By the end, you may find yourself wanting to ditch figma altogether and just write the components live.
+
+
+Watch: https://www.youtube.com/watch?v=adpUOpW85ns
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-14-agentic-coding-for-frontend-apps
+Event: https://luma.com/agentic-front-end-coding
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=adpUOpW85ns</link>
+      <guid isPermaLink="false">aitw-053</guid>
+      <pubDate>Tue, 14 Apr 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=adpUOpW85ns" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[SSE Streaming]]></title>
+      <description><![CDATA[This week we build a real-time site summarizer using Server-Sent Events (SSE) streaming. We crawl a website, summarize each page with an LLM using BAML's semantic streaming, and stream partial results back to the browser as they're generated. We cover batched async concurrency, FastAPI SSE endpoints, and BAML's @stream.done/@stream.not_null attributes for controlling what streams and what waits.
+
+
+Watch: https://www.youtube.com/watch?v=9MFiATinGC0
+Code: https://github.com/hellovai/ai-that-works/tree/main/2026-04-07-sse-streaming
+Event: https://luma.com/evals-revisited
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=9MFiATinGC0</link>
+      <guid isPermaLink="false">aitw-052</guid>
+      <pubDate>Tue, 07 Apr 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=9MFiATinGC0" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[No Vibes Allowed March Edition]]></title>
+      <description><![CDATA[This week on the podcast is our March episode of our no vibes allowed series! Join us to watch how we implement everything we discuss on a weekly basis in our company's product. Real code, real trade-offs, and real production systems
+
+
+Watch: https://www.youtube.com/watch?v=0rMG-3iiilc
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-31-no-vibes-march
+Event: https://luma.com/no-vibes-allowed-march-26
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=0rMG-3iiilc</link>
+      <guid isPermaLink="false">aitw-051</guid>
+      <pubDate>Tue, 31 Mar 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=0rMG-3iiilc" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[MCP is Dead?]]></title>
+      <description><![CDATA[MCP isn't dead...or is it? This week on the podcast, we'll dive into this debate. What is the state of MCP today?
+
+
+Watch: https://www.youtube.com/watch?v=z5inaSXkiTU
+Code: https://github.com/hellovai/ai-that-works/tree/main/2026-03-24-mcp-is-dead
+Event: https://luma.com/is-mcp-dead
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=z5inaSXkiTU</link>
+      <guid isPermaLink="false">aitw-050</guid>
+      <pubDate>Tue, 24 Mar 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=z5inaSXkiTU" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Prompt Injections Guardrails]]></title>
+      <description><![CDATA[A major risk factor in agentic coding is Prompt Injections. Tool output, document retrieval, system prompts all get inputted into the LLM and are all at risk of prompt injections.
+
+This week on the podcast, we're going to cover how to handle this risk. We will discuss how to protect system prompts, avoid hijacking, and implementing ethical guards
+
+
+Watch: https://www.youtube.com/watch?v=zU8GpxgYDvc
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-17-prompt-injections-guardrails
+Event: https://luma.com/prompt-injection-guardrails
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=zU8GpxgYDvc</link>
+      <guid isPermaLink="false">aitw-049</guid>
+      <pubDate>Tue, 17 Mar 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=zU8GpxgYDvc" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Claude Agent Skills Deep Dive]]></title>
+      <description><![CDATA[Claude Code has exploded in its abilities over the past 8 months, and it can be hard to keep up. Seemingly overnight, everyone is discussing claude's skills, commands, agents, and subagents, and a lot of the literature out there already assumes you know what these are. This week on the podcast, we're going to go over all of them. We will discuss what each one is, how and when to use it, what the benefits and drawbacks are, and how they fit into the broader context engineering picture.
+
+
+Watch: https://www.youtube.com/watch?v=b5O6gb_Zuk8
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-10-claude-agent-skills-deep-dive
+Event: https://luma.com/claude-skills-deep-dive
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=b5O6gb_Zuk8</link>
+      <guid isPermaLink="false">aitw-048</guid>
+      <pubDate>Tue, 10 Mar 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=b5O6gb_Zuk8" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[PII Redaction and Sensitive Data Scrubbing]]></title>
+      <description><![CDATA[When building generative AI systems, one of the biggest risks companies face is the LLM accidentally exposing PII or PHI to an end user that isn't cleared to see it. This week on the podcast, we'll cover how to fix this problem. We'll discuss what prompting techniques you can use, and more importantly, we'll discuss how you can build evals to get comfortable with shipping these systems to users.
+
+
+Watch: https://www.youtube.com/watch?v=Ql2gLHWuX7M
+Code: https://github.com/hellovai/ai-that-works/tree/main/2026-03-03-pii-redaction-and-sensitive-data-scrubbing
+Event: https://luma.com/pii-scrubbing
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=Ql2gLHWuX7M</link>
+      <guid isPermaLink="false">aitw-047</guid>
+      <pubDate>Tue, 03 Mar 2026 18:15:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=Ql2gLHWuX7M" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[No Vibes Allowed February]]></title>
+      <description><![CDATA[In our February edition of our No Vibes Allowed series, we will be coding and shipping real features in our products using all of the concepts we cover on this podcast, including using advanced context engineering and backpressure. Join us to see how these concepts apply to real code and real products.
+
+
+Watch: https://www.youtube.com/watch?v=YcT7gjzj2TU
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-24-no-vibes-february
+Event: https://luma.com/no-vibes-allowed-feb
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=YcT7gjzj2TU</link>
+      <guid isPermaLink="false">aitw-046</guid>
+      <pubDate>Tue, 24 Feb 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=YcT7gjzj2TU" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[AI Content Pipeline Revisited]]></title>
+      <description><![CDATA[We have another meta episode this week! Several months ago, we did an episode back about automating the pipeline for generating the artifacts and content for this podcast. That pipeline became stale, and so we breathed some life back into it and we're going to discuss the different parts of that pipeline on the podcast.
+
+This episode will discuss everything that goes into bringing you an episode. We'll discuss
+    -  Details of the entire pipeline and tools we use to bring you each episode
+    -  How to get AI to have the right tone in freeform generation and not sound like AI
+    -  Browser agents
+    -  Finding clippable content from the transcript
+    -  Image generation
+    -  How far should automation go?
+
+
+Watch: https://www.youtube.com/watch?v=U5Gssat8IUw
+Code: https://github.com/hellovai/ai-that-works/tree/main/2026-02-17-automating-aitw
+Event: https://luma.com/ai-content-generation
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=U5Gssat8IUw</link>
+      <guid isPermaLink="false">aitw-045</guid>
+      <pubDate>Tue, 17 Feb 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=U5Gssat8IUw" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Agentic Backpressure Deep Dive]]></title>
+      <description><![CDATA[In our next installment of advanced coding agent workflows, we'll explore some alternatives to research for improving results from coding agents. Code and web research is great for understanding the current codebase and finding documentation, but neither of these things is as concrete, and can still lead to hallucinations or incorrect assumptions.
+
+In this episode, we'll talk about learning tests and proof-driven-dev - writing small PoC programs and tests that lay the groundwork to confirm understanding of external systems, *before* you get deep into implementation.
+
+This will extend our previous conversation about agentic backpressure and building deterministic feedback loops to help coding agents work more autonomously.
+
+
+Watch: https://www.youtube.com/watch?v=Zx_GOhGik0o
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-10-agentic-backpressure-deep-dive
+Event: https://luma.com/agentic-backpressure-deep-dive
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=Zx_GOhGik0o</link>
+      <guid isPermaLink="false">aitw-044</guid>
+      <pubDate>Tue, 10 Feb 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=Zx_GOhGik0o" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[Prompting Is Becoming a Product Surface]]></title>
+      <description><![CDATA[Prompting used to be an engineering problem. Write the right string, tweak it until the model behaves, ship it behind the scenes.
+
+That breaks the moment real users show up. Customers don't think in prompts — they think in goals. They want to explain what they're trying to accomplish, not debug a magic sentence.
+
+So prompting is moving into the product. Interfaces matter. Structure matters. Guardrails and feedback matter. The real work now isn't prompt cleverness — it's building systems that let people express intent in a way software can actually understand and trust.
+
+
+Watch: https://www.youtube.com/watch?v=qdfwmYTO0Aw
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-03-prompting-is-becoming-a-product-surface
+Event: https://luma.com/prompting-is-a-product-surface
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=qdfwmYTO0Aw</link>
+      <guid isPermaLink="false">aitw-043</guid>
+      <pubDate>Tue, 03 Feb 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=qdfwmYTO0Aw" type="video/youtube" />
+    </item>
+    <item>
+      <title><![CDATA[No Vibes Allowed]]></title>
+      <description><![CDATA[We received great feedback from our previous live coding sessions, so this week we are bringing it back this week by live streaming while we add more features to BAML. We have discussed a lot of topics over the past several months, and we will be digging into the how to put many of these concepts into practice as we build out actual features in the product.
+
+
+Watch: https://www.youtube.com/watch?v=Xq8VxnGVStg
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-27-no-vibes-allowed
+Event: https://luma.com/no-vibes-allowed-jan-26
+
+AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
+      <link>https://www.youtube.com/watch?v=Xq8VxnGVStg</link>
+      <guid isPermaLink="false">aitw-042</guid>
+      <pubDate>Tue, 27 Jan 2026 18:00:00 GMT</pubDate>
+      <category>Technology</category>
+      <category>Software Engineering</category>
+      <category>Artificial Intelligence</category>
+      <enclosure url="https://www.youtube.com/watch?v=Xq8VxnGVStg" type="video/youtube" />
+    </item>
     <item>
       <title><![CDATA[Email is All You Need]]></title>
       <description><![CDATA[Email is about as adversarial as inputs get: malformed HTML, inconsistent templates, human writing, forwarded junk, zero standards. And yet entire business workflows depend on it.
@@ -77,8 +707,8 @@ Learn how to make your agents feel faster through strategic latency reduction an
 
 
 Watch: https://www.youtube.com/watch?v=wadVIkJnjQE
-Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-06-understanding-latency
-Event: https://luma.com/12-factors-to-coding-agents
+Code: https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-06-latency
+Event: https://luma.com/baml
 
 AI That Works - Weekly conversations about production-ready AI engineering with live coding and Q&A.]]></description>
       <link>https://www.youtube.com/watch?v=wadVIkJnjQE</link>

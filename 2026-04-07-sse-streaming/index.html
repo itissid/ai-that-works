@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Summarizer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; padding: 2rem; max-width: 960px; margin: 0 auto; }
+    h1 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+
+    .controls { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    input { flex: 1; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; font-size: 0.875rem; }
+    button { padding: 0.5rem 1.25rem; border-radius: 6px; border: none; background: #3b82f6; color: white; font-weight: 600; cursor: pointer; font-size: 0.875rem; }
+    button:hover { background: #2563eb; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .batch-label { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin: 1.5rem 0 0.5rem; }
+    .cards { display: grid; gap: 0.75rem; }
+
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1rem; transition: border-color 0.2s; }
+    .card.streaming { border-color: #3b82f6; }
+    .card.done { border-color: #334155; }
+
+    .card-url { font-size: 0.7rem; color: #64748b; word-break: break-all; margin-bottom: 0.25rem; }
+    .card-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.35rem; color: #f1f5f9; }
+    .card-summary { font-size: 0.85rem; color: #94a3b8; line-height: 1.5; }
+    .card-summary.pending { color: #475569; }
+
+    .cursor { display: inline-block; width: 2px; height: 0.9em; background: #3b82f6; animation: blink 0.8s steps(2) infinite; vertical-align: text-bottom; margin-left: 1px; }
+    @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } }
+
+    .status { font-size: 0.8rem; color: #64748b; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Site Summarizer</h1>
+  <div class="controls">
+    <input id="url" type="text" value="https://boundaryml.com/podcast" placeholder="Enter a URL..." />
+    <button id="go" onclick="start()">Summarize</button>
+  </div>
+  <div id="output"></div>
+
+  <script>
+    const output = document.getElementById('output');
+    const urlInput = document.getElementById('url');
+    const goBtn = document.getElementById('go');
+
+    // card elements keyed by page url
+    const cards = {};
+
+    function getOrCreateCard(url) {
+      if (cards[url]) return cards[url];
+
+      const card = document.createElement('div');
+      card.className = 'card streaming';
+      card.innerHTML = `
+        <div class="card-url">${escapeHtml(url)}</div>
+        <div class="card-title"></div>
+        <div class="card-summary pending">waiting...</div>
+      `;
+      // append to the current batch container
+      const containers = output.querySelectorAll('.cards');
+      const container = containers[containers.length - 1];
+      if (container) container.appendChild(card);
+
+      cards[url] = {
+        el: card,
+        titleEl: card.querySelector('.card-title'),
+        summaryEl: card.querySelector('.card-summary'),
+      };
+      return cards[url];
+    }
+
+    function start() {
+      const url = urlInput.value.trim();
+      if (!url) return;
+
+      output.innerHTML = '';
+      Object.keys(cards).forEach(k => delete cards[k]);
+      goBtn.disabled = true;
+
+      const evtSource = new EventSource(`/summaries?url=${encodeURIComponent(url)}`);
+
+      evtSource.onmessage = (e) => {
+        if (e.data === '[DONE]') {
+          evtSource.close();
+          goBtn.disabled = false;
+          const status = document.createElement('div');
+          status.className = 'status';
+          status.textContent = 'Done.';
+          output.appendChild(status);
+          return;
+        }
+
+        const data = JSON.parse(e.data);
+
+        if (data.type === 'batch_start') {
+          const label = document.createElement('div');
+          label.className = 'batch-label';
+          label.textContent = `Batch ${data.batch} \u2014 ${data.urls.length} pages`;
+          output.appendChild(label);
+
+          const container = document.createElement('div');
+          container.className = 'cards';
+          output.appendChild(container);
+
+          // pre-create cards in batch order
+          data.urls.forEach(u => getOrCreateCard(u));
+          return;
+        }
+
+        if (data.type === 'partial' || data.type === 'final') {
+          const card = getOrCreateCard(data.url);
+          card.titleEl.textContent = data.title || '';
+          card.summaryEl.className = 'card-summary';
+
+          if (data.type === 'partial') {
+            card.summaryEl.innerHTML = escapeHtml(data.summary || '') + '<span class="cursor"></span>';
+          } else {
+            card.summaryEl.textContent = data.summary;
+            card.el.className = 'card done';
+          }
+        }
+      };
+
+      evtSource.onerror = () => {
+        evtSource.close();
+        goBtn.disabled = false;
+      };
+    }
+
+    function escapeHtml(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+  </script>
+</body>
+</html>

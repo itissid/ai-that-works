@@ -1,0 +1,25 @@
+{
+  "name": "02-storybook-riptide",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6007",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@radix-ui/react-slot": "^1.2.3",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/react-vite": "^10.3.5",
+    "@tailwindcss/vite": "^4.0.6",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.544.0",
+    "storybook": "^10.3.5",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.0.6"
+  }
+}

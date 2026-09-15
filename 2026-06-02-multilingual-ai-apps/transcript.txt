@@ -1,0 +1,1276 @@
+Vaibhav (00:03.298)
+Think we're live.
+
+Dex (00:04.964)
+believe we might be doing a live one here. what's up, dude?
+
+Vaibhav (00:10.21)
+How's it going? That's a good day. It's a good Saturday. t Tuesday.
+
+Dex (00:11.696)
+I'm good. I'm in the I'm in the airport. Let me know if the audio gets bad and I'll shout at everyone around me to shut the hell up and then I'll probably get thrown out of the lounge. So you know. It would be a funnier episode. It would just be shorter, you know?
+
+Vaibhav (00:18.456)
+Mm-hmm.
+
+Well where are you traveling to?
+
+Where are you traveling to?
+
+Dex (00:28.139)
+I'm going to Austin today. Gonna go hang hang hang out by your alma mater, dude.
+
+Vaibhav (00:30.077)
+man. You
+
+You gotta go get some good old breakfast tacos down there. There's a place called Habanero Tacos. my god, it's like Habanero Tacos right in downtown. Yeah. today's episode is gonna be a fun one. We're gonna go talk about multilingual applications. So how exactly do we build agentic systems that might have customers that speak multiple languages? And what are the various techniques that we can talk about there?
+
+Dex (00:39.322)
+Habanero tacos. It's going on the list. what are we talking about today?
+
+Dex (00:49.848)
+It's okay.
+
+Dex (01:00.688)
+Okay, bye Bob. We're gonna challenge Question number well, finish your intro, and then I have I have lots of questions.
+
+Vaibhav (01:02.028)
+so I think it's gonna be what
+
+Vaibhav (01:08.748)
+But before we get into that, just a quick reminder to everyone else, this is the AI Work That Works podcast. We are back on YouTube and coming back on regularly scheduled episodes. You should hopefully be seeing them on Fridays now if you're watching the recording instead of on Mondays, so a whole week later. And on top of that
+
+Dex (01:26.106)
+That's right. We heard people's favorite weekend activity was to go to the gym and listen to AI That Works. So we're going to give you more time. We're gonna get them out earlier. we have a new recording stud a new production studio that we're excited about. So stay tuned for that. But that has been why there's been a little hiccup at episodes in the last couple of weeks is just switching teams.
+
+Vaibhav (01:29.304)
+Ha ha ha.
+
+Vaibhav (01:39.274)
+Yeah.
+
+Vaibhav (01:43.928)
+Yeah. but while we do that, I'm Viboff. I work on building a programming language that is designed to be agent first. And with me we have my co host Dexter who's building the new non non IDE IDE for helping design docs be way better with agents.
+
+Dex (01:52.112)
+Wanna talk to her about
+
+Dex (01:58.788)
+Yes.
+
+Trying to trying to get agents to write all the other programming languages that weren't designed for them. better. incredible.
+
+Vaibhav (02:06.284)
+There you go. There you go. But let's get to it today. I wanna go really d this topic is really deep and rich, so I wanna be sure that we get time to go talk about it. Dexter, can you send me over the whiteboard?
+
+Dex (02:12.826)
+My speed.
+
+Dex (02:20.346)
+My god, I was supposed to give Kevin a link to be able to make whiteboards and I think I completely forgot. that's put that in the meeting notes, Kevin, if you watch I don't know if Kevin watches the episodes. I bet he doesn't.
+
+Vaibhav (02:32.872)
+I think he watches some of them actually during lunch.
+
+Dex (02:37.104)
+Who has time for launch? stay tuned. It is coming at you in three, two.
+
+There you go. Let's let's get it done.
+
+Vaibhav (02:47.694)
+All right.
+
+So today I'm gonna try and show r real code as well. So hopefully we're gonna go see Yeah, you can watch all the past episodes on youtube dot com slash at boundary ml. and they should be on there or the AI That Works podcast that Dexter has a link to that has a short link to.
+
+Dex (03:10.404)
+There it is. That's a GitHub page that has a link to the podcast page that has a link to the YouTube videos.
+
+Vaibhav (03:11.746)
+There you go.
+
+Vaibhav (03:16.398)
+All right.
+
+Dex (03:18.884)
+Look, I built my own link shortener. It's a lot of work to add new links. So this is what you got. all right. Lay it down because I am wanna open this with a question of like, hey, don't most large language models already talk multiple languages? Like, isn't this just a solved problem?
+
+Vaibhav (03:24.31)
+All right.
+
+Vaibhav (03:37.934)
+yes. so that's actually the number one thing I usually ask most people ask about when they talk about this. So first things first, no they don't because it really goes into if you've ever talked to a system, here's how your agentic app works. A user puts in some sort of input and you build some sort of this is like the user's input. And the user's input really depends. Like if you're building a form extraction, then it's like
+
+It might be like some sort of data that they upload that you want to extract from. So like a PDF that you're gonna pull data out from. If you're building a chatbot, it can be a text input. If you're building a voice agent, it's voice input. But the idea is there's some way that a user injects data into your agentic system. Then you have your AI pipeline. The thing is it's not just your AI pipeline. It's your AI pipeline that has a very specific goal.
+
+Dex (04:10.522)
+Just fine.
+
+Dex (04:32.784)
+Right. So instead of this generic like agentic back and forth of agents, we're doing the more like twelve factor agents workflow kind of thing where it's like, hey look, we're gonna take this input and turn it into a very specific output.
+
+Vaibhav (04:33.139)
+And on top of that, a very specific prompt instructions. So
+
+Vaibhav (04:52.553)
+Exactly. And the big difference between your agentic pipeline versus you the big difference between your agentic pipeline versus like Chat G BT, which is like a very general purpose agent, is the proportion of data that is coming into it that is relative to what the user said versus what you said. And almost every single thing in Chat GPT, Chat G P T does not have a very specific goal. So it's actually
+
+Dex (05:19.49)
+Yeah, you're gonna have to explain that a little bit more. You're talking about the ratio of like how much of the st how much of the steering is here versus like how much of it is over here. And basically like that open AI is like system message and basic training is basically has to be super open ended. They can't tell it anything 'cause they want it to be as general purpose as possible, right?
+
+Vaibhav (05:26.626)
+Yeah.
+
+Yeah, that's actually the bet.
+
+Vaibhav (05:40.254)
+Exactly. So as a steering volume, like typically in a chat GPT application, the majority of your steering is here. Whereas a very tiny percentage of your steering is over here. So what that means is even though the so because the model has innate understanding of all the languages, it actually is able to do quite a lot in terms of taking the user's input and give you the thing that they want out of it. The problem is when you build a speci a more bespoke AI application
+
+Dex (05:51.738)
+Can't
+
+Dex (06:00.317)
+yeah.
+
+Vaibhav (06:10.285)
+'Cause and why are you building a bespoke application? Well, because you want a more guaranteed outcome for the user. When a user does this, the
+
+Dex (06:16.656)
+Right. You're writing a long prompt with lots of instructions of like, Hey, here's what the user said. Hey, you gotta parse it like this, and here's the tools you have, et cetera, et cetera, right?
+
+Vaibhav (06:28.267)
+Yeah, and just to be very clear, like people use the word steering like it's a good thing.
+
+I'm gonna use a different word. This is like what the burden is. Like it has very low burden on Chat GPT to produce the right answer. The burden relies on the user. The reason that you're building an application is because you're switching the burden paradigm.
+
+Dex (06:47.504)
+You wanna put more steering here and make the make it so the user doesn't have to think as much about their you're yeah, okay. You're doing the engineering, context engineering, prompt engineering, whatever you want to call it, so that the user doesn't have to for a given set of like broad input set of prompts, there is a narrow set of outcomes. Versus with chat IP chat GPT, like there is a wide set of outcomes because the steering is is so minimal on the model side, on the system side.
+
+Vaibhav (06:50.124)
+You want
+
+Vaibhav (07:06.484)
+Exactly.
+
+Vaibhav (07:15.015)
+Exactly. And it's again I'm using the word burden instead of steering because steering implies positiveness. But you actually don't the more steering your user has, the less it's like using a terminal versus UI. Yes, you get way more control on a terminal, but you definitely prefer a UI for a lot of interfaces because it's just easier on the users for the user. So when you do this, the problem is more and more of your stuff lives in your AI pipeline.
+
+Dex (07:35.128)
+I think it would be the yeah. I agree. It would be the main factor that is not properly.
+
+Vaibhav (07:43.138)
+And if your AI pipeline is doing more of the steering and has more of the burden to derive things correctly, well imagine your user speaks French and your i whole pipeline is written purely in English. Well, it's just statistically, if I see a document that's eighty percent French sorry, that's like twenty percent French and eighty percent English, I'm going to go ahead and give you English as an output. It's just almost n yeah.
+
+Dex (07:49.872)
+Is it all of those or what are the issues?
+
+Dex (08:10.456)
+Right. So if your system prompt is in English and your so like and then your you know, user the user in yeah, the tools are in English.
+
+Vaibhav (08:17.879)
+Tool calls.
+
+Vaibhav (08:26.699)
+Yeah, we'll use English as blue.
+
+Dex (08:29.326)
+Maybe even your user message is like English, French, English, because you're putting a custom user message that is embedding in the actual user's input.
+
+Vaibhav (08:35.618)
+Yeah.
+
+Vaibhav (08:38.929)
+yeah. Yeah. Yep, 'cause you're f yeah, I gotcha. There you go. And this is like the actual user input. Well, it's no it's super likely that the assistant response
+
+Vaibhav (08:56.297)
+Is also going to be in English. So to actually build a system around this, what you have to do is you have I there's a couple different approaches. one is you can just build a totally parallel system where you literally just build a French version of the pipeline. So all of these just turn to green because like everything turns to French. So even if you inject
+
+Dex (09:10.916)
+You just built a French version of the pipeline.
+
+Dex (09:18.064)
+And you just do a classification right at the front, basically.
+
+Vaibhav (09:21.909)
+Yeah, exactly. Like should I use the French pipeline? Should I use the English pipeline? That's option one.
+
+Dex (09:26.106)
+Okay, so you would take your user input in.
+
+Dex (09:31.586)
+A tiny little like classifier Boolean or whatever. You could have multiple of these pipelines, right?
+
+Vaibhav (09:35.925)
+Yeah. Yep. And you could have infinite pipelines that you want for every language you want, and you're like, hey, if you fall into like and then you could even have like a special pipeline that says like that's over here.
+
+Vaibhav (09:50.22)
+That's like the
+
+Dex (09:50.8)
+I'm gonna make a copy of this so we have the like before and after here.
+
+Vaibhav (09:55.063)
+Yeah. And you can even make like a miscellaneous language pipeline that adds a special instruction that says use the user's preferred language to reply and you insert it over here. Alright, and where it's it's just a special instruction that has this. And the difference between this pipeline when are we ready, Dex? okay, perfect.
+
+Dex (10:19.652)
+Sorry, I move I moved this stuff down here so that we have the original one.
+
+Vaibhav (10:23.732)
+And I'll put this right next to this. And the difference between this pipeline, the miscellaneous pipeline, where you added a special instruction into your prompt, like this, that just says like, use that's a disgusting color. that says use the user's preferred language to reply, and you inject the language in here, is that this pipeline is going to just use the model's ability to respond and c have a coherent conversation and reply correctly in French.
+
+Dex (10:32.186)
+What would you ask?
+
+Vaibhav (10:50.848)
+This pipeline relies on both the model's ability to coherently reply and follow instructions.
+
+Dex (10:58.394)
+You're relying on the auto complete and the instruction following, which the instruction following was the last thing we got with models. Like the thing that made Chat GPT take off in a big way was that it was able to follow it. You could tell it to do a thing and it would do the thing you asked. It wouldn't just auto complete the next token in the conversation.
+
+Vaibhav (11:14.314)
+Yeah. So this is kind of how I think about this is like what is the trade off in these pipelines? Well this one has a higher guaranteed outcome to be in the right pipeline. This one has a narrowed outcome. And why might you want a system like this? Well, like, I don't know, let's take what's a bespoke language texture? I don't really know too many. I'm very illiterate except for programming languages.
+
+Dex (11:33.776)
+what is that made up language that that mathematician made? Someone in the chat got it. No
+
+Vaibhav (11:38.422)
+Pig Latin.
+
+Vaibhav (11:42.687)
+Esperanto. Yeah. So like exactly. So like if you did this, well then for really, really popular languages on your system, what you can do is you can track what languages are people are using in your miscellaneous pipeline. And if a certain percentage of them start using a certain language, well then you just build an automatic pipeline for them. And just start converting your systems over.
+
+Dex (11:43.184)
+That's the one. Thank you.
+
+Dex (11:57.048)
+That's great idea. Yep.
+
+Yeah, probably.
+
+Right. Okay, and what if these models are really, really smart and like, hey, look, yeah, I know instruction following is harder over here on the right, but it only makes it go from like ninety five percent accurate to ninety two percent accurate. Like why why why does it matter if it's like the the models are smart enough that like in general this is this is kind of like a rounding error for most like one shot questions.
+
+Vaibhav (12:34.897)
+I'm gonna show a funny page. You guys have seen this, right? The GitHub status page.
+
+Dex (12:37.21)
+Yes.
+
+Dex (12:42.768)
+Okay.
+
+Vaibhav (12:44.234)
+And you know what I'm getting at here, which is like it looks like a rounding error, but like clearly like e like you can just go over here and like look at what the day is. And like it's not a rounding error when you have like ninety nine point eight two uptime is not acceptable for GitHub. So i you think these are rounding errors, but like fundamentally what it really boils down to how do I share this tab again?
+
+Dex (13:08.604)
+This is that idea of like the difference between software that's right ninety nine percent of the time and ninety nine point nine nine percent of the time is like something you can actually trust and use versus something that feels constantly broken. Even if it's a one percent difference. Okay.
+
+Vaibhav (13:19.998)
+Exactly. Exactly. now the problem with this, this whole approach over here is like so while this is one approach, I don't actually recommend people build this approach. And the reason I don't recommend this approach is because now your eval matrix has just gone stupidly hard. Th
+
+Dex (13:35.364)
+And you have to maintain prompts in every frickin' language and tool definitions in every language, and you're gonna be paying like translation agencies to manage these giant translation files that map all this stuff to every language you wanna support.
+
+Vaibhav (13:44.648)
+Exactly.
+
+Exactly. And there's probably subtle differences in like using the right words that change how your pipeline works. And like now your your team who likely speaks one of these languages, maybe two but likely not ten. and likely a s much smaller subset of what your actual of what your actual customers speak. Well, you can't even make these French pipelines better. Like how do you know that updating the English pipeline should also trigger an update in the French pipeline? You don't know that.
+
+Dex (14:03.214)
+It's I don't know
+
+Vaibhav (14:14.122)
+So now your whole pipeline is delayed. So you end up in a world where your English pipeline is updating much, much faster than your French pipeline. Your French users are just sad anyway. And then you ask the question of go ahead.
+
+Dex (14:21.176)
+This is where we will It's it's like it it it's like when certain apps have really shitty support for Windows.
+
+Vaibhav (14:30.636)
+Yeah, exactly. And then there's
+
+Dex (14:32.536)
+It's just like okay, clearly you only care about your Mac OS users 'cause the Windows fixes come a month later.
+
+Vaibhav (14:36.02)
+Yeah. Exactly. And like, you know, like I was talking to a company that serves stuff in Canada and like they have the same problem. They're just like Canadian users are just treated less than like American users, just because infrastructure is not as re readily available there. So how do you
+
+Dex (14:52.048)
+Well, because Canadians just like to mix French and English in the same sentence is a bit. It's like All right, let's go.
+
+Vaibhav (14:55.936)
+Well, there's also that too. so so what is the solution here? Well I have a solution that I think works pretty well, which is you actually build your whole pipeline in English. And this is actually gonna be a very, very, very similar situation to what you'll often see for voice chat bots. So we've talked about voice agents a lot. I think it's gonna be a similar concept here. What you actually do over here is you take the user's input.
+
+Dex (15:18.748)
+Others.
+
+Vaibhav (15:24.077)
+And you do a minimal amount of work with a system that looks like this.
+
+Vaibhav (15:33.622)
+Oops.
+
+Dex (15:35.3)
+No, I think I think we all agree with that. I just making a point of chat.
+
+Vaibhav (15:38.41)
+with a system that looks like this, but instead of all your tool calls and all your systems over here, this s this miscellaneous l pipeline's only job is to basically normalize it so that it can be fed as an input to your English pipeline. And if you think about it, that's kind of what voice agents do. You get audio as an input and you convert audio as an input with speech to text into text so that your normal agent thick pipeline can trigger it.
+
+So like if you think about any voice agent, you talk to anyone that works on voice agents, almost all of them do this. Which is like you have you often have like a audio exactly. There you go. You have this like whole layer over here, which is like audio comes to speech to text, then you have like your ag your agent in the middle, then your agent turns to text to speech, and then you send out that goes and converts to audio. And you just build this pipeline through, and that's how you build a really robust system.
+
+that's not as reliant on like older models because if you want to direct audio to audio well then you have to use like very shitty LMs to go do that because LMs are not very good at pure audio to audio and yes they're they work but no one that does this here I'll put an LM in the middle so it's it's a little bit more No one that does this like everyone that does this in practice knows that the system just produces way worse accuracy when you do this than when you do this.
+
+Dex (16:51.6)
+Sure. I'll fright.
+
+Dex (16:59.69)
+This is like Quinla Kramer, the the founder of Daily, he talks about this all the time. Is like we wish we had really good like speech to speech models, but it just doesn't it just doesn't work. This works so even though it's little bit slower and it's like complicated, it works so much better that it's worth doing.
+
+Vaibhav (17:10.526)
+Exactly.
+
+Vaibhav (17:15.569)
+Exactly. And the accuracy wins and the maintainability wins are way better. And evals for this are easier to build. There's so many everything basically just gets easier when you do the second approach. The same is true for multilingual systems. What I would recommend doing is normalize to your pipeline, build amazing evals for this. Build amazing evals for this. Yeah. So it's solid.
+
+Dex (17:33.486)
+the English pipeline. So you just translate the user's input? Like what does this first step look like?
+
+Vaibhav (17:40.444)
+It could be translation. It could be intent capturing. It could be translation while also including. i you s you could say I translate it and I keep the original text around just in case some l stuff gets lost in conversation. it could be an and then you have to translate it back.
+
+Dex (17:55.835)
+And then you have to translate it back, right? Like you c okay, you have to store the actual 'cause like one of the outputs of this like multilingual pipeline will be
+
+One of the outputs will be like translated message. And the other one will be like source language. And then like you don't pass the source language in. Maybe you do. maybe you also pull in the original message. But then later when you go to translate it back, okay. This makes a ton of sense. You you know what the source language was, that's easy to classify. And so you pull the final output and the source language and you and you send it back.
+
+Vaibhav (18:11.285)
+Mm-hmm.
+
+Vaibhav (18:17.661)
+Yeah. Exactly.
+
+Vaibhav (18:26.665)
+Yeah.
+
+Vaibhav (18:31.209)
+Yeah, and the other nice thing about this approach is you actually get a second win, which is if someone is actually speaking both like in India, for example, a lot of people speak Hindi and English together, mixed up half the time. You actually get the win of this pipeline as well. Cause as long as you include the original source message, like you were saying, Dexter, you can actually keep the original English without with minimal translation loss. You can include into this pipeline that, hey, this is some translated message, by the way. Here's the translation. Now continue onwards.
+
+Dex (18:40.848)
+Take care of you.
+
+Dex (18:59.867)
+With this.
+
+Vaibhav (19:00.211)
+And you just get your assistant response as if you're normally speaking to them and then you translate it back to match the same tone of the original language. And what's fascinating about that is if the user is actually speaking like a mix of like Hindi and English, your translation unit can mimic that conversation flow.
+
+Dex (19:20.858)
+Okay.
+
+Vaibhav (19:21.887)
+Does that kind of make sense?
+
+Dex (19:23.46)
+Because you brought so basically like let's can we model this as like a DAG of like instead of the pipeline pictures, like what are the inputs and outputs at every step?
+
+Vaibhav (19:29.759)
+Yeah. Yeah. Let's do that.
+
+Dex (19:34.474)
+okay, so you have the yeah, you have the original user message.
+
+Vaibhav (19:38.577)
+And let's say for just purposes it's like the user speaking Hindi plus English. Okay.
+
+Dex (19:45.336)
+This is the email you're talking about.
+
+Vaibhav (19:51.293)
+So you can turn this into
+
+Dex (19:53.136)
+I don't
+
+Vaibhav (19:55.195)
+A translation.
+
+Dex (19:59.203)
+So there's like a pipeline node here basically.
+
+Vaibhav (20:01.109)
+Yeah. Exactly. And we turned this to p pure English. You can also do another thing where you take this and you do like some sort of intent capture or something. Like some sort of metadata extraction. Whatever you might want to extract, it doesn't really matter.
+
+Dex (20:03.64)
+You're all whole
+
+Vaibhav (20:21.919)
+And then you have your like actual age agent that you're writing that has a bunch of tool calls and everything else in it. And instead of injecting this message directly into it, you just boom. yeah, I'll let you do it.
+
+Dex (20:29.647)
+Yep.
+
+Yeah, sorry. So this is actually gonna be blue according to this, 'cause the green is the actual like inputs and outputs.
+
+Vaibhav (20:39.645)
+Yeah. Yeah.
+
+Vaibhav (20:44.715)
+So this goes into there. You might want to put the intent capture in there. Yeah, it just it's really up to you what you want to put into it. And then you can even put this thing in here as well. like
+
+Dex (20:46.948)
+Do you also you also keep the intent here?
+
+Dex (20:54.554)
+and we're also gonna output from here, right? We're gonna output the like detected language, right? Detected languages.
+
+Vaibhav (21:00.667)
+I we we might not even need that actually. I think you can just do this. Like translate to pure English, intent capture, and then send it to the agent. Right? And once you've done this, while your agent now produces some sort at some point it'll produce a response.
+
+Dex (21:04.944)
+Okay.
+
+Okay. Sorry about that. I hung up one nice.
+
+I worried that it'd be written in triple.
+
+Vaibhav (21:18.929)
+It's and if if you did any sort of translation, well, it's not gonna produce a perfect response. So then you're gonna say
+
+Dex (21:26.288)
+Yeah, so you have this other prompter pipeline that takes all of these inputs. Where you just jump across profiles and like all that sort of stuff. So maybe we're Sorry, I'm gonna I'm gonna send these into here. Yes, yeah, we shall just call you like this is we haven't even host on here. No, we could only the metrics every time on this based on the stage or design games, which Renard was right.
+
+Vaibhav (21:28.501)
+Make these arrows diagonal.
+
+Vaibhav (21:40.767)
+Yeah.
+
+Vaibhav (21:46.629)
+Exactly.
+
+Vaibhav (21:50.643)
+And now what you're able to do is now you have another pro pipeline that's basically able to convert to the user's tone. So yes, the user sees some delays. yes the user is not getting the same experience as a as a system that's getting pure English into it, but they're getting a much higher quality of experience.
+
+Dex (21:54.432)
+Yeah.
+
+Dex (21:59.537)
+And we started focusing on the common metric of like now all we're not players and we like attention.
+
+Dex (22:08.176)
+And this pipeline would you only take the original message and the response or would you also pull in like the intent capture or something?
+
+Vaibhav (22:24.994)
+I d I don't know. The intent capture is like optional. I should put this in dash. Like it's not like this is like mandatory. Thou shalt do this. This is like if you wanna do this, here's like another thing you can add into this pipeline. and do it y and like remember this is all like agentic stuff. So like part of agentic engineering like software engineering. You can just assemble stuff together. and I keep on adding more layers. Yeah.
+
+Dex (22:33.264)
+Yep.
+
+Dex (22:41.264)
+Right. And that makes each of these prompts or pipelines are like you have a lot of e evals on your like special sauce agent. And then these little pro like translation things are also really easy to like test in eval because then the range of inputs is is smaller to build confidence that this is going to work because it's not solving a smaller problem. It's just like breaking down a five hundred line function into smaller functions that are testable.
+
+Vaibhav (22:58.523)
+Exactly.
+
+Vaibhav (23:05.808)
+Exactly. So let's do this. I'll just show you guys let's just go do this in real time because what better? Of course.
+
+Dex (23:07.328)
+Okay.
+
+Dex (23:12.69)
+we're gonna write some code today? Hell yeah.
+
+Vaibhav (23:19.082)
+did not mean to show that.
+
+Dex (23:23.044)
+I think you're just sharing the window, so you're safe.
+
+Vaibhav (23:25.953)
+okay, cool. That's good. I'm gonna set this up really fast.
+
+Dex (23:27.598)
+Smart. Yeah.
+
+Vaibhav (23:33.701)
+I think RM
+
+Dex (23:34.328)
+Yeah, I had something I think we'll just
+
+Dex (23:39.856)
+See if it tells me.
+
+Vaibhav (23:42.452)
+CD multimodal languages. Let's go. Okay. screen share my whole screen.
+
+And you guys will see how fast this is. This is like very fast to build these kinds of pipelines and build evals for them. So I I wanna make sure that we are able to get some real code done.
+
+Dex (23:54.309)
+Yeah.
+
+Vaibhav (24:06.568)
+Okay. And I don't actually code in cursor anymore, but I do like showing code in it because it's useful.
+
+Dex (24:13.06)
+I mean there's a lot of like conceptual things that are a lot easier to demonstrate with with actual code. Yeah. Looks like your terminal is broken, dude. There we go.
+
+Vaibhav (24:17.992)
+Yeah. Exactly.
+
+Vaibhav (24:24.198)
+I don't know why it takes so long. UV in it. I'm gonna use Python. UV at BAML.by pydentic.
+
+Dex (24:33.902)
+and then there'll be a second piece to that it's like, hey, can we confirm that like when people thought a personality test people actually spend more time on it? Then we know we're doing it right. And so long as we
+
+Vaibhav (24:36.202)
+Kids.
+
+Vaibhav (24:45.458)
+And now that we're doing this, I'm gonna do one last thing, which is
+
+it just happened really fast.md.
+
+Dex (24:56.133)
+Then we know we should push on the light because NPX skills at boundary ml slash BAML.
+
+Vaibhav (25:00.267)
+we have that, but that's for the new language. not for this one.
+
+Dex (25:06.18)
+Wait, you guys are making a new language?
+
+Vaibhav (25:09.727)
+I can't show it yet. okay. So Claude
+
+Vaibhav (25:18.75)
+Yes, I trust this folder.
+
+Dex (25:21.114)
+So a hundred percent 'cause as soon as you have
+
+As soon as
+
+Dex (25:34.8)
+So like I know, maybe you
+
+Vaibhav (25:35.312)
+sorry. I have to go fix this.
+
+Dex (25:40.984)
+Once we get like twenty million people maybe it's a No, right? Yeah, subscription. Then what we can do in H two is vote. Dude, those are enthropic tokens, they just keep getting pricier and pricier. Because you gotta you gotta take everything they'll give you.
+
+Vaibhav (25:46.814)
+Yeah dude. I gotta
+
+Vaibhav (25:55.521)
+and
+
+Okay, I don't really care about this. Okay, whatever. and then split terminal.
+
+Vaibhav (26:09.245)
+Okay. So what I'm gonna do is actually something really simple. I'm literally just gonna take our SVG that we just copied from here.
+
+Dex (26:12.08)
+Yeah,
+
+Dex (26:16.974)
+yeah.
+
+Vaibhav (26:18.569)
+Copy as S V G
+
+Dex (26:20.624)
+You can just copy it as JSON if you want. I don't know if that's gonna Yeah.
+
+Vaibhav (26:23.353)
+No. I want the image. And I'm gonna talk cloud.
+
+Dex (26:29.138)
+it's it's catching up. It's like
+
+Vaibhav (26:29.989)
+Our goal is to build an AI data extraction service that actually works for multilingual applications. We'll have lot l users speaking all sorts of languages, and sometimes even mixes of multiple languages. I want to build a basic pipeline that shows this off with the diagram that I showed as the architecture. we want to make sure that we use small models for any of the translation parts, and obviously our main agent should actually be a little bit more heavyweight, so we can do something interesting.
+
+Dex (26:33.338)
+that's that that's what a good reason we should force us to I think we should have a debate. We should have a debate. Yeah, and like in my head I'm like that feels like the right call.
+
+Dex (27:00.26)
+You wanna tell it what the agent does? Like we didn't actually come up with a cool use case. It could be you wanna do Okay. You think it's gonna you think it's gonna do travel travel booking?
+
+Vaibhav (27:04.775)
+It'll come up with the use case. This is this is what models are good at.
+
+That's a good one. Make the use case travel booking.
+
+Dex (27:16.321)
+Use gauge.
+
+Dex (27:22.92)
+Dallas does call us the most. You know, it's always a joy to watch you exercise the the advice of LMs are actually just really good spell checkers.
+
+Vaibhav (27:25.757)
+Okay, it'll figure this out.
+
+Vaibhav (27:35.943)
+Yeah. It's I don't even care. It's just great. And it actually did this.
+
+Dex (27:39.78)
+Whenever I see people editing their like s yeah. Whenever people I see people like editing their like messages to the model to make them like spelled correctly or fix the grammar and I'm like, that is the worst possible use of your time right now. Yeah.
+
+Vaibhav (27:54.502)
+I usually try and just read the message and sometimes if I catch it I don't send this other message 'cause it got it correctly. and if I don't catch it then I'm like, Okay, well then I guess deal with it.
+
+Dex (27:59.119)
+Yeah. Yeah. Yes. It's a button that's apparent. It's gonna be known as the sounded middle of the sound phone.
+
+Vaibhav (28:08.143)
+this should I think it will do its thing. while it does it thing, do you guys have any questions? It'll probably take like five, six minutes for this to cook something up. Lucas has a question. the Eleven Labs API would be useful to translate from audio to text and back, right? I've personally never used it, but I think they do have an API that a lot of people do like.
+
+Dex (28:08.848)
+That's what I've been requesting to do to do the process of This is my calling. Are you the flooring contest today?
+
+Dex (28:23.296)
+I have a cruise week.
+
+Dex (28:28.88)
+Yeah, I mean it can be parts of that. I think they'll serve you the whole pipeline. It's like a lot of these companies started as like the building blocks because that was the smallest possible thing and then as they grow and get more mature they end up doing
+
+so I imagine the first thing they did was like text to speech and then speech to text. And then, you know, probably a year later they ship the feature. I I know they have this now where it's like you can ship a whole agent, you just put in a system prompt and a bunch of C P tools and they kinda wire the whole thing under the hood for you.
+
+Vaibhav (28:54.462)
+Yeah.
+
+Vaibhav (28:58.747)
+Yeah, they basically just run the while loop and they're like, if you give us a tool definition, we'll just add it to our while loop.
+
+Dex (29:04.75)
+Yeah. How to test a system that you don't speak its language like an AI? Do you trust AI to write code to test AI in another language?
+
+Vaibhav (29:12.849)
+So that is a great question and this is actually a big problem point that I think a lot of people have, which is you can't build evals for things you don't understand. The reality of the system is now that you have good evals, the fragility of your system gets a lot smaller once you actually build a pipe on this, 'cause this for this pipeline you can guarantee it's working. You can basically be sure that, hey
+
+Dex (29:19.93)
+Is your address number?
+
+Dex (29:27.183)
+Yeah.
+
+Vaibhav (29:38.032)
+If I get a good message in that I can understand, is it producing something that you understand? Because you have great evals for this. What you can't guarantee is a translation here good or is a translation here good. And because you can't guarantee that, you have to take two things at face value. Either you do need to guarantee that, so you will hire a team of people to do translations for you in every single language you want to support and build evals for that manually. Or you will say, you know what, these are small enough tasks that I trust these models to be good at, and whatever
+
+Dex (29:42.328)
+Yeah.
+
+Vaibhav (30:07.943)
+Whatever error tolerance they have, I accept. And there's really only two worlds there. if you don't understand the language, there's just like fundamentally you either have to accept the models as face fa as like at fake face value and say that, yep, these solved my problem, or you have to be like, I have to go build a whole team of people that speak the language to go g get incredible data. Does that answer
+
+Dex (30:22.382)
+I know of course that's actually.
+
+Dex (30:28.887)
+And this idea going from ninety nine percent to ninety nine point nine nine percent is often like most of the work.
+
+Vaibhav (30:35.677)
+Yeah. like if you're building a medical company, you you almost definitely need to go and like get eval data for like every single medical terminology. Unless you're like screw it, people around the world just use English, we'll just trust that.
+
+Dex (30:49.646)
+And that's that's the other advice we give, right? Is like your engineering time is usually a lot worth a lot more than the tokens you're spending until you have like millions of users. And so the idea is like, cool, use if if if if a very smart model like an Opus model is fast enough for all of this, then just use the smartest model you can until it gets too expensive and then go do the engineering. At certain point the trade off is like, Cool, now it's worth spending a week of engineering because the money we save by switching to Sonnet
+
+is, you know, thousands of dollars a day or something.
+
+but yeah, that's the the the other thing is like yeah, don't don't try to get too c I mean this is all fun like puzzle solving and and engineering, but like part of the I think the advice we give on the show a lot is like don't over engineer things until you actually have a need for it. Like spend token throw tokens at the problem until it becomes more expensive to throw tokens at the problem than engineer around it and make the same pipeline work with like a GPT OSS one twenty B or something.
+
+They make noise, right? they make noise because the computer's number of images we want to easily.
+
+Vaibhav (31:59.827)
+No
+
+Vaibhav (32:03.174)
+I don't know how to actually add an N bar to this file. I'm gonna add an N bar on this page just in case.
+
+Dex (32:20.637)
+I think we may be like I mean yes, the voice agent stuff is probably the most likely to have good multilingual support. I think part of the idea here is
+
+Vaibhav (32:36.186)
+It's more about what you want to be able to do, behind the scenes. And I'll kind of show you what it is. Yeah. Exactly. And like this matters a lot more the more the more tools you have, for example, your tools are often almost always gonna be run in English. So now you either have to have like copies of your tools in every language or you have to go do this yourself. So let's just try running this really fast. Do you think things work better in a language better than another one? Yeah, I think
+
+Dex (32:40.336)
+Right, this d this does not only apply to voice agents here what we're doing.
+
+Dex (32:47.066)
+In discussion.
+
+Dex (32:59.12)
+Yeah.
+
+Vaibhav (33:04.762)
+Almost definitely things work way better in English and Chinese. Hundred percent. There's just no chance any other language comes close in terms of accuracy.
+
+Dex (33:10.809)
+Unless you're using deep sync.
+
+Dex (33:18.032)
+Yeah, there is that theory that that if you get your ma model to talk in Chinese it's more token efficient. Which I don't know. So there are both stories like I asked them
+
+Vaibhav (33:19.307)
+Vaibhav (33:24.984)
+I don't I don't know if I agree with but like I it's more about like just like the amount of training data on the internet. There's literally like the Chinese internet and then the American internet. And there's just no the English internet is gigantic. Probably the next biggest internet I suspect would be the Chinese one. So it's just like based off of training data more so than anything else. There's also a huge movement in China to build c really high quality models. So like that's feeding into a training loop. and like I know Mistral's there with like on the French side, I just don't think it's big enough.
+
+Dex (33:46.478)
+Okay.
+
+Vaibhav (33:53.372)
+To really drive enough data up there.
+
+Dex (33:56.452)
+This is this is God appointing us.
+
+Vaibhav (33:58.033)
+So why aren't people building agents in Chinese? I mean if you go to China I suspect they are. Like
+
+Dex (34:03.299)
+There is a conspiracy theory that part of the reason that in the newer I mean part of the reason in the newer models that you don't get to see the sit thinking traces. You only see the summary of the thinking traces, or like the th the thinking is passed through some other small model to summarize it. I mean the obvious reason is because if you can get the thinking traces you can easily like distill out and clone a copy of the model. But if you only have the summaries then it's a lot harder to
+
+distill a model with like the you have to regenerate the training data yourself. But the other thing someone pitched to me is like, the OpenAI has been training on deep seek traces. And so the reason why they summarize the thinking in English is because it's actually thinking in Chinese 'cause it's seen so much Chinese data. Conspiracy theory. We don't end we we don't endorse any of these theories here at the AI That Works podcast, but there are so a lot of reasons.
+
+Vaibhav (34:49.007)
+so I'm gonna run this.
+
+Vaibhav (34:58.426)
+So the agent is actually ready. So I'm gonna split the terminal and I'm gonna start running this code. Deactivate. Clear. Okay. So let's start running this code. UV Familog equals off. So I'm gonna run this. I said can we book a trip in Spain? It did some stuff, it figured it out.
+
+Dex (35:06.832)
+Where did you go to slide UV run?
+
+Vaibhav (35:22.117)
+it figured out I'm missing some data and says boom. And just like gave me a response. Can you
+
+Dex (35:29.488)
+And then you're gonna ask Claude for a Spanish version of this.
+
+Vaibhav (35:32.198)
+Give me four examples I can run.
+
+Dex (35:37.604)
+Good stuff. Wow. And then after he's my age, he's been in his late fifties right now.
+
+Vaibhav (35:47.185)
+Okay, so here we go. You got like a combination. So this this is basically a combination of this. let's just try running this. I've I I can speak this, but for those of you that can't, this is basically saying something like I actually wait, is this is that actually Hindi pars? there you go. And you can actually see what it is. What the bot did.
+
+Dex (35:53.77)
+Yeah, our pages last
+
+Dex (36:01.936)
+Like what's the last one?
+
+Dex (36:06.062)
+From Bangalore to Goa for three passengers in business class. Yeah.
+
+Dex (36:16.612)
+Did you it even it even pulled through the the parts that I said in English in the beginning are now in English in the final one.
+
+Vaibhav (36:17.008)
+It actually went through, figured it out.
+
+Vaibhav (36:24.888)
+Exactly. And you can see what it's able to do and you can see why the model might be able to better model the kind of coherency over this, especially over a long form conversation.
+
+Let's make the main script run over a longer form. Also
+
+Dex (36:50.117)
+Yeah.
+
+Vaibhav (36:50.918)
+or chat and not just end.
+
+Vaibhav (36:56.922)
+And I'll show you kind of how this continues onward. And like I don't know, if there's a language that someone in the chat speaks, I'm happy to have it try one of those as well. 'Cause this like I we only gave it we only tested on English. on English, f what's it called? English English and Spanish.
+
+Dex (37:05.326)
+Yeah, yeah.
+
+Dex (37:16.88)
+Yeah, can we look at the pipeline that it made? I said I think one of the things I did was I'm other
+
+Vaibhav (37:19.164)
+Yeah, happy too.
+
+Vaibhav (37:24.626)
+They actually like literally just copied my thing. It did a translation, capture intent, and takes the original message, runs a travel agent response and matches the user's tone.
+
+Dex (37:32.878)
+Yeah, there's really a lot of buttons. A lot of fun is asked for some people. Okay, so we do these in parallel. But so easy. Okay.
+
+Vaibhav (37:36.818)
+So if we go do this, it's very simpler. You run the message. Yep, we do this in parallel. and so it's actually doing the translation intent capture in parallel. Then it just logs them, so it just prints it out probably. Then it actually gets the agent result with the English text and like the intent hit if they want it. And like the intent hit something you might do anyway. Now you get the agent result. Then you actually localize the English back to the user's model. And that's it.
+
+Dex (37:48.112)
+Yeah. Yeah. Right.
+
+Dex (37:54.533)
+Yeah, absolutely. Absolutely. Well Nina, how do you how do you to get to
+
+Vaibhav (38:05.639)
+It's very, very simple thing. It actually gave me like yes we can. And again, these are not high qualified prompts, but I suspect the model prompts are pretty good.
+
+Dex (38:05.838)
+Nice. Can we look at the prompts?
+
+Dex (38:14.062)
+Hope that's a good thing.
+
+Like for example, I probably wouldn't paralyze and send the same message to the model twice. I would probably just have it do a combined structured output of both, right? That's a good thing.
+
+Vaibhav (38:26.243)
+Maybe. I it's just like easier it might be easier to do like a combo or a separate one. It just depends on your flow over here.
+
+Dex (38:30.222)
+Yeah. Yeah, you'd have to eval both approaches, basically. See is it
+
+Vaibhav (38:34.681)
+Exactly. But here for example, one is just a captured intent. The small model, let's look at which one it used. The other is used anthropic haiku. Ooh. Interesting. Claude's getting more biased at wanting to use haiku. It was not doing that before. Claude does have a pro claude agenda. It used to use OpenAI. That's funny. and then it captured the intent, just sent this to you. the next system that we have is let's go back to our pipeline. Let's look at this.
+
+Dex (38:47.512)
+Yeah, the Claude has a very pro Claude agenda.
+
+Vaibhav (39:04.219)
+Let's open the translate to English. I just wrote a very basic thing. Translation preprocessor. Do this. And it says like it actually says interesting things that I wouldn't have thought about, which is just like place names should go to their st exactly. and that's actually definitely true. Like the way you might s frame this in Hindi would you say dulli, but it's spelled D E L H I in English.
+
+Dex (39:16.72)
+Transliterated place names.
+
+Dex (39:26.138)
+Well what a great story. I'm so glad that we found we found
+
+Vaibhav (39:29.691)
+And that's just like one example of a thing. So you can see how if you build evals for this, you might find very special things that you have to go add in. and then obviously like this relies on the model to not actually respond. And there's tricks here. So instead of using a model to do this, what we can do here is we can just like count the number of words that are like frequent English words in your in your actual input. So it actually becomes a really fast pass to your system. Exactly.
+
+Dex (39:43.652)
+Yeah. So what I will do in this out.
+
+Then I will not
+
+Dex (39:56.625)
+To classify the language. so you can basically say like, let's check and see if it looks like it's English and then if it is, then skip the classification pipeline and just send it straight to the English pipeline and skip the translation layer.
+
+Vaibhav (39:59.548)
+So before we even send it
+
+Vaibhav (40:12.099)
+Exactly. And you can see how it can speed this up. and did it actually build a website for me? I think it did. That's funny.
+
+Vaibhav (40:32.229)
+It actually just runs a f it actually just runs a demo for me.
+
+Vaibhav (40:38.723)
+it actually just runs a full demo and shows me exactly what's happening with a user message along the way. but this is kind of what I find to be really fascinating with these systems is it becomes detecting them way better. And you can see over here the agent eventually determines it was ready. I think the way that this works is it keeps on running the agent tool message until it's ready to go. And then once it actually determines whether or not it's done or not.
+
+Dex (40:51.15)
+Well see the problem.
+
+I do that in the secret storage.
+
+Dex (41:04.824)
+I took a I took a look at my sheet here. You said you're an eight five one five album. Doesn't look like I designed it.
+
+Vaibhav (41:08.167)
+Where is this? It basically tries to see whether or not the conversation is done. where is this? Quit buy reset.
+
+Dex (41:16.72)
+Please Okay. Take care.
+
+Vaibhav (41:20.829)
+at some point it just sort it determined if it's dead or not. Where is this?
+
+Dex (41:22.522)
+Sounds great. I'm rotating that.
+
+Vaibhav (41:26.533)
+Where's the user message? Where we determine doneness.
+
+Vaibhav (41:34.529)
+it just has hard hard coded demo turns. but you can imagine how you would r only exit if you actually had ready had ha like ready to search was actually true. And if ready to search was true, then you actually like exit and you're able to go exit on this termination.
+
+Dex (41:41.168)
+We have a TV.
+
+Yeah, wait, what's the output what's the output type from the agent? Like is it is it like a yeah, is it just like a a discriminated union?
+
+Vaibhav (41:54.692)
+Agent result?
+
+Vaibhav (41:58.372)
+It's very simple. it actually has a bunch of stuff. It tells you all the missing info, whether or not it's ready to search, and then the English reply.
+
+Dex (42:08.108)
+Okay. And I guess the okay, so chat turn
+
+I guess like when does it decide that the agent is done looping through tool calls? Are you sure? Actually. I don't think that's right.
+
+Vaibhav (42:16.293)
+When ready to search is true.
+
+Yeah. I mean in the actual code it doesn't do that, but I can go make it do that. It just runs forever. Until you actually say I'm done or if I it's ready to go. let's make the hell, I'll just tell it to do that. The agent should actually exit when it's gotten all the information and let the user know that it's gonna start a search and then get back to them ASAP. There you go.
+
+Dex (42:23.536)
+Life is good. Take care, why would we drink it?
+
+I see. But
+
+Dex (42:43.128)
+I guess that's not really what I'm asking. I'm more like where where is the where is the object that is like returning like tool call versus like final message?
+
+Vaibhav (42:52.322)
+right over here. It's only returning the tool call. Yeah. Yes.
+
+Dex (42:55.632)
+So it appends a chat turn with the reply English. So it can't do like multiple searches yet. It's just like a one turn agent. that's fine. Okay. Yeah, yeah. Yeah. We've done that episode a hundred times.
+
+Vaibhav (43:07.501)
+not right now. Yeah. I would have to go add multiple s you get the point of how I would go build multiple searches here. I would just add a while loop around this thing and now I have multiple searches. Yeah, exactly. the point of this episode is to show how easily it is to add these sort of translation units above and in front. And then how you can make the user still feel kind of like in flow with this approach. And now I just added the results so we can actually know when we're done as well.
+
+Dex (43:24.944)
+Speaking of which we can get to all the fires here today, but I can cover up more on the cycle.
+
+I drew on the whiteboard, if you go back, the the kind of like flask fast classifier approach.
+
+Dex (43:41.624)
+If you go to the right a little bit, this would be cool to implement as well. Whereas like basically, yeah. If it if it looks like English using like a regex or a string contains, we just skip it and go straight to the main pipeline.
+
+Vaibhav (43:44.901)
+Yeah. That was easy.
+
+So
+
+Vaibhav (43:56.801)
+Most of our users are actually English speakers. We do have some that speak other languages. The problem with this current pipeline is it adds a lot of latency to non English to to English users, even though they're a higher proportion of our user base. What I'd like to do is write a quick little heuristic that lets me know if a user mostly wants English or not. Mostly by checking the following. We should just take the mo most common words in English that appear almost everywhere, check if the sentence contains them.
+
+And if it does, then we can just run the English pipeline reply back in English. And it's really just some percentage threshold that we can set based on what we find.
+
+Dex (44:35.162)
+this seconds. Yep. And then what I'm gonna do is I'm gonna make you make that function always return true. And we are going to test the pipeline with none of your fancy AI shit and see if the smart model can just answer in the right language for the user.
+
+Vaibhav (44:49.414)
+i that's a good way to test it out. Yeah. and I think what's really interesting about that query is like when you do this, you'll literally get to see exactly what the model is doing. And I one thing I wanna do in that case, I want to make sure the model isn't hard coded to respond in English.
+
+Dex (44:53.4)
+yeah.
+
+Dex (45:11.928)
+I mean the result type is reply English.
+
+Okay. Yeah, that's good.
+
+Vaibhav (45:26.118)
+There you go.
+
+Vaibhav (45:38.555)
+Yeah, so it's gonna go build this. I wan but you notice what I had to go do right away. Cause if I wrote reply English, it's gonna reply in English, no matter what I do, and that will not be good. so these are the kind of small little details that are really easy to overlook. And once you do this, you might not you might think that your agent is not working when really it's just like one word in your prompt that's derailing everything. And that was literally just one word.
+
+Dex (46:00.175)
+Yeah. This is the inverse of that thing we talk about of like, there's this cool thing do where you can not change the prompt and just change the output schema. Go ahead. And actually the schema is part of the prompt because what you name the fields tells the model what they should be. But also what you name the fields will tell the model what they should be. And so you can accidentally leak intent about what you want or the wrong steering into your output format. And the model's gonna read that and decide, okay, cool, I need to translate this, even though you asked it not.
+
+Vaibhav (46:12.838)
+Yeah, exactly.
+
+Vaibhav (46:27.02)
+Exactly. So let me show you how this
+
+Dex (46:28.12)
+Once you create these competing things where then you're relying on instruction following, which again is like pretty dang good these days, but is always gonna like reduce the success rate of your pipeline if you if you're relying on complex instruction.
+
+Vaibhav (46:41.262)
+Yep, and this is much faster. so once this is ready, I will actually run this. It's actually running some tests for me now.
+
+The nice thing about actually having a system that by default makes people add tests is the model does run them by default, which then it determines if it's good or bad really fast.
+
+Dex (47:05.614)
+Yeah, that's nice. So you can create that like internal back pressure where you d I mean, I do this all the time. It's like every time we have we have a bunch of inference in our cloud and every time someone complains I just take the complaint and paste it in the cloud. I'm like make a new eval for this and then iter iterate on the prompt until all the tests pass. Basically the the very expensive Jeppa.
+
+Vaibhav (47:09.037)
+Yeah.
+
+Vaibhav (47:24.406)
+Exactly. So and like if you don't in my opinion, like if you're editing your prompt and you're not running tests, like why are you just making life hard? Like you're just making the model's life hard. What I wanna happen is when the model stops working, I wanna be really confident that the thing is just going to work.
+
+so let's run this and now I think I can run this. I it just picked like a thing over here. Verify it
+
+Vaibhav (47:55.001)
+No, just tokenize, I don't care. EV run main dot py. I think if I run this okay. So we've got a quick little REPL here. So let's just try this. Hey, let's book a trip to Spain. And you saw that it went straight to English, gave me a response. And it's still doing intent classification, so that I can remove intent classification too. if I want.
+
+Dex (48:06.608)
+I want to go to Spain.
+
+Dex (48:15.586)
+English fast.
+
+Dex (48:21.2)
+Yeah, I feel like that that was that was the only reason we had intent classification was to make the pipeline better, right?
+
+Vaibhav (48:31.738)
+Vacation for the English part models already under stand intent well. Okay, cool. let's just go do that really fast, then it'll be way faster. And then what I'll do, I I would actually love to try the thing right after what you said. Which is let's just I'll just pass in the I'll just paste in the Hindi demo that it had right over here.
+
+Dex (49:00.922)
+Yeah. I wanna I'll give you some spaces.
+
+Vaibhav (49:01.529)
+And like we'll just try it.
+
+Vaibhav (49:08.165)
+It's very interesting. This agent loop is always the slowest pull. And I
+
+Dex (49:14.892)
+Is the actual like going and thinking and like using the smart model to call tools and stuff.
+
+Vaibhav (49:19.298)
+Exactly.
+
+Dex (49:27.886)
+I like that it said bye at the end.
+
+Vaibhav (49:29.907)
+Ha ha ha.
+
+Dex (49:32.08)
+Good one, Claude.
+
+Vaibhav (49:34.914)
+It says by, it's not clawed actually. Every time you hit exit, the CLI tool is
+
+Dex (49:38.542)
+No, but I mean yeah, but Claude wrote that into the script.
+
+Vaibhav (49:42.548)
+where? yeah, right over here. When you hit control C it says bye. That's a nice little touch, you know?
+
+Dex (49:47.119)
+Yeah.
+
+Dex (49:52.516)
+Wim a little clawed coated whimsy.
+
+Dex (49:58.969)
+I mean I guess Telnet also does that.
+
+Vaibhav (50:00.44)
+Okay, cool. I think it's ready to go.
+
+So trip to Spain.
+
+And this is just like the single model that just does this directly.
+
+Dex (50:12.196)
+Yep. Yep.
+
+Vaibhav (50:15.597)
+and you can see that it's it'll probably work. No one has any doubt on this, I suspect. But let's do the most more interesting thing, which is now let's turn off the
+
+Dex (50:28.004)
+Let's just make that thing always return true, right? Twenty six foot. If true. Yeah, there you go. Hell yeah.
+
+Vaibhav (50:36.231)
+so this will be fascinating.
+
+Dex (50:44.42)
+I wonder if you have like multilingual in the prompt anywhere or something.
+
+dude, it did respond in England in English. Okay, so we do need that thing. Wait, let's let's make it back to untrue and run it again.
+
+Vaibhav (50:52.267)
+Exactly. So now we can search. Let's just
+
+Vaibhav (50:59.781)
+Yeah.
+
+Dex (51:03.568)
+I mean false.
+
+Vaibhav (51:05.675)
+I love untrue.
+
+Dex (51:07.504)
+Yeah.
+
+Vaibhav (51:18.167)
+And and like boom. Right? And you and like this is just like straight proof of what's going on behind the scenes. And like we can we can just check really fast. Like who knows? Like maybe maybe when we do send English, there's some prompt in here, but it's really the same run agent loop as what we had before. This is the exact same travel agent. It's just that the model is Yeah, let's look at it. Let's just make sure that we didn't inject anything special on here. So first
+
+Dex (51:19.384)
+Okay. Magic.
+
+Dex (51:36.974)
+Yep. And can we just look at the travel agent prompt?
+
+Dex (51:45.69)
+Yeah.
+
+Vaibhav (51:46.009)
+This is response, so we're definitely not we're definitely not getting
+
+Dex (51:52.088)
+Yeah, but all your tool depths are in English.
+
+Vaibhav (51:55.061)
+Everything is in English. whoops.
+
+Dex (51:59.255)
+that'll do it. Alright, let's try it again.
+
+Vaibhav (52:03.193)
+Let's try it again.
+
+Dex (52:05.706)
+so we have to go back to always true, right?
+
+Vaibhav (52:07.885)
+I wanna I wanna find all the English. Okay, now we actually have all the English. Okay.
+
+Dex (52:14.286)
+Was there not a no your agent result? No, so yeah, you aliased it. That's right. Okay, cool. Yeah, yeah, yeah. All right.
+
+Vaibhav (52:17.569)
+I changed it I at least at the response.
+
+Dex (52:25.188)
+You search for scent. Yeah, there you go.
+
+Vaibhav (52:37.849)
+Still English.
+
+Dex (52:39.645)
+Mm. Interesting.
+
+Vaibhav (52:42.735)
+So my suspicion is like it's just again, it's like if we go back to what we were talking about earlier, it's just it's just there's exactly it just
+
+Dex (52:47.28)
+Yeah. There's so much in the prompt is English that it's just getting tuned toward and even the world's smartest model isn't smart. I mean, I bet if you r if you asked it to respond in the language that the user said, then it might do better, but
+
+Vaibhav (52:59.149)
+Yeah, so I can add in and again, that's that's literally what we were talking about here, right? We can add this in here. But if you want guarantees, and again, it's about how much confidence do you want in your end user happiness. Well, if you want high confidence in your end user happiness, don't use audio to LM to audio. Use audio to speech to text, to LM to text to speech to audio. Similarly, don't use non English to LM to non English. Use non English to English to LLM to English to non English. Like it's the same exact system.
+
+Dex (53:04.078)
+Yeah. Yeah.
+
+Dex (53:11.438)
+Yeah.
+
+Dex (53:18.639)
+I love it.
+
+Dex (53:22.49)
+Yep.
+
+Dex (53:28.836)
+This is sick.
+
+Vaibhav (53:29.369)
+and it's and it's really cool that we have like real proof here that just shows that e in even the most simple example. This agent has no tool calls, it has nothing to complicate. The model should be able to figure this out, but it can't.
+
+Dex (53:39.64)
+That's true.
+
+Dex (53:45.092)
+This is a good app, dude. I like this. This is
+
+Vaibhav (53:45.145)
+So
+
+for anyone should definitely try this out. hopefully like you can just take this code, you can literally just get clone this and the repo will be live in like couple seconds and you can just go at it and your system will just work.
+
+Dex (53:59.835)
+Yep. You can load this in and use it for I loved also the the other cool takeaway for me was like pasting frickin' S V Gs or pasting PNGs into clawed code. Actually it works pretty damn well these days. It's cool.
+
+Vaibhav (54:11.567)
+Yeah. Yeah, I love pasting PNGs in. It's actually what I do most of the time. I build architecture diagrams and just paste them in.
+
+Dex (54:19.216)
+Fascinating. See I always have Claude make H D L and then I iterate back and forth on the H DML. But at some point you gotta go do code.
+
+Vaibhav (54:25.157)
+Yeah. The images are I find faster. shall we do a if people have questions you can post them in the chat. While we do that, let's do a quick little outro recap. Dexter, do you wanna record it? Or do you want me to do it?
+
+Dex (54:38.768)
+sure. I can take it. Let me steal the screen share, yeah.
+
+Vaibhav (54:44.087)
+Okay. or you can tell me where to move it. I just follow you here. I'm following you.
+
+Dex (54:47.64)
+That's not gonna work. That's not gonna work.
+
+Vaibhav (54:50.443)
+I trust. Do you want me to post wait one thing, I'm gonna post screenshot of the code in here.
+
+Dex (54:52.246)
+all right, cool.
+
+Dex (54:58.93)
+yeah, drop drop that on there too.
+
+Vaibhav (55:05.271)
+And I'll run this one more time with the same thing.
+
+Vaibhav (55:18.381)
+No way, you have two examples of code.
+
+Vaibhav (55:27.857)
+copy and pasting.
+
+Vaibhav (55:33.697)
+It's such interesting work, how much manual work that we still do as software engineers. All right.
+
+Dex (55:36.549)
+Sure.
+
+Yep. All right, go put that somewhere else. sick. Okay, cool. you ready?
+
+Vaibhav (55:45.099)
+I got two images for you actually.
+
+Dex (55:55.665)
+All right, y'all. This week on AI That Works, we talk about multilingual model pipelines. and the difference between ChatGPT and an app that you might make where you would want to add a lot of steering in your system to narrow the outcomes that a user gets. So if you have a lot of instructions in your system prompt, the problem is is that if most of your prompt is in English and then the user answers in French, the model's gonna be very heavily steered towards i English. And so even if the user asks something in French, they're probably getting an English answer.
+
+And there's a couple like the naive way to do this would be to like classify the input and put it into an English pipeline or a French pipeline, or you could try to rely on instruction following and ask the model to basically follow the user's preferred language, which you know is gonna have a lower success rate. Or you can do the pipeline that we propose here, which is basically you take the user message, you classify it into English.
+
+You have another pipeline to get the intent. And then your core business logic that you eval and test a lot is going to be in English. And then you do these small micro functions on either end, very similar to how a audio pipeline would work, where basically you have audio, speech to text, LLM, text to speech audio. we are going to translate on either end and have the core logic be a big, beefy, smart LLM that we can test the heck out of. we talked about some optimizations for detecting English, if that's our primary language.
+
+And we wrote a whole lot of code to get these agents working. and even back tested it to prove that if you do not do this pipeline, you are much more likely to get a English response than a response in the user's native tongue or even a mix of you know dialects and tone. So really cool stuff. I learned a lot. as usual, everything that we're all about here, AI engineering, break down the problem, make it testable.
+
+and you know do some proper good old fashioned engineering. This is a really fun episode. I can't wait to get into it.
+
+Vaibhav (57:48.035)
+Let's get started.
+
+Dex (57:50.456)
+That's kinda long. You wanna do a shorter one?
+
+Vaibhav (57:50.935)
+Alright everyone. Sure, we can re record it again. Do it.
+
+Dex (57:55.664)
+All right, we'll do one shorter one, we'll let the editors pick.
+
+Cool. Today on the AI That Workshow we talked all about audio pipelines and a bunch of kind of varying levels of naive to slightly less naive to quite sophisticated levels of did I say audio? It's not audio. Fuck. All right, we'll do one more.
+
+Vaibhav (58:14.798)
+You guys love our live retakes? This is really what it's all about, you know?
+
+Dex (58:18.2)
+This is the fun part, right? Okay, cool. on this week's episode of AI That Works, we talked about building agents that work in multiple languages and the problems if you just pass in user input to a mainly English pipeline, the naive ways you could approach that, and then some sophisticated pipelines that break down the problem, do some optimizations, and show you how to get models that r respond really reliably in whatever language the user has, while most of your business logic lives in one language.
+
+Usually English that you can eval and test the heck out of, and you're just doing poop translations on either end. And then we showed you how to build a real agent that follows these principles and proved that if you don't do the pipeline, it really just will always answer in English. So very fun episode. I learned a lot. Thank you, ViVov. Thanks everybody. I'm excited to get into it. Yeah, that was much better.
+
+Vaibhav (59:04.846)
+Let's do it. Let's get started. I agree. That was way shorter. We got we we gotta practice this stuff. We'll get better as we keep doing this. Imad, you have a question of whether or not last week's episode will be on YouTube or not. It should be. we are catching up on a couple of episodes, but you should start seeing these episodes show up every single week. I think last week's is coming up in the next week or two, but this week's will be on on Friday. You should get full access to it.
+
+Dex (59:10.512)
+Yeah.
+
+Dex (59:30.938)
+Yep, from here going forward we will have the full episodes available the Friday after we after we record them, so a couple days later, and then we will be doing a little bit of catch up over the last couple of weeks where a as as we have capacity to backfill those two or three episodes that got missed during the transition.
+
+Vaibhav (59:47.032)
+Yeah. We missed about two episodes left, I think. I think we have one of them uploaded now and we have two more to backfill. All right, folks. Have a good one.
+
+Dex (59:54.001)
+Cool? Alright, y'all. Thanks for joining. Have a great day. Good luck.

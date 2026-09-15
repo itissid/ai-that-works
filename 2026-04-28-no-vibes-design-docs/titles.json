@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Can an AI Out-Plan a Senior Engineer?",
+    "rationale": "This title uses a provocative question format to create a compelling hook. It speaks directly to the ambition of tech leads and senior developers by framing AI not just as an assistant, but as a high-level collaborator that can challenge established human expertise. It implies a deep dive into achieving exceptional quality in planning."
+  },
+  {
+    "title": "Using Sloppy Code to Build Perfect Plans",
+    "rationale": "This title is actionable and uses a counter-intuitive hook based on the episode's 'fighting slop with slop' philosophy. The paradox of using 'sloppy code' (quick internal tools) to create 'perfect plans' (detailed design docs) is intriguing to developers, who understand the trade-offs between scrappy tooling and production-quality work."
+  },
+  {
+    "title": "The One-Shot Implementation Plan",
+    "rationale": "This title leads with the ultimate benefit for any developer: making implementation easier. 'One-Shot Implementation' is a powerful, desirable outcome that immediately signals the value of the design process being discussed. It frames the entire episode around the practical goal of writing code correctly the first time, thanks to superior planning."
+  }
+]

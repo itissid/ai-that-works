@@ -1,0 +1,828 @@
+Vaibhav (00:01.243)
+All right, I am late and I am sorry.
+
+Dex (00:05.088)
+You know, it's more fun for me when you're late because I get to talk shit about you in the chat and that I enjoy.
+
+Vaibhav (00:10.631)
+Dexter, I will promise you you don't have to wait for me to be late to do that.
+
+Dex (00:14.741)
+I should just do it now?
+
+Vaibhav (00:16.687)
+Yeah, just go for it. This ripped me. No, I'm joking. Please don't. I'm a sensitive soul.
+
+Dex (00:19.682)
+Damn. Well, it's Cinco de Mayo. And that's...
+
+I do have your link though. And I'm really excited. You know what? I'm excited for this episode. We're back to normal. Just me and Vaibhav. And I think sometimes we get a little obsessed with creating really, really high quality content when the best part of this show is the mediocre content that you all have come to love and expect. So we are going to hang out. Some stuff been going on lately in the news.
+
+Vaibhav (00:48.487)
+you
+
+Dex (00:55.918)
+But ViBub, you wanna introduce yourself and the show and then we'll get into it?
+
+Vaibhav (01:00.167)
+I'm one of the co-founders at Boundary. make a programming language called BAML. And we're really excited to show some of new stuff coming up very, very soon. But I'm going to put a pin on that for today. And then we've got Dexter over here, who's my co-host. He's... Go for it. Tell them.
+
+Dex (01:16.152)
+Yes, I'm Dexter. I can say, yeah. I'm the CEO and co-founder of HumanLayer. We build tools for engineers to get better results from AI. So you can move two to three times faster without AI slopping up your code base. And today we're going to talk about slop. And we're going to talk about...
+
+where it comes from and there's been a lot in the news. So I guess I'll introduce the show to you. This is AI that works. We talk about AI that actually works. We do a lot of systems diagramming. We go deep on the concepts underneath and try to help you learn things that'll help you push beyond the demo. And today I'm really excited to talk about, there was a ton of stuff going on online. We did the harness engineering thing like two weeks ago. I've been complaining about people writing shitty AI written harness engineering articles online for the last two weeks.
+
+at which point Ryan Lopopolo of OpenAI was like, sorry for the hardest engineering hype. What?
+
+Vaibhav (02:09.464)
+You wanna pull up the tweet? You wanna show the tweet? Yeah.
+
+Dex (02:14.528)
+Yeah, well, so I'll show the tweet that started this. Yeah, where is?
+
+Vaibhav (02:18.49)
+that triggered us to have this conversation.
+
+Vaibhav (02:28.134)
+The TLDR is just like, what we really want to do is just, I think, a little bit more detail into talking about what it means to build harnesses in way more detail, and what harnesses can and cannot do, and where the alpha really is in this world, at least from our perspectives.
+
+Dex (02:49.122)
+Yeah, and basically, know, our job as people who work in AI all day and talk about it sometimes is to cut through the hype and cut through the jargon and try to help everybody move forward and be productive with this stuff because there's a lot, there's a lot, there's a couple good articles on harnesses going around.
+
+And for every one good article, there's like 10, like half AI written slop of people just engagement farming. And so I think it's worth kind of taking a stand here.
+
+Vaibhav (03:11.408)
+Are there?
+
+Vaibhav (03:15.621)
+Yeah.
+
+Vaibhav (03:20.016)
+To be fair, Daxter, is this you engagement farming over here? Are we producing one of the good ones?
+
+Dex (03:25.89)
+No, I think engagement forming is specifically is like when you do something that you know is low quality or low effort, just because you know it will give you more likes to do it and more engagement to do it than to not do it.
+
+Vaibhav (03:37.302)
+yeah, okay, okay. So it's because it's high effort, it's not engagement farming.
+
+Dex (03:42.998)
+It's a high effort, it's genuine. It may yield engagement, but we're not doing it just for engagement. We're doing it because you all have a right to know.
+
+Vaibhav (03:45.252)
+There we go.
+
+Vaibhav (03:54.669)
+I agree. Let's pull something up. A lot of people are asking what's a good way to high effort ragepate. what's a good way to high effort ragepate? Just yell. No, what's a good way?
+
+Dex (03:56.29)
+So, let me go find this tweet real quick.
+
+Dex (04:09.582)
+No. Yeah, I mean if you try really hard, it's probably still rage baiting, but...
+
+Vaibhav (04:15.302)
+What are I think a few people are asking like what are good articles for harness engineering if I'm completely honest the best way to do any of this harness engineering stuff is I would get clone codecs I would get clone PI and Then I would try and build a harness. That's better than them at one thing for one task And like it doesn't matter what the task is. It can be data science. It can be writing unit tests. It can be like end-to-end tests That's probably the best way to really get good at it
+
+And if you really want to read an article, and maybe Dextre has some ideas, but my opinion is, for example, when I want to go learn about a new feature, I just git clone a repo that is a good example of that feature. And then I just have Claude or Codex explain it to me. Let's go talk about this in detail. Let's talk about every design decision that was made. there we go. The tweet.
+
+Dex (05:07.842)
+Yeah, so here's the quote. while alternative coding harnesses may have short-term lift, they will be bitter lessened away. I am bearish on any harness that doesn't come from the lab whose model you are using. You're fighting against post-training. To put a finer point on this, you know how like, Yoctals are like, huh, that's weird, but I guess whatever it's what we've got, we can work with that. It's exactly the same with like the particular JSON construction that the Codex Shell tool uses. And so the model, this is like,
+
+Pre-Clawed code, before we figured out how to do this in RL, the model used to mangle nested quotes in this monstrosity RPC all the time. It basically was bad at tool calling. The way they made the model good at tool calling, we talked about this two weeks ago. But ViBub, you want to put a point on this and just kind of draw out pre-training versus post-training and how this stuff looks. Ryan is kind of right, but I'm also like.
+
+There's more follow on stuff and responses to this that we'll dig into, but I want to just clarify what he's saying here. And then we can jump into, as requested, the much longer article about context harness engineering that was posted a couple of weeks ago.
+
+Vaibhav (06:06.534)
+Yeah.
+
+Vaibhav (06:13.53)
+Yeah. Yeah. like here's.
+
+My theory, again, this is my theory. Please do not take me on it. This is not financial advice. But it might be AI advice. When I go look at this, when I think about the quality of a model on any given task, let's say a model has a curve that looks like this. Why is this line so big? I can't do this. This is emotionally hurting me. Let's say a model has performance curve like this for a lot of tasks where it performs really good in this region, but then for tail end tasks that it doesn't
+
+have lot of data for it starts like flatlining its performance. Effectively at post training what you can do is you can kind of like make this, oops, I'll use a different color. You can change the shape of this curve to be like this. And then with more post training you can get better and better and better over time. And I think Ryan's quality.
+
+Dex (07:05.496)
+Sorry, what are the axes here?
+
+Vaibhav (07:09.488)
+quality on this side, then type. It's like a type of task, like difficulty of task or like constraint of task or something. And you can kind of make it better. I think Ryan's point in theory is definitely correct. In some sense, you are definitely correct that the best way to get alpha for a lot of tasks that are extremely hard for a model are to go train for it. And if you have enough data, nothing is almost going to be as good as training for that task.
+
+My particular opinion on this is the part that is really missed here is actually a software question that has nothing to do with models. And I know Dextre and I have talked about this. If you go think about what is running here, you have an LLM, and you're right that there's high alpha here. Then you have a harness.
+
+And then you have this last thing, which is like the environment that you're running in. The thing that I think makes this impossible to have any model company maintain alpha over this is as long as they keep using the same exact API as everyone else to talk from harness to LLM and back.
+
+Dex (08:28.59)
+So this is like the completions or responses API, And open AI or Anthropic has their own, but it's like close enough that you can translate it.
+
+Vaibhav (08:30.893)
+or responses API. Yeah. Exactly. Yeah. Because the environment that you run the harness in is often owned by the user.
+
+Vaibhav (08:50.373)
+And because this is often happening, not only in user-owned machines, but like there's a second dimension of it, which is like, actually I'll talk about it in a second. There's nothing that they can do from someone building another harness that basically mimics this because you can always capture the web request coming out of here and you know exactly what alpha that they have. So any alpha they have,
+
+Dex (09:10.04)
+Yeah. We've, we've done this on the show before, right? Where we basically like put a proxy between Claude code and the LLM API and you've pulled out like, when it does it, when it does a file edit, uses new string, old string or actually technically old string, new string, but yeah.
+
+Vaibhav (09:24.141)
+Yeah. Yeah. So the point is like, but the point is like, as long as you know the shape of the call that the model prefers to make, nothing prevents you from having the model make that shape of call. Like there's nothing. Yeah.
+
+Dex (09:40.238)
+Right. Passing that tool shape to the LLM. Okay. So let's zoom out. Like, why does it matter that you give the LLM the same tool definitions and same tool parser, like response parsers that, that, that cloud code uses? Yeah. This is, think where the RL stuff comes in. Cause this was the first time we got models to be good at tool code.
+
+Vaibhav (09:52.502)
+sure. Yeah. Why do you want the exact same tool definitions? In fact, yeah, this is what we're talking about with post training. So like what Cloud Code team is likely doing is that they're taking the...
+
+Dex (10:06.318)
+Okay, so this could be one task which is like call edit tool properly without mangling the JSON, without like fucking up the workspace.
+
+Vaibhav (10:12.27)
+Yeah, exactly.
+
+They actually don't even, I wouldn't even say that. It's like success. The metric is just like success of like edit tool.
+
+Dex (10:25.518)
+Sure, yeah. mean, well, are you talking about success of just like calling it properly or like doing the edit to solve a problem?
+
+Vaibhav (10:27.108)
+Right.
+
+Vaibhav (10:32.345)
+both.
+
+Dex (10:34.636)
+Yeah, so this is like your sweep edge performance or something.
+
+Vaibhav (10:35.341)
+Right. It's just like success. Exactly. Exactly. And what they can.
+
+Dex (10:40.622)
+But like embedded in this is one of the things you have to do to succeed at Sweet Bench is you have to be able to call the edit tool correctly the first time so you're not wasting a bunch of context retrying it over.
+
+Vaibhav (10:50.507)
+Exactly. So what ends up happening over here is when you're doing this, tool, the models are basically being trained, like Claude Opus, whatever the latest version is, is being trained for this specific version of the edit tool.
+
+And like technically these models are fairly general purpose. So if you use it for a slightly different version of the edit tool, it's not like you're getting way worse performance just to be very clear. You're likely going to get like something like this. Oops, I didn't get the right line. Interesting, I cannot draw a dashed line.
+
+Dex (11:21.774)
+Yeah, like if you called it, like let's say for example, you switched new string and old string. That might impact your performance by 0.01 % per call, right?
+
+Vaibhav (11:32.641)
+Exactly. like fundamentally, like it's like, it's basically the same performance because these models are so general purpose. It's just slightly worse. So it's not even like that big of a difference, but it is a slight difference and likely the best alpha for any given task, assuming that the model providers are choosing to post-train on that task is here. Now, if they're not choosing to post-train on the task, it's very possible that your implementation is actually better than what the model is doing because they're not actually opting
+
+optimizing for it. But if the model weights are being optimized for it, you should use something like this because you will just get slightly better performance. There's still caveats in which you can do better. But in general, this is like a good. In machine learning, there's no such thing as absolute truths. You're just like general rules of thumb. So this is a good general rule of thumb.
+
+Dex (12:04.28)
+Right.
+
+Dex (12:10.689)
+And the...
+
+Dex (12:23.384)
+And I think it's also worth noting that the chart, I won't pull it up, but the chart you always cite of like, Hey, if you're going to do a hundred turn operation, reducing your accuracy by 1 % actually has like a 25 % impact on the final result or more because of how that comes.
+
+Vaibhav (12:30.308)
+Yeah.
+
+Vaibhav (12:36.741)
+Exactly. Yeah, so if you're doing like 50 tool calls because you're doing a coding agent task, it compounds real freaking fast.
+
+or like 500 tool calls. So I think once we go from here, so now we understand how LLMs are kind of optimizing the harness for this. They define specific tools in here, which they also post-train the model on because they have a bunch of data for that. And now that they're post-training on it, now they can go do it. So the shape of this doesn't actually matter. That's the key part that a lot of people think about. if you're a model provider, you actually don't have to care about the shape of your tool call at all. You spend zero effort on that.
+
+You post train, so it doesn't matter. Exactly.
+
+Dex (13:16.03)
+because you're going to post-train. I see. Yeah. So if you're pre-training a model, basically, so you have these two stages, right? You have like pre-training. I'm not going to draw a diagram of pre-training. is post-training.
+
+Vaibhav (13:29.763)
+I mean, to some degree, might matter, but effectively, you train the model on general English, tool calling, whatever, and then you post-train it on the coding agents for the tool calls that you care about the most.
+
+Dex (13:39.886)
+So you have data and this gives you a pre-trained model. And then you have RL, RL or RLHF where you have humans labeling datasets. And then you have a post-trained model.
+
+Vaibhav (13:51.247)
+Yep.
+
+Yeah, you likely now they probably use cloud code as like a good training test set if I were them. They have so much data from there for free. Like that's probably the best thing for these companies is how much high quality complex data they're getting with coding agents. So.
+
+Dex (14:01.932)
+Yeah. Yep.
+
+Dex (14:10.028)
+Yeah. Okay. Cool. Okay. So that's why knowing what tool calls the harness is sending to the LLM is important to get the best results from that LLM. And so let's go back to the point you were making, which is like, okay, cool. As long as the harness runs on my machine, which it has to do, if it's going to access my files and my shell and stuff like this, then I will know the tool call formats. And so I can basically, I mean, this is, think Dax has mentioned, this is how OpenCode has developed their
+
+Vaibhav (14:22.304)
+Exactly. Okay.
+
+Vaibhav (14:33.721)
+Yeah.
+
+Dex (14:39.886)
+tool calling syntax because like the tool for cloud code is edit, but the tool for chat GPT is patch. And it's like this long string. It's like file. And then it's like this long, like it looks like a get diff.
+
+Vaibhav (14:53.284)
+Exactly. again, it's also dependent. Go ahead.
+
+Dex (14:54.51)
+And if you try to use GPT-5 in the Cloud Code harness, because again, if you are proxying here, you can also just like divert, instead of sending a proxy in through transparently, you can divert all this traffic to a different LLM, you are gonna get terrible performance because GPT knows how to call this tool and it hasn't been post-trained on this tool.
+
+Vaibhav (15:18.432)
+Exactly.
+
+You won't get terrible performance, you'll get slightly different performance. Terrible is hard to say because these models are very good general purpose machines. And there's three questions in the chat that I think are worth on this topic really fast. So one of the questions is, am I alluding to the fact that DSPy or BAML can do slightly better than the model if it makes no assumptions on the tool calling shape? And the premise here is exactly that. So you can definitely do better than models for general purpose tool calling than what models do.
+
+Dex (15:29.934)
+All right, let's pull it up.
+
+Vaibhav (15:49.623)
+the more complex your shape is, the less training data that there is for your kind of shape. Often a really complex kind of shape that really suffers from this is recursive data types. Because recursive data types are so nuanced and they have intricate relationships along them, getting a model to output extremely complicated recursive data types, you just shouldn't do that in general. It's going to be very expensive and everything. Sorry, it's not expensive. It's going to be very hard to get high accuracy out of it for hard tasks.
+
+can likely do better than the model by default unless they are post-training on it. The coding agents live in a... Go ahead. Recursive data types. Yeah, there's a whole bunch of other reasons.
+
+Dex (16:23.822)
+I will also add that the Anthropic API does not support discriminated unions.
+
+Vaibhav (16:33.732)
+And then the other part fundamentally is like JSON is not the best way to represent all data because of escape characters. like for again, for simple, like these model providers are now specifically encoding specific kind of tools. They're getting better at that. And that might mean it's getting better across the shape of all of them. But what I suspect it means is it's getting really good at writing code in JSON format, not necessarily. And I don't even think they do code in JSON format. I suspect what they do is they detect it's this tool, then they do this, then they don't.
+
+require JSON, they just parse it until they get a special end token. That's what I would do if I were them. Because then you don't have worry about teaching the model escape characters. You just let it output code like it's supposed to output code.
+
+Dex (17:15.224)
+Do you want to like draw or screenshot or code that last point of like,
+
+Vaibhav (17:17.751)
+Okay.
+
+Vaibhav (17:21.57)
+Yeah, sorry, I said a lot of words and I probably can describe that a lot better. Split. How do I split?
+
+Dex (17:30.03)
+If you want to steal the screen show, can by the
+
+Vaibhav (17:33.892)
+One second, I accidentally split all my tabs, combined all my tabs. There we go. OK. Now I'm happy to. So what that means is a model effectively is just outputting one token at a time. So when you do tool calling, what you effectively do is, actually I have a blog post on this. It's going to be better than what I have shown. So I'll just pull up some image really fast.
+
+Dex (18:04.558)
+Do you want to just paste them into the whiteboard?
+
+Vaibhav (18:06.305)
+Yeah, that's exactly what I'm doing.
+
+Vaibhav (18:17.111)
+Did someone delete my image? No, all my images got deleted.
+
+Dex (18:23.832)
+What were you saying last week about how it's okay to let AI slop run rampant on your marketing site, just not in your production code? Somebody said that. I don't think it was you. I think it was somebody else,
+
+Vaibhav (18:29.315)
+It's possible that I said this. It's okay. I'll pull it up and go describe really fast.
+
+Vaibhav (18:44.423)
+Okay, let me draw this straight out. Effectively, what happens? You ask a model to generate a tool call. So a model is basically just generating token sequence after token sequence.
+
+It just generates one token at a time until it does this. then obviously it has a sequence of input tokens that came before it. So these are input tokens. These are output tokens. When it decides that it wants to invoke a tool call, it says some English tokens. Then eventually it outputs a very special token that's like the tool call token. It says, I'm going to initiate a tool call. And usually after that, it outputs more tokens. like, here's the name of the tool call. And it'll say the name of the tool call.
+
+Vaibhav (19:27.607)
+name.
+
+Let's make that font very small so I can be reasonable. And then I'll start outputting the data. And once it outputs a tool call name, what Anthropic or OpenAI or any of these companies can do is they can now say something like, from this point onward, you can only abide by proper JSON. So if you're outputting an array, it has to be a correlate, a choice. And it continuously goes onward. Now, what I was alluding to is if you're doing the edit tool call, I actually don't have to do this.
+
+because I'm doing post-training. I don't have to abide by JSON rules anymore. I have to know that this is special tool that I know special things about that has different constraints and everything else. And what I do now is I let you output something like old code. I don't know if I have a token for this or not, but I'm just theorizing here of how you could do this. You have a token for old code. Then you could have it generate a bunch of token sequences that are basically just like arbitrary code.
+
+It's not good. That just does this over and over again. And then you can have it code generate A, new code, and does this again. And you can see how one does not end up having to do any special JSON encoding here. And then you can output one special thing that says done.
+
+And now you're effectively done with this by injecting three special tokens. Not saying that you have to do three special tokens. There's even simpler ways to go do this. But there's many reasons why you don't want to enforce grammar for to edit calls for tools and stuff because like...
+
+Vaibhav (21:12.907)
+It's just a, one, it's a huge waste of tokens, and two, there's no way that the model will generate the best code if it has to JSON escape it while it generates code for large diffs. So I would rather just do it much differently and not, this is, someone's asking, don't they just enforce grammar? So this is also a form of grammar enforcement, just to be very clear. It's just a special kind of grammar enforcement that is not JSON compliant. This is a grammar enforcement that says, if you call the edit tool,
+
+output a token that's called old code, then any sequence of tokens, then you must output a new code token, then any sequence of tokens, then the done token. It's still grammar enforcement. I think people just think about grammar enforcement as enforcing JSON. That's not what that means.
+
+Dex (21:59.616)
+Okay, so what does this have to do with recursive types and discriminated unions?
+
+Vaibhav (22:03.779)
+Ah, the point is once you start doing discriminated unions or something else, do have to use something like, unless you're post-training, you have these special tokens for the tool that you care about, you effectively have to do JSON grammar. And JSON grammar is perfectly fine. But like we said, now you have to enforce this. Then you have to enforce the tokens for actually outputting proper JSON. So you have to do like, key.
+
+Vaibhav (22:35.843)
+and then another quote token. then a, and again, I don't know the token vocabulary off the top of my head, so I'm like just pretending what tokens are.
+
+Dex (22:44.514)
+Yeah, like this might be its own token kind of thing.
+
+Vaibhav (22:46.901)
+Yeah, exactly. That's a good thing to just draw it there so people don't think of it as single tokens. And maybe the answer is like 100 here. Or maybe the answer is another map with another key inside of itself, because it's like a recursive map for whatever reason. And once you start doing this kind of data shape, there's just less training data in the world on like extremely complicated recursive types that have relationships between each keys. So the model is kind of trying to do two things at the same time.
+
+Dex (23:16.044)
+And so, and so maybe the context engineering slash harness engineering here thing here is, is less about how you talk to the model and more about like, how do you provide tools to the model in a way that the model is going to have a chance of calling it? Well, you know what I mean? Like the reason why cloud code works is because the tools that are the core of it, read, write, edit bash are damn simple. There is no nested object in.
+
+Vaibhav (23:31.488)
+Exactly.
+
+Vaibhav (23:40.64)
+Exactly. and the, remember there's a special token here that we already mentioned, which is like, this is like a special like start tool call. There's a very special token here. And I think the main thing that I was trying to point out to people was that for many things, start tool call is a good thing, but it's also very possible that the best way to actually just get the best alpha here is just to just let the model keep doing output tokens.
+
+like normal and just you've built your own format that is actually more efficient at encoding the data that you want to encode because the model providers haven't really optimized for this kind of behavior yet. That was kind of the point of this. And this is how you can get alpha on top of the models even though you're not doing this. Yes, that's question one.
+
+Dex (24:09.112)
+this special format.
+
+Dex (24:26.478)
+Cool. You said there were three questions in the chat. Were there some other good ones that we want to jump in on?
+
+Vaibhav (24:30.371)
+Yes, do you have an idea of why Harness for the cloud code Opus 4.7 is the worst harness?
+
+Dex (24:39.566)
+Oh my God, it's because when you run Opus 4.7 in Cloud Code with no customization, you start your context window at 50,000 tokens because there's 32,000 tokens of tools and 10,000 tokens of system prompt. That's my take.
+
+Vaibhav (25:01.121)
+Yeah, I think my take is probably people over index on the benchmarks too much. I think most tasks in software engineering don't require the best stuff. So just like use the thing you like. And like, I agree with Dexter. Yeah, let's talk about that right after.
+
+Dex (25:15.246)
+Should we talk about benchmarks real quick?
+
+Like what are the main ones and like how are these models actually post-trained RL, right?
+
+Vaibhav (25:25.365)
+I don't think benchmarks matter for this stuff, personally.
+
+Dex (25:29.282)
+Well, guess not less benchmarks, more like, I mean, the benchmark and the data set is kind of the same, right? You have your like train and test data sets.
+
+Vaibhav (25:38.755)
+No, because I think the benchmarks are like, how do I define this?
+
+Vaibhav (25:48.163)
+Let me think what I'm trying to say. When I think of coding agent benchmarks, every single time I look at one, I'm like, it's fucking bullshit. Because it doesn't match my behavior as an engineer. What I want is I want to toss a really, really hard problem at the model, and then I want it to go solve some bullshit for me. And that's just, I don't know about you, but I find that like...
+
+the model makes way less of a difference than people claim it makes. And I find that it's more about the processes that we put around it that helps increase the system. So when I used RPI, for example, I felt like that boosted my system more than any specific model or harness did. And that was like a...
+
+That was the thing that matters a lot. The benchmark is like, I don't care what they say about the benchmarks unless it actually like lets me ship more code.
+
+But what do you think?
+
+Dex (26:49.282)
+I mean, I think it's the reason I think this is relevant is like, talked about this, like, RL environment or RLHF that gives you the post-trained model. And the models only know how to code well on the types of things that they've seen. And so you can look at something like, learned this actually chatting with, Calvin, who was one of the OGs on, the Codex launch, but there's this thing called sweep bench multilingual, right?
+
+So we take the model and we teach it to do these, to like learn how to call these tools well and to like increase in the reliability at a certain task. You have Sweetbench multilingual, is, it works off of, so the original Sweetbench was just Django, right?
+
+Vaibhav (27:34.784)
+Yep. It was also like a single very simple task, what I saw.
+
+Dex (27:41.334)
+Yeah. So you basically, you would take the repo. this is roughly, I'm like within reason. This is, this is how it works. You look at past PRs and I think they got like 2000 of them. if you actually, there was a bunch of these that got distilled down. so it's like useful PRs. this was what was called like, and it gets distilled down to like less.
+
+And this is how you get Sweebench verified, which was basically like all of the tasks were actually like looked at by humans and made sure these were like actual good tasks for the model to do. And you basically give the model an RL environment.
+
+Dex (28:27.094)
+where we should really have Menge on to talk about this, honestly. This would be a great episode of like going really in depth on how code RL works. But you basically like check out the code before the PR. You ask the model, ask the coding agent to fix it. And remember coding agent is model plus harness.
+
+Dex (28:52.782)
+And then the output is like changed code. And then you have some sort of like verifier, which is like, did the model actually complete the task? And this can have one score. It can have a lot of scores. This is similar. We talked about JEPA. There's like frontiers here. So this might be like test correct. Maybe like you might penalize it for like simplest solution. So like the more lines of code it writes, it gets a little bit penalized.
+
+There's all these like reward functions, basically token cost time. Yeah. And then sweet bench multilingual just basically takes Django. And then also I forget all the projects that are in it, but you have like a red S or C C plus plus. I think, I think it's just C. Uh, you have, forget what the other ones, but there's basically like, you have it for all the different programming language. You have one for Java. You have one.
+
+Vaibhav (29:23.894)
+Yeah. Yeah. So we had this to be bench.
+
+Vaibhav (29:36.746)
+Yeah, it does a bunch of random projects.
+
+Vaibhav (29:49.814)
+Yep, makes sense.
+
+Dex (29:50.358)
+for, for Golang, you have like a bunch of different projects where you do this process. And then basically based on these results, you actually use that to like adjust. use like, again, like you use it to do like GRPO or some, some fancy, fancy thing that actually updates the model weights.
+
+Vaibhav (30:09.216)
+I don't think they update the model weights here. I'm pretty sure this sweep bench is just about like...
+
+Dex (30:15.414)
+So there's the benchmark which you can use to put it in and then evaluate the model. But then also, like my understanding is that when you do RL, you use the results on these benchmarks. When you say this is part of the training data, it's like we're using this to adjust the weights so that it gets good at lots of different types of coding tasks.
+
+Vaibhav (30:23.872)
+Yeah, in theory you can do this. If you have metrics... If...
+
+Vaibhav (30:32.554)
+Yeah, once you...
+
+Yeah, once you have metrics, can optimize for them in various ways. I agree, yeah. I think...
+
+Dex (30:41.292)
+Yeah. And like you have another one that is like terminal bench, right? Which is like, the thing call bash a lot?
+
+Vaibhav (30:50.242)
+I think, like, no, my computer died.
+
+Dex (30:56.344)
+your computer die?
+
+Vaibhav (30:58.08)
+my monitor did. Okay, I'm back. Sorry. no, my monitor's still dead.
+
+Dex (31:02.337)
+Okay.
+
+Vaibhav (31:07.83)
+has happened today. my HDMI port came out. That is a skill issue.
+
+Vaibhav (31:17.406)
+There we go. There we go. Okay. I am back to being a normal human being. Okay. I think I agree. I think, but like there's a couple other things that maybe we should chat about. I think the main thing I really want to make sure that we really stress on is like this whole point about like is there bitter lesson? Is there value in building a harness? Or like are the labs basically fucking everyone? And like that's all that's all it is. Like if you're not a lab you're fucked.
+
+I have a really simple reason why I think that's like, it's actually like the labs that have almost no alpha. They basically do all the work for all the people to give other people opportunities to build better harnesses. And I think this is why people are building better harnesses. Because the labs optimize, I think this goes into like psychology of like what is an organization really optimized to do. A lab to some degree has to believe that the alpha has to be related somehow. I'm scrolling up to a higher part, Dexter. If you click on me, can follow me.
+
+Dex (31:48.536)
+No.
+
+Dex (32:09.142)
+Yeah, yeah, Yeah, yeah,
+
+Vaibhav (32:11.171)
+On the right, yeah, there you go. The lab to some degree has to believe that there's some strong alpha in what they are doing tied to what they have. So it's almost in their incentive to only discover solutions that are tied closely to the model. But.
+
+Dex (32:14.125)
+Yeah, okay.
+
+Dex (32:28.364)
+Right. And that's basically, it's like, okay, what is our unique advantage is we have a crap ton of compute and we have a lot of researchers who are good at doing this post-training stuff and we own them all.
+
+Vaibhav (32:36.253)
+and we own the model. But I think that's actually red herring, in my opinion, because this is just a pure software thing. So imagine you're in this world that we were talking about earlier. So I'm going to go back to this drawing that I had. I'm going copy and paste it, and then bring it over to the side, and then clean it up a little bit. The thing is, when you're doing this over here,
+
+This is an open-ended response. There's no way for the model to prevent you from recognizing what this API call is. You can observe this. Now someone might say, and why is this true? Because if you're a coding agent, this coding agent is typically running on a user-owned machine. But.
+
+someone might say that, no, actually this is going to run on the labs machine. The labs will not let you run their coding agents on your machine. You have to go into a cloud computer that ends up running this. So now this is a lab-owned machine. Exactly. But it's still, even though it's a lab-owned machine, it's user-owned code.
+
+Dex (33:25.24)
+Yeah, this is how like Devin works and like cognition. Yeah.
+
+Vaibhav (33:38.408)
+If the user is running code, you can't prevent them from doing this because at some point they're going to make an API call and they will go do this. If you're billing them on their API usage, at some point you're going to expose what API call you're making to the end user because that's what they're being billed on. mean, some, mean, like if you're, okay, let's say you're making some API usage over here and you're being billed for this. How are they going to ban you from seeing your own API calls to what the models are? Assuming that you're using an API key to go,
+
+Dex (33:51.746)
+Talk more about that.
+
+Vaibhav (34:08.392)
+process it. Let's not say like...
+
+Dex (34:10.072)
+But if it's lab owned machines, what if they're proxying all the auth and like, don't, all you, all you put in is a GitHub issue and you get back a PR. Like let's talk through that world.
+
+Vaibhav (34:18.401)
+It just depends on if they want to build any sort of interopter like observability on pricing or anything else on that They could say no But we haven't really seen a lot of companies that do massive compute that don't have intricate pricing availability for what they do Very few companies are like totally opaque that do usage based consumption
+
+Dex (34:33.55)
+don't know if I agree.
+
+Like I know Cognition works really, really hard to make sure that their system prompts are kept secret. Like I don't know if those have been leaked.
+
+Vaibhav (34:52.053)
+the cognition prompts.
+
+Dex (34:53.676)
+Yeah, like this system prompts and stuff like that.
+
+Vaibhav (34:55.806)
+I think it only works if they're probably not selling to that many people. Once you start selling to large number of people, you will leak your system prompt. It's an inevitability.
+
+Dex (35:05.08)
+chat. I'm nominating someone in the chat to go see if the Devon cognition prompt has been leaked.
+
+Vaibhav (35:09.855)
+Yeah, it's like I think Vercell tried really hard to prevent their system prompt and as soon as they got like a lot of users eventually they just had it leak. Exactly, you can't prevent this stuff from leaking almost. It will leak. The thing that is like we said, the more important thing is like the tool call APIs, like the tools that you define. You can make it hard for people to understand exactly how you use the tool.
+
+Dex (35:15.441)
+yeah, V0 prompt is everywhere.
+
+Okay.
+
+Vaibhav (35:34.164)
+And like you could have a tool that's called edit tool that actually does like really fancy things underneath the hood. But again, it's a binary running on a machine. To some degree, it's a binary running where you are running user code. If you are running user code, the user can tell your coding agent to write a thing that sniffs at we know. Exactly. Exactly. Like you cannot prevent this. you like.
+
+Dex (35:52.76)
+to write a proxy that sends data out of the environment to me. Yeah.
+
+You basically move the proxy into the lab done environment and then you, you, out, out shell it. Yeah.
+
+Vaibhav (36:03.195)
+Exactly. Exactly. You cannot prevent this stuff from happening, no matter how hard you try. There you go. There's the Devon prompt. It's not even a ... I think the point is there's no alpha here, and that's really the hard part about what all these model providers struggle from, which is you cannot prevent people from understanding what your tool call is. There is a way you can prevent them, which is you can build a ...
+
+Dex (36:13.666)
+Nice.
+
+Vaibhav (36:32.981)
+Run string commands on binary. I mean, the stringing doesn't work either because like disassembly is really easy to do with a model now. Models can like under disassemble like code that used to take humans like weeks or years to go do. They just do it way faster. Yeah, exactly.
+
+Dex (36:45.454)
+yeah, dude, without even without even prompting it, I was debugging a Claude code thing and my Claude code running started reading through all the compiled like minified JavaScript to like figure out what was happening.
+
+Vaibhav (36:55.005)
+Exactly. Yeah. like because of that reason, there's no way.
+
+Like that's kind of why, like when I see like there's no alpha here for the long term and why you can't prevent the harness engineering from leaking. That's why I think it can't be better lessened away. Because what you end up doing as a model provider is you have a model that provides this level of skill. I don't like this. This level of skill. Then you build a harness that adds a little bit of alpha on top of it. And you do a lot of, you spend a lot of money to go up a little bit on top of this.
+
+and then someone else basically just builds a better harness by looking at you and like thinking harder. And they just big think. Like you think and then they big think. But they spend way less money on their big think than you spend on your big, and then on your think.
+
+Dex (37:42.062)
+Okay, but what if this, I mean, guess the question is, we talked about this on the other Bitter Lesson thing, like what if you take it in this direction, right? And then the lab releases a new version that takes it in a different direction. now even, yeah, then you have to come over here. Yeah, let's color code these.
+
+Vaibhav (37:53.686)
+That's fine. Then you just big think. You big think again. It's not like it's a problem. Your job as the person building on top of the model is like, you just think more. It's like...
+
+I think the best analogy, if you guys watch the show, hear me talk about performance optimization will work a lot, because I think it's a very, very similar system. Like the hardware people build hardware, and you write software that makes you run really, fast on that hardware. Then the hardware people invent something new, and you're like, fuck, I write new software that runs really, really fast. And that's just what you do. Like every single time Nvidia releases some new GPU instructions, that's an opportunity for you to rewrite your algorithm from scratch and beat the
+
+out of your path system. Like that's what you can do, right?
+
+Dex (38:41.418)
+Okay. We've got about 20 minutes left. Do you want to go through the harness engineering paper together, the article from like February? Or should we take some more questions? What do you want to do?
+
+Vaibhav (38:54.241)
+We can do that. Let's take some more questions. Sounds like people have a lot of questions on here.
+
+I think the paper, hopefully people understand the point of like why we think like the models effectively can't really own this stuff. It's like, it's running on your code. It's running your code on your machines. There's no protection. They cannot prevent you from understanding how they make tool calls. They can prevent you from understanding how they use the tool calls in their actual harness, but like that's binary disassembly. And like you can disable binaries and go understand them. can, you can like track a binary's like file call access, like syscalls.
+
+Dex (39:24.654)
+Well, and it's also if you...
+
+Vaibhav (39:29.635)
+and just like track all the syscalls that binary is making and just know exactly what it does and like regurgitate it.
+
+Dex (39:41.848)
+Can dumb model with good harness beat the good model with bad harness?
+
+Vaibhav (39:50.929)
+It depends on the delta of dumb and good.
+
+Dex (39:53.996)
+I mean, I think this is the same thing as like the context engineering argument, right? It's like, if you can actually like narrow the scope of the problem to exactly what you want to do, and you can optimize for your use case, then it's not even, can it beat it? It's like basically the hard, the dumb harness, the worst harness in the world is just YOLO prompting a model. Just open the thing and ask it to do a thing and no programmatic anything in between. And then the entire spectrum between that point.
+
+Vaibhav (39:58.838)
+Yeah.
+
+Vaibhav (40:18.674)
+Exactly.
+
+Dex (40:23.776)
+and the harness, the lab ships and the alternative like way of interacting, the model that you can build. we talk, I mean, we talked about this last year of like, Hey, look, one will output these reasoning traces. But if you have a very specific problem and you put in the time to code it up, you can get GPT four, mini or GPT five mini to do the same thinking thing with thinking turned off. just happens. And, and again, like,
+
+Is that better than having the official like reasoning tokens in your trace? I don't know. It's an optimization problem. In the very long term, are you probably going to need to rebuild that as models put more and more kind of like attention optimization into the layers of the model to focus on like official thinking tokens versus thinking tokens in the plain output context? Probably. But again, it's what we said is like
+
+You can context engineer the models faster than the labs can release a new model every six months.
+
+Vaibhav (41:23.072)
+train a model. Exactly. And that will always be true. If the labs get really fast at training a model, should, in theory, get faster at context engineering a model. In theory.
+
+If I had to ask a question, is there a new DevOps layer for tech companies where you just have to always keep up to date with the latest models? I think the answer is yes. If you're using models for anything, like writing code or in your actual product, it's part of your job now. You always have to test the newest model and be like, does it uplift your customer value higher? And if it does, swap it out. AB testing is fundamentally a big part of software now.
+
+Dex (42:08.558)
+This is you e-bills.
+
+Vaibhav (42:08.896)
+Dextra, I don't know if you guys agree. What else have we got? There's a couple more I saw.
+
+Dex (42:15.928)
+Can you explain how this relates to Anthropic's anti-distillation attempts? Weren't they trying to conceal or spoof the tool shapes?
+
+Vaibhav (42:23.476)
+Yeah, and they probably realize that's pointless.
+
+Dex (42:26.69)
+Well, so the new Opus model 4.7 doesn't show you the reasoning traces anymore. Have you seen that?
+
+Vaibhav (42:33.382)
+yeah, makes sense. They're just like, we found some alpha, Clodex OpenAI doesn't either for that reason.
+
+Dex (42:39.394)
+Yeah, you get the thinking summaries, but not the tool traces, the reasoning themselves.
+
+Vaibhav (42:44.296)
+Yeah, they won't give it to you. really, I didn't mention this earlier, but the one way the model providers can prevent you from doing this is they could just say certain tool calls you can only make if you're calling from our harness. That's really hard to do because proving that you're not from a harness is really, that you are from a harness is really, it's very much like browser agent stuff where it's like you can spoof coming from any browser anytime. What?
+
+Dex (43:07.274)
+dude, it's impossible because you know what's happening with the open claw thing is they started it said, Hey, if you're using open claw, you can't use your Claude code subscription. And then they made that a policy. And then a couple of days later, if you had part of the open clause system prompt and your system prompt, they would start blocking you. And of course then everybody else, okay, we'll, change our system prompt and just change, take that part out. And so a couple of days later or weeks later, it became clear that it was like.
+
+Vaibhav (43:16.767)
+Yeah.
+
+Vaibhav (43:20.084)
+Yeah.
+
+Vaibhav (43:23.4)
+Yeah, exactly. Yeah.
+
+Dex (43:36.686)
+people, they were looking in the recent Git history for the types of commits that OpenClaw would make. And so if you have any of those in your recent Git history, then you get blocked or diverted to extra usage. I don't know. I'm not taking sides on this one. If Anthropic wants to give me a discount and wants to set rules about where and how I'm allowed to use it, like that's their prerogative as a business. And you can vote with your dollar as to whether you're cool with that or not. But I think...
+
+Vaibhav (43:43.465)
+Yep.
+
+Vaibhav (43:48.425)
+Yeah.
+
+Vaibhav (43:57.663)
+Yeah, that's their choice as a business. I agree.
+
+Vaibhav (44:06.176)
+I mean, as a business, you can do this, but that's what I mean. It's impossible to go do this. It's like saying you can only access a website from Chrome. Yes, you can do that. It's just very, very hard to guarantee it. It's like...
+
+Dex (44:06.733)
+yet.
+
+Dex (44:17.058)
+Yeah. I mean, it's, yeah, we're basically going to have like bot detection, but for custom harnesses at a certain point where it's like every, it's a constantly moving frontier of every time the provider starts blocking something, everyone changes their behavior to not hit that, that catch. And then they have to bring new heuristics all the time and it's just constantly moving.
+
+Vaibhav (44:22.364)
+Yeah, and it's...
+
+Vaibhav (44:34.912)
+Yeah.
+
+And that just means you're going to have false positives and false negatives. And that's just like the tax of business. It's like if you run a store, you have some amount of shoplifting. It's just part of running a store. And like this might just be part of running a model company.
+
+Dex (44:48.28)
+Damn. Is people shoplifting your subscription plan to use it for sending discord messages to your buddies?
+
+Vaibhav (44:54.118)
+Yeah, I guess. Yeah.
+
+Exactly. This is a new form of token lifting. That's what it is. Token lifting.
+
+Dex (45:02.018)
+Yeah.
+
+Cool.
+
+Vaibhav (45:06.608)
+Bruce has got a question. Can you talk about the limits of harnesses running long-running tasks and is there alpha to optimize your own long-running build workflows versus using best-in-class harnesses? I think so. think like long-running tasks are still very, very unsolved because they're just, again, it's tasks that have less training data. So if you have an engineering workflow in your team that you know works for your people, building a custom harness that does that workflow
+
+It's just, it's going to be good.
+
+Dex (45:38.894)
+Yeah, and I think we talked about this a couple of weeks ago, but like it's worth mentioning you have like the model, you have the LM, and then you have like what we might call the like inner harness.
+
+Dex (45:57.752)
+So this is things like the tools, the tool definitions, the tool implementations, like what they, after you edit a file in cloud code, it returns like information about that file. you run, know, edit returns context, or when you run bash, like it's like.
+
+long bash responses automatically offloaded to a file. It's things like long read calls rejected and sent to basically like you have to use limit offset. But then we'll
+
+Vaibhav (46:31.358)
+Yep. Yeah, it's like this is where you start getting alpha and like...
+
+Vaibhav (46:46.868)
+Yeah, exactly. again, this is like the
+
+problem with this stuff is it's averaging for the general use case. So we have certain files, like snapshot files, that are long by default. And we need the model to read all of it when it reads it. it's annoying that that ever happens. And every time it does, it actually lowers our performance. Because now the model has to read this thing by an offset. So I think the one mistake that a lot of people make is that they forget that the engineers building this stuff are the same as you.
+
+Like they're literally building the exact same as you. Maybe they have a little bit of more knowledge about like what Anthropic is doing next. But like if you've ever worked at a big company, you kind of know how that works. Like you don't really. Like it's just like information arbitrage anyway, even inside the companies. So like my opinion about all of this is just like, if you were good at finding alpha before, you should still be good at finding alpha now. I have a...
+
+Dex (47:46.074)
+where, where I'm going with this is just like, have your outer harness, which is like, okay, how do you, yeah.
+
+Vaibhav (47:51.818)
+Can I show the perfect image?
+
+I did this yesterday.
+
+Vaibhav (48:02.569)
+you scroll down you can show it later. That's one.
+
+Dex (48:04.065)
+Yeah.
+
+Vaibhav (48:07.067)
+All you're going to do is you can build any amount of harnesses around it that just go do this, and you just keep stacking your while loops to add more intelligence. And if you've got a while loop that has more information than the one inside of it does, you can do better. The RPI loop that you added is a while loop that has more information than the one inside of it does, because it knows that I'm doing some sort of a process around engineering. And that makes that inner loop perform better, because it's not trying to do as much.
+
+Dex (48:29.678)
+Yeah.
+
+Vaibhav (48:36.959)
+I think you can just keep stacking loops. And I honestly think this is what software is going to keep becoming. We're just going to keep stacking loops forever. Like someone asked about beads and gas sound. Beads and gas sound is just another loop on top of this. We'll just run another while loop. And then you got beats. Exactly.
+
+Dex (48:48.565)
+Yep. Yep. Yeah. And then you put a while loop on top of that and you have gas. mean, this is what we're saying, flying a little bit, but like, yeah, this is a really good picture. I agree.
+
+Vaibhav (48:59.847)
+Yeah, this is how I've always thought about it. Like, and as long as you can find a while loop to add on, you can find alpha.
+
+Dex (49:09.602)
+Yep. mean, this is someone just posted the other day. was like, I built my first, orchestrator on top of open AI goal, right? So Codex is a goal mode now, which is kind of Ralph Wigamy where it just like, keep going until you do the thing and launch new context windows. And it's like constantly doing this like internal compaction on the goal. And he was like, yeah, so I have this thing that like basically one thing generates the goals. And then another thing goes and takes all those goals and fans out and completes the goals. And it's like, okay, cool. You pull one more loop on top of it. And it's, I don't know.
+
+Vaibhav (49:34.847)
+That's a while loop. Exactly.
+
+Dex (49:39.884)
+This is again, some of the hype stuff where I'm just like, okay, cool. did that. but like the thing you built is probably just like a hundred lines of Python or TypeScript. And so like, I don't know if there's like, there may be alpha in it, but it's also, it's like, I don't think there's a, there's a moat in it. So I'm curious ViBob for you, like for people who want to build tools that are going to be around for awhile, solve problems in a way that is sustainable. Like what advice would you give folks?
+
+Vaibhav (50:06.297)
+your job is not to build any one while loop. Your job is to always build the next while loop. And if you feel that you can't keep up, then like I would quit now and go cash in right now. And there's a of money to be made.
+
+Dex (50:14.423)
+Interesting.
+
+Dex (50:21.294)
+Okay, you heard it here first. Lean into the grift and get paid because this is really hard and if you don't have the gas for it, then you might not make it.
+
+Vaibhav (50:31.551)
+I wouldn't say it's hard, it's just like a thing that you have to keep doing. This is very, very different than previous software where you learned a thing and you could build a career off of building a PHP dev.
+
+You can't, like performance engineering, think that's why it's so hard. Like machine learning work is so hard and why AI engineers, not today's AI engineers, like traditional machine learning engineers or performance engineers were paid so much money. It's because the rate of speed that you have to update was so fast. So like if you're a performance engineer, every new hardware revision, you got to learn it real fast and you got to know how to ship it. And like you got to make, and you have to invent for the new thing like you invented for the old thing. You can't just like have invented for one
+
+Dex (51:10.562)
+otherwise you're gonna fall behind.
+
+Dex (51:15.022)
+Yep.
+
+Vaibhav (51:17.223)
+type of hardware and be like I'm done I'll make a career off of this and like that's what that's what software is now trend exactly your skill set is your ability to understand core concepts and reapply them over and over and over again
+
+Dex (51:22.016)
+It's the velocity, not the position.
+
+Vaibhav (51:34.367)
+in a very different way. Leak code is a great skill now. People that previously good at leak code, and I don't mean memorizing, but truly just solving from first principles. Sorry, I have an Excel draw somewhere, but this is not it. That's actually, in my opinion, still a hireable skill. Because if you're good at application of fundamental skills on the problem sets, that is what this Y loop skill is.
+
+Dex (52:00.0)
+And here's my final pitch too, is like, use all of this to solve a problem. Like this is part of like product engineering, right? It's like, don't just build the thing, like go solve a problem, understand your impact. Impact and like, I don't know, not to get corny with it, but like make, make a thing people want.
+
+Vaibhav (52:05.136)
+yes, yes.
+
+Vaibhav (52:14.898)
+Yeah.
+
+Vaibhav (52:20.776)
+Wait.
+
+Dex (52:21.09)
+Make a thing that makes people's lives easier, that solves their problem, that they're willing to pay you money for. Oops.
+
+Vaibhav (52:24.69)
+Wait, wait, put it back. I want to the last thing.
+
+Vaibhav (52:35.006)
+Boom. Make the world a better place. I'm joking. But generally, make the world a better place. I do think that's part of software. Build something really fucking cool that makes you want to keep building more software and inspires more people to build it.
+
+Dex (52:35.266)
+Okay, all right. Listen, just because you're not in Silicon Valley doesn't mean you get to make fun of us up here.
+
+Dex (52:53.346)
+Nice, I think that's a good spot to end on. We can maybe take one last question and then you wanna do the like close out recap.
+
+Vaibhav (53:02.194)
+Mythos, that's right, make no mistakes. Yeah, we'll take one more question and Dexter wanted to close out today. It's been a while. I want to hear your voice at the beginning. be cool.
+
+Dex (53:05.527)
+Ultra Think.
+
+Dex (53:17.102)
+cool. Would be cool to know what models you guys are using.
+
+Vaibhav (53:20.412)
+what models you guys are using and what raising levels. My, yeah sure, my model of choice is the model I used last. That's it, that's my only distinction how I pick a model. Nothing else.
+
+Dex (53:23.278)
+All right, VibeBug, you wanna go first?
+
+Vaibhav (53:35.428)
+every now and then I, I do click when I hit out, when I'm noticing that I'm running out of context, I upgrade to the 1 million context window in any model I use. That is the one, and if I click up, get Opus 4.7. If I click down, I get Opus 4.6, and I don't really know which one I use. It's very random.
+
+Dex (53:56.648)
+cool. my answer is, been experimenting a lot with 5.5 on low mode. I have not had enough time to get a feel for what are the higher level reasoning efforts on 5.5 that I like. I know from talking to people like Ben Davis and a couple others that if you put it on higher, extra high, and you're not careful, you'll get that case of like, the model wrote a thousand unit test for a like color change on a button. And so it's like, okay, you gotta be careful there. So.
+
+I like 5.5 low for a lot of things, especially if things are already planned out. Obviously GPT is still bad at UI, but we'll see, we'll get there. So, I think Claude is nice for human readable plans. Like if I'm going to write a plan that I'm going to read and interact with one, it's going to be short and high level. And two, I want a model that is like, like designed to write like a human and feel a little bit human. think Codex is almost intentionally at this point, like feels a little robotic. I don't know if it's intentional or not. And I know like.
+
+it makes it really, really good at doing certain types of tasks. But if I don't want to think about like making sure the model builds the right understanding of the code base before it starts working, I will use like GPT-4 on higher X high.
+
+Vaibhav (55:11.26)
+You know what that reminds me of actually? That reminds me of a very, very important thing, which is I freaking hate whenever I use a coding agent, it says, I would do this, but that sounds like a really expensive refactor. So to minimize changes, I'm going to do this other thing. it's so, these models are so bad at that because like historically in software you want to go do that. But like now with AI it's like, no, just do the right thing every single time.
+
+Like that's what I wish they did. But sadly, I have to like prompt it for that. That's like the only reason I can't run in wild, like wild true run. one, that one cause. Yeah. Or they, they actually, they're doing the opposite. They're trying to minimize entropy. Yeah. Anyway, go ahead Dexter. Let's do the outro and then go for it.
+
+Dex (55:39.224)
+Yep. Yep.
+
+Dex (55:46.946)
+Yeah, because I like to cut corners.
+
+Dex (55:55.16)
+Yep.
+
+Should we do the outro? Okay. I'm going to just go ahead and share.
+
+tab again.
+
+Dex (56:13.536)
+Okay, so today on AI That Works, we had a great conversation around whether or not you were going to get better, bitter. Today on AI That Works, we had a great conversation about whether or not you're going to get bitter lessened if you try to build your own harnesses, the advantages that model labs have in building really good harnesses, the ideas behind RL and how you can swapping a certain harness for a model that's not trained on that harness.
+
+the intricacies of recursive types and tool calling and token-wise tool calling versus constrained tool calling. Some basics on benchmarks and RL and how these models are actually trained for the harness that they're going to run in. And then we talk a little bit about outer harness versus inner harness, orchestration, all sorts of fun stuff. It was a really fun conversation. We're back to basics here on just learning together and trying to figure out what's the next steps and what can we all do.
+
+to take AI and push the frontier of what's possible, get the best possible performance, move way beyond the demo. And I really enjoyed the chat.
+
+Vaibhav (57:20.99)
+get started. To everyone on the chat, if you guys enjoy the show, definitely keep giving us a shout out on Twitter or on YouTube. If you ever find interesting snippets, let us know what we can keep doing to make it better. Adios, everyone.
+
+Dex (57:34.094)
+All right, folks, good luck.

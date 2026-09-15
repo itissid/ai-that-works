@@ -1,0 +1,759 @@
+dex (00:01.218)
+Alright, ready? Let's do it. So vibe off.
+
+Vaibhav (00:01.272)
+Hello.
+
+How's it going, Dexter?
+
+dex (00:06.518)
+I'm good. I'm very excited. thank you for humoring me on our on our little audible right there. But we are gonna we are gonna change the schedule today, guys, folks. Anthropic just released Fable Five, so we're gonna get hands on and mess with it.
+
+dex (00:27.916)
+Yeah, I'm Dex. I'm the CEO and co founder of Human Layer. We build tools to help coding agents solve hard problems in complex code bases. Vibav.
+
+Vaibhav (00:28.216)
+Let's do it.
+
+Vaibhav (00:35.872)
+I'm Bivob. I work on making a programming language that's extremely easy for agents to read, write and describe and humans to understand.
+
+dex (00:43.864)
+Amazing. how do you want to get started? Do you want to talk about how you evaluate models on different things? Do you want to just spin up a BAML project and drop in the model ID and see what happens? We we have not tested this. We did zero prep. This announcement dropped about twenty minutes ago. So you get to see us do some live coding. Yeah.
+
+Vaibhav (01:01.816)
+Okay, you wanna do something wild? let's say something wild. I've been do I've been working on a really really hard problem. Yes, I've been working on a hard problem. We can just see how good Fable 5 is at it. And while we're doing this, I'm gonna describe the problem for everyone. it's almost definitively true that we will not be able to solve this problem in the call. I just don't see it happening. But what I think will be interest what I will be interesting, yeah yeah, I'm I'm up to it.
+
+dex (01:08.078)
+Amazing.
+
+dex (01:15.566)
+Let's try
+
+dex (01:26.146)
+I gave you a whiteboard. If you want to draw it out.
+
+Vaibhav (01:32.073)
+Actually I'll just screen share I'll show. I'm gonna screen share my whole window, my whole screen, and then we'll just I'll just rip into a panel. so let me describe the problem really fast. As we do stuff, I think one of the most important things for sorry. It is extremely bright out here. I don't know if you guys can see. It was a very nice day. And I'm here coding with you guys instead. I am in Cancun. but
+
+dex (01:53.88)
+Are you in Cancun, dude?
+
+Are you writing a lot of code out there?
+
+Vaibhav (01:59.993)
+I actually have written a decent amount of code. But let me go and screen share the right folder really fast and like talk about what I want what I want to show. specifically the thing I wanna show is like look, I think as more and more code has started to become has started to become wha how do I say this?
+
+has started to become like AI generated. Code has basically become non-deterministic because none of us know what it's doing. So a large part of what we've been thinking about is how do you make code more observable? And one way we think we can make code more observable is like what if you could like build diagrams off of code that are deterministic. If you change the code it changes the diagram. And then if you if you actually run the code a Y C found
+
+Cancun. And if you actually run the code, then what ends up happening is like it actually like ties the image to the code. So as you're executing, you can clearly see what's going on behind the scenes. And you can actually see exactly what your pipeline is doing without ever reading a single line of code. I find this to be very fascinating, and I think it's gonna be extremely useful for people as they understand less and less of the code. It's way easier to understand the diagram relative to your code. Now, the hard part about
+
+dex (03:12.418)
+And this is just you're just setting up the problem for
+
+Vaibhav (03:15.68)
+I'm setting up the problem for what we need to go do. In order to do this at any reasonable amount of productivity, the language that you're using needs to have incredibly high throughput and you basically need to have observability built into the language. Because what you're really doing is you're tracking
+
+dex (03:18.072)
+Yeah, yeah. Okay.
+
+dex (03:32.664)
+What do you mean by high throughput?
+
+Vaibhav (03:35.17)
+You're basically you're calling there's some performance costs you pay in order to have all this data observable and like actually transferable out here. You're paying a lot of expensive costs to go do that.
+
+dex (03:43.084)
+Right. Cause you have the code to operate the VM to run the user's code, and then you were also using CPI use cycles to process this observability pipeline.
+
+Vaibhav (03:51.144)
+Exactly. And it's well known artifact that like if you're gonna go profile your code and measure like where your code is doing, well then in that case you you often pay a performance your profiled code is often slower than your actual release code. But now what we're trying to do is effectively profile every single piece of code ever written, always.
+
+And in order to do that, you need to make it extremely high throughput. But you don't want to make it so that if you run like like Python is incredibly slow. And if you try to build this in Python, basically imagine that for calling every Python function, you have a separate function you call that's called observe this function, which captures those parameters and saves it into a disk somewhere or something. That would be incredibly slow. So what we're trying to work on is how can we have all of these function calls, all these methods that are called, like array.length. That's a method of being called. How do you know that all array.push?
+
+a method. How do you track all this stuff in a way that's performant and allows you to track all the data without actually making it so that the actual program itself is incredibly slow? This is one the problems that
+
+dex (04:49.462)
+Is this basically like becoming a like fang style interview, right on the spot here of like how do I do this super efficiently and I'm sure there's some some magic algorithm under the hood that you're gonna explain?
+
+Vaibhav (05:02.621)
+so there is actually no magic algorithm for this problem. the thing about this problem is this problem is just a this is just a strict coding problem and like you're just like moving memory really fast. I would love to see how Okay. I would love to see how basically how good Mythos is or the Fable model is at solving this problem and I'll just I'll just like let it rip in the background.
+
+dex (05:13.196)
+I put the link in Slack, but you can get it, I can send it in Riverside.
+
+dex (05:24.834)
+Yeah, how far are you? Like, show us onboard us into where you're at right now.
+
+Vaibhav (05:29.527)
+Okay, I'll actually onboard you to where I am. What I'm at right now in this problem so far is I have a giant frickin' list of documents that I've already built that analyze this data. that have built like some sort of memory model around this. I'm not gonna try and describe this actual architecture team if you're interested in it, you know like
+
+dex (05:38.691)
+Yep.
+
+Vaibhav (05:46.934)
+This will be open source and you'll be able to read it. But the main goal is very simple. I basically want to be able to run, it's a multi-threaded execution environment, so I need to be to run like a thousand plus threads at any given time and have all of them be profiled. I'm willing to pay a 2% print penalty in terms of how slow the code gets in favor of having this constant profiling. I want to be able to do diffing on profiles. So if I run the code once and run the code again, so I want to be able to see the diffs between them. I want it to take less than 10 nanoseconds per
+
+dex (06:07.501)
+Mm-hmm.
+
+Vaibhav (06:16.857)
+event that I send out. Because if it's less than 10 nanoseconds, then I know we'll stay under the 2% profiling benchmarks. And then it needs to be maximally correct and lossless data. I'm not willing to throw away any function call. Even things like array.length and stuff. I just want all of them recorded everywhere so I know all the data. So I have a doc. I've been working on this for quite some time. This is a it's a MIDI doc. It's like a
+
+dex (06:40.534)
+Is this decisions? Is this understanding the world today? Is this exploring options? Is this open questions? Like tell me what like or everything.
+
+Vaibhav (06:46.515)
+the doc is basically talks about like a variety of data structures that we can use that allows us to basically go like how we build like an architecture that could do this and have the constraints that I defined to go solve this problem. And it talks about how we're gonna go save the data, how we're gonna profile it, how we're like and the different layers of the stack that does this. It has already done some analysis on the doc. And then I have a bunch of and I ran another model that actually like queries this doc.
+
+and then like try to find other issues with this talk to go understand it and figure out like where stuff is problematic with my constraints. And I kinda stopped here. and there's other people on the team that are working on this as well, it's not just me. So it's a fairly it's a very meany problem.
+
+I can't give a strict assessment on this until I see Nythos produce some doc. This doc has taken me hours to read, so just to be very clear, it's not a thing that I can just like riff on and give feedback really quickly. What we can do is you can actually have I think a great assessment of this is we can actually have Claude.
+
+Vaibhav (07:58.88)
+I just wanna try the new dock really fast. no, I don't wanna lose this chat thread. This chat thread is very important to me.
+
+Vaibhav (08:07.543)
+Need terminal.
+
+C Damo language and then let's do you know what the new model is called?
+
+dex (08:16.174)
+That's called Fable Five. If you do slash model, you may be able to just pick it. you might have to upgrade your Claude.
+
+dex (08:28.47)
+Let's see.
+
+Vaibhav (08:34.065)
+my pod through upgrade vodka latest
+
+dex (08:41.007)
+allegedly it finally beat Pokemon.
+
+Vaibhav (08:41.471)
+And let's It's really interesting the kinds of tests that people bring to test these models. I just find like these practical tests are way more interesting.
+
+So like here's one thing that I would use to judge this model. I'm gonna give it this problem that I've been working on for a while with quite a few models and then also just like talking to engineers on our team. I'm gonna give it these two documents and I'm gonna say, is there anything major that I've missed or architecture that is wrong? Or if it's architecture correct, can you describe the architecture to me so that I can explain it to someone else? And if it describes it back to me in a way that's very coherent and like picks out one or two key details that I haven't thought about before, it is a solid win.
+
+dex (09:24.546)
+Yep, you're looking for leverage.
+
+Vaibhav (09:25.535)
+And that's I'm looking for leverage, exactly. And the the first leverage I'm looking for is not can it do the work. The first leverage I'm looking for is how well can it
+
+dex (09:34.584)
+Yeah, if you do claw dash dash update, you should get fable.
+
+Vaibhav (09:38.579)
+I don't have it. Claude, that's that's version. What version are you on?
+
+dex (09:41.837)
+Do you
+
+One seventy. You need claude dash dash update.
+
+Vaibhav (09:52.052)
+they haven't published it to Homebrew yet. How do I install quad? Let me install quad.
+
+dex (09:54.851)
+why are you using homebrew? You get the curl pipe bash installer and do not click the malware thing, because for a while the top link here was yeah here we
+
+yes, that is the correct way to install clot code.
+
+dex (10:18.215)
+uninstall.
+
+Vaibhav (10:20.503)
+please don't judge me amigos. I'm bad at computer stuff.
+
+dex (10:26.732)
+You could have asked Claude to uninstall itself. That would be kinda cruel.
+
+Vaibhav (10:32.703)
+One two like two.
+
+dex (10:33.142)
+Also, just so you know, the Twitter livestream title didn't update, so people still think we're talking about observability. But for anyone who's joining late, we are hands on with Fable Five.
+
+Vaibhav (10:39.392)
+Vaibhav (10:45.591)
+And it's all
+
+Okay, whatever. I just run this and we'll see how this goes. yeah, so and in general whenever a new model comes out, this is really my task. I take the hardest task I have, usually a task that's already in progress, and once a task is in progress, I just try and have the model regurgitate back to me what it understands about the task so far. And I expect it to
+
+dex (11:12.056)
+Do you have any like tasks you go back? Like I keep a couple like commits logged in a TXT file somewhere, that is like my personal notes of like, if I check out this repo to this SHA and give it this prompt, that is a problem that took me a week to solve and the model sucked at helping with it. Like you kind of like accumulate your own like little collection of mini bench.
+
+Vaibhav (11:32.097)
+Kind.
+
+Vaibhav (11:36.309)
+That's actually really interesting. I I think the only reason I haven't really done that,
+
+dex (11:45.64)
+I don't know why that homebrew one is still there, but
+
+Vaibhav (11:48.959)
+It's okay. I'll just sound fun.
+
+dex (11:52.342)
+Yeah, you also got an even older version.
+
+Vaibhav (11:56.249)
+What version am I on?
+
+dex (11:58.039)
+You got one fifty three. So now run that path dash dash update. Yeah.
+
+What is what is going on with your updater?
+
+Vaibhav (12:15.127)
+What I have? I don't know. I I I'm that far off. I'm just gonna delete this one so I don't ever actually use it.
+
+I guess I don't have POD. I only have POD this older version. Yeah, use screen share. It's still the older version.
+
+dex (12:32.002)
+Alright, well I could share, I have it. there you go. that's the old one. send me your send me can you push this to a branch on the open source? Can I see it or is it closed source? Yeah, pull put push it up and I'll try it out.
+
+Vaibhav (12:40.961)
+Yeah, let me do that. and the docs and also make a commit. Skip all three commit hooks.
+
+Vaibhav (12:57.367)
+Yeah, and I'll send you the branch. That's very unfortunate. I have no idea. I I'm surprised homebrew takes that long to update though.
+
+dex (13:07.758)
+It's incredibly frustrating.
+
+Vaibhav (13:10.379)
+Yeah.
+
+dex (13:12.475)
+okay, what is this
+
+Vaibhav (13:16.517)
+the branch is called trim dash events.
+
+dex (13:19.276)
+It's just the BAML repo.
+
+Vaibhav (13:20.949)
+Yeah, the BAML repo is in trim dash events.
+
+Branch should be live in just a second.
+
+Vaibhav (13:33.889)
+Yeah.
+
+dex (13:36.327)
+I don't think I have a BAML checkout on this machine yet. I I got a new laptop, so I'm gonna start cloning that.
+
+Vaibhav (13:41.153)
+nice.
+
+dex (13:49.248)
+I can hear that you are at a outdoor daytime club. Is it party th what are you guys what are you guys doing out there?
+
+Vaibhav (13:53.669)
+I the music's not bad.
+
+Just hanging out. we gave a fun little talk in the morning. No no, it's actually they have a fun little YC conference going on. Like that. Yeah. Yeah. Luckily I have a team that's I have luckily I have a team that's working. So I can slack off. Okay. PR should be up.
+
+dex (13:59.055)
+Doing team team offsite? Is it personal?
+
+dex (14:07.115)
+I almost went to that and then I decided that I was too busy. I didn't know you were going.
+
+dex (14:17.43)
+Yeah. Yeah. must be nice. okay, cool. I am twenty eight percent done cloning boundary ml slash BAML, but we can give it my other we can give it my other benchmark problem.
+
+Vaibhav (14:28.971)
+We do have a lot of code.
+
+Yeah, give it your other benchmark while you while you're in the Fraggles and doing that.
+
+dex (14:35.456)
+All right. All right. I was actually just testing this with another model recently, so I can
+
+dex (14:47.342)
+Let's see.
+
+Vaibhav (14:50.803)
+up the chat really fast because there's something interesting.
+
+dex (14:56.354)
+See, we still have flicker problems.
+
+Vaibhav (15:00.07)
+let me see if I can set the podcast manually.
+
+dex (15:03.921)
+yeah.
+
+dex (15:17.368)
+Yeah, I was already testing this with
+
+Vaibhav (15:19.113)
+it does work actually. I actually yeah, I got it. Apparently I have share screen window.
+
+dex (15:23.057)
+you got it? Alright, you should take it back then.
+
+Vaibhav (15:32.267)
+I did not expect this to work. Okay, so we're gonna go set this up, we're gonna go ahead and just run this code, and then we're gonna say read all the dots. And then tell me what the current proposed architecture is in a clean document, consider some diagrams as necessary.
+
+what drawbacks it has and if you find any
+
+And if you find any issues with the current proposed architecture, just feel free to change it along the way so that you actually build the best possible architecture that actually meets all the constraints that we want. Remember, we want to have extremely low performance hits on observability, especially of function calls, so that we can build a flame graph effectively of all your pro of your full program. But we also at some point want to get data such as arguments and return values of functions as well.
+
+Vaibhav (16:39.04)
+Save made it. Okay, cool. I'm just gonna let it go rip and then just see what it does. And if this produces great results, fantastic. And if it doesn't, it doesn't. But like for everyone actually like benchmarking these models, I have found that switching your products and your evals to it is like one way to do this. And like if you have great evals, then this is a great way to go experience this. And I'll just stop sharing while it's running this, because it's not gonna be interesting to watch cloud code just run in the background. But
+
+dex (17:00.525)
+Yep.
+
+dex (17:06.723)
+Yeah.
+
+Vaibhav (17:08.414)
+Everything else is like just pick the hardest problem that you're currently working on right now where you have a lot of mental context on it right now and just go have Claude try that. If you haven't tried a problem that like Opus is already good at, you're not gonna know if it's any better. It won't give you any insight. So the recommendation for me always is like hardest problem only. old problem Dexter, I like your approach of old problems. I I have a question for you because this is where I kind of struggle with, which is
+
+dex (17:16.078)
+Yep.
+
+Vaibhav (17:38.85)
+With old problems, I don't remember the context very well myself. And that makes it kind of hard for me to be like, is it good or is it bad? 'Cause I I can't tell.
+
+dex (17:48.367)
+Well, this yeah, this comes back to basically something that Jake Nations from he was like one of the one of the number one cloud code engineers at Netflix before he went and joined a lab. But his basically his take, and other people have said this, is like you understand a
+
+bad pattern or you understand something you want to avoid at all costs in the future because you have like s slaved over debugging it at three in the morning and you're just like, I am never letting this happen to me again. and so the problems that I have is just like especially back in like I think like October we had some stuff at our open source that was basically just like the model could not figure it out. There was too many moving pieces. There was too many like
+
+Vaibhav (18:14.21)
+That's fair.
+
+dex (18:32.558)
+There were too many moving pieces. There was just too much that it it just couldn't solve the problem. Is this race condition among like a Golang demon with a socket? And then it would like call Claude Code, and then call claude code would call an MCP server, which would call an API, which would then like route back to the socket and then like loop all the way back through to
+
+to the claude code instance, back to the daemon, back to the database, back to the UI. And there's just like all these moving pieces and like no model could solve it. And so like me and the team had to basically spend a week like re onboarding and like understanding that part of the code base. And it's like why we ended up and like that started to happen more and more and it was why we realized that was kind of part of why we were just like, okay, actually like if you don't own the code and the architecture, you are signing yourself up to deal with that someday.
+
+And why we kinda back to so it's like it's burned into my brain the exact problem because I was so upset when we finally actually figured it out. I was just like, It's so I I I remember exactly what the problem is and I have like a little like kind of like answer key for it.
+
+Vaibhav (19:39.491)
+So, fun fact, I'll give you guys a small little update. right now what's going on is this the model is very slow. That's my first gut instinct by the way. let me go back to screen sharing actually. I suspect people might find this interesting. where'd it go? I lost my window.
+
+dex (19:54.253)
+Yeah.
+
+Vaibhav (20:08.29)
+screen share.
+
+Here's my first instinct here. The model's honestly quite slow. I'm not a fan so far. It's been running for three minutes. All it really did was like it read one file, it read another file. And like maybe it's doing something else, but it's like...
+
+dex (20:17.641)
+dex (20:24.43)
+I'm sure you're getting a lot of thinking.
+
+Vaibhav (20:27.414)
+Yeah, I'm sure I'm getting a lot of thinking too, but it's just almost done thinking with high effort, so like it's fine. But like I really hope for this amount of thinking it better be frickin' great. I'm expecting like like perfect output. 'cause it's like so slow.
+
+dex (20:43.158)
+Yeah. And I think a lot of people have kind of like pointed out as like, okay, like the model getting a little bit smarter is and doing a one shot problem is like less of a useful evaluation of the gap in quality versus doing something like a slash goal or s like a a Ralph loop of like, hey, if I put this thing in a box for, you know, as long as it needs, 'cause like in the grand scheme of things, if you set up the loop right and the model spends six hours digging in and trying to figure that stuff out.
+
+and it's it find you know finds a vulnerability in FFM peg that's ten years old, for example. Like it doesn't matter that it was slow. Like it did a thing that like no human has done in the like and maybe it's like no human has maybe put in the time or no one could afford to spend the time to go do that, but it was able to go find a thing that no human was able to do at the like you know, supposed trade-offs for Cloud Fable 5 is unavailable, so auto mode cannot determine the safety of Bash right now.
+
+Vaibhav (21:21.237)
+Yeah, exactly.
+
+dex (21:44.442)
+why don't you turn off auto mode and just put it into like normal like approval mode? Yeah.
+
+Vaibhav (21:53.398)
+Why is it using Fable Five for bash approval? Just use the shitty model for bash approval.
+
+dex (21:57.089)
+I don't know. Yeah, I think the auto mode classifier is not supposed to use your your primary smart model.
+
+Vaibhav (22:05.496)
+Yeah. interesting. Yes. well, I guess it did. I switched up auto mode.
+
+dex (22:13.72)
+Seems like this model is very thinky.
+
+Vaibhav (22:20.796)
+So it knows for future things. it's probably gonna heavily bias off of minor corrections. And th that's like another tip for everyone. Like you saw that I made that mistake with auto mode. If I don't send that message, next time it's also not gonna try and use bash. So I can just get around this just by like giving it like a quick little update to its context window. To say like disregard the previous error message effectively.
+
+dex (22:40.813)
+Yep.
+
+Vaibhav (22:46.828)
+Very interesting approach though. yeah, other techniques that that I found are like I I don't really have any of the techniques. Like I feel like in product it's very easy to tell and most people are probably not gonna benefit from having fable in their product relative to their like
+
+Relative to existing models and like the part of the reason why I think most people will not be able to use Fable in their product, and this is just like my immediate gut reaction to this, is because this model is because of how thinky and how how slow it seems to be, my hunch tells me that almost every single person that switches over to Fable for their product pipeline will need to completely redesign their UX. To like make it so that like you can actually like have the have the end user tolerate waiting for that long.
+
+dex (23:11.917)
+Yep.
+
+Vaibhav (23:32.448)
+And some people might have like background tasks that like users don't really care about. But most people I think have like real time interactions with models to some degree. And for none of those is it tolerable to wait this long. Like even right now when we're chatting in this podcast, like it kinda sucks that we can't show anything along this whole time period every single time. We have to wait forever and ever and ever to get anything interesting.
+
+dex (23:39.64)
+Yep.
+
+dex (23:52.429)
+Yep. I mean I'm running f Fable I'm I'm actually gonna go see if I can find the the the the fix for this PR and set up a a little test for this over here. Mine's moving really, really fast, so it might just be your internet, dude.
+
+Vaibhav (24:07.692)
+Dude, no chance. I just downloaded the BAML repo. And like that was fast this morning.
+
+dex (24:12.654)
+Interesting.
+
+yeah, I'm I'm using it right now and it is making lots of tool calls and thinking with high effort, etcetera.
+
+Vaibhav (24:26.123)
+And it's fast.
+
+dex (24:27.98)
+Yeah, it's going it feels about the same as Opus for me. Here I can I can take over the sharing while yours is running.
+
+Vaibhav (24:33.824)
+Yeah, go for it.
+
+dex (24:37.014)
+dex (24:46.734)
+Okay, so there is the there is the tool call number or there is the PR number four nine.
+
+Think it's four or nine, let's see.
+
+dex (25:00.62)
+Yeah, I think it's t two six. Okay.
+
+I had to turn off auto mode also.
+
+Vaibhav (25:08.617)
+Ha ha ha.
+
+dex (25:13.256)
+It's four on what is it, two six? Give me the SHA before that PR and give me a prompt to ask an agent to solve the issue. Just explain the symptoms. We wanna see if the model can solve the problem and identify the root cause.
+
+Vaibhav (25:43.136)
+I have a question for folks that are watching. Do you guys find it useful to see the real time preview or do you guys find it more useful to see the full transcript after a conversation? Like we've ran it, we've been playing with it for a couple hours, and then we just walked through the Claud Code transcript after doing that.
+
+dex (25:57.944)
+That's true, we have done a mix of both.
+
+Vaibhav (26:00.077)
+Yeah, I'm always curious.
+
+dex (26:02.295)
+What does the chat say? I'm I'm locked in over here, cloning BAML.
+
+Vaibhav (26:07.65)
+See that works.
+
+dex (26:09.291)
+Yeah, we could also go do the one we did last summer. We could check out the what was the thing we spent like seven hours on? Is like adding Wasm support or whatever.
+
+Vaibhav (26:18.384)
+that that would be a one shot in the new system. I bet Opus would one shot it. Like the new system we've been able to like really fastly so we've been adding like other language support now. We've found it's it's way faster now. it's writing the design doc. It actually wrote a V two design doc. it completed it.
+
+dex (26:19.511)
+Could see if it could one shot you think it you think it would one shot it now?
+
+dex (26:29.718)
+Yeah.
+
+dex (26:39.083)
+Yeah. Okay. Nice.
+
+Vaibhav (26:46.914)
+Let me pull this around, while you keep running your stuff and I'll share my thoughts on it.
+
+dex (26:48.13)
+Specific.
+
+dex (26:52.107)
+Yep. Yep. Do you want to steal the screen share?
+
+Vaibhav (26:56.408)
+I lost the photograph. Bring this thing back onto this window. Yeah. Alright, let's go through this. I'm gonna read this for like five, six minutes so Dexter, you can entertain folks. I'll read my thoughts out as I go do this. So, I mean obviously e I mean the model did what I expected. It was able to serialize what it's doing, it's observability and profiling, built into architecture.
+
+dex (27:00.405)
+Alright, I gave you the screen share.
+
+dex (27:13.601)
+Okay.
+
+Vaibhav (27:21.368)
+it knows the branch information, okay. It knows that we deleted all the existing code, that's nice. So that we can start from scratch. And it really captured the use cases.
+
+dex (27:27.338)
+Mm-hmm.
+
+dex (27:33.855)
+The flame graph is different from what you what you demoed, right? Or at the end of the day it's like the data for f it's a different visualization of the same data. Okay.
+
+Vaibhav (27:38.945)
+that's basically just another it's it's the same thing. The data's the same exactly. It's a different visualization, same data. the thing I demoed was just like a way to represent that data in a way that's like human sensible. And a flame graph is another way to represent data for a different purpose. a flame graph is really high, capture arguments. C one, yeah.
+
+Okay that's good. C3 is the most important, C1 is the next most, C2, and then C four. Okay, great. I don't yeah, I don't care so much about dealing with the debugger and coverage. I would like that, but it's not necessary. we do like the per OS worker, lock free SPC ring, SPSC ring, one feature bitmap, that's good. One save hook point. And then it
+
+kind of save this. So like for context, here's like the architecture that we have. We have virtual threads or green threads in our runtime. What we basically do is every single green thread is writing to a specific OS pinned ri data structure. So it's lock it's lock free. So we don't have to have like we don't have to take a mutex or something which costs like hundred a hundred nanoseconds or something.
+
+And it just writes to that data structure. And since only one green thread can be running on one OS thread at any given time, just constraints on how operating systems work, this is completely safe. And what we do is we have what we have is like
+
+dex (28:55.817)
+amazing. My fable decided to invoke G Stack. That's not gonna work.
+
+Vaibhav (29:00.268)
+That's funny. Get out of there. and then what we do over there is once this OS thread writes to a data structure, we have another thread that consumes off of this data structure and swaps it really fast so we have like a minimal lock that we have to have to basically keep on writing data to that data structure all the way through. And this just goes through and does stuff. I wanna read the mistakes that it find.
+
+dex (29:18.414)
+Mm-hmm.
+
+dex (29:25.762)
+Yeah, what changes did it make?
+
+Vaibhav (29:27.926)
+Yeah. So functions start and end each carry in timestamp. two clock reads per call pair, that's true. and you'll notice that one of the things that it made is this is a conversation that we've had. Exactly. So that means like we now have like a twenty to thirty nanosecond minimum sorry, forty to sixty nanosecond minimum for doing this. I think it's gonna
+
+dex (29:41.934)
+The system time now is twenty to thirty nanoseconds.
+
+dex (29:52.962)
+Did you know about this? Okay.
+
+Vaibhav (29:54.519)
+We did. This is a thing that we've already discussed on the team, which this was one of the things I would have expected it to have come up with. I think there's a clock that's really fast. so we should be able to get around this. I'll see if it brings that up later. If it brings that up, that's a solid, solid model. But this is a this is already unaccounted for in our GAPS document. actually I have an idea. While this is running, why don't I
+
+close other tabs. Why don't I just like go here?
+
+dex (30:28.173)
+This is Opus four point eight, right? Yeah.
+
+Vaibhav (30:30.336)
+Right here. Can you Are there any things that you discovered that weren't previously in there? in the any of the documents earlier?
+
+Vaibhav (30:44.802)
+while it does that I want to go see what it pulls off with. So let's keep on going, see what I find.
+
+So
+
+Vaibhav (30:56.182)
+This is gonna take way too long to read. The thing is this is a very technical problem, so it's hard for me to give like a s quick scan read and be like, it did it catch something interesting or not, because it's very nuanced. here we go. It did it did find something here. it did use the right
+
+dex (31:05.708)
+Yeah.
+
+dex (31:10.175)
+Okay, so you're gonna use like a causality clock instead of using wall time, basically.
+
+Vaibhav (31:15.68)
+There we go. There we go. It did do something kinda nice. that's smart.
+
+that's one thing that I can quickly scan that it's correct on. Exact asynchronous can migrate at await points, that's correct. Therefore the ring pointer is stable. Hey there we go. This is a nice little thing that we had. It just trimmed out some of the fat that we did not need. I'm queers what it came out with Wasm. Wasm single threaded one ring. The engine drains it. okay.
+
+So wasm I would have to read this to see if it's actually correct. I need to think about it, not just read it.
+
+See what caught us.
+
+Yes, a handful of things were genuinely, not in the V1 nor in the GOPs. Let me just read this really fast. the dispatch loop sensitivity is measured. We know that that makes a difference. that's true from a performance standpoint. The per call arithmetic. that's less than two percent target. We measured a BAML call round trip at 136 cycles, approximately 40 nanoseconds. Is
+
+dex (32:05.484)
+Yep.
+
+Vaibhav (32:29.74)
+V1's hot path is going to be over 100% overhead for extremely like basically like trivial functions. So we have to make a we have to come up with a way to make that fast. That we already kinda knew though. One branch equals one predictive branch is not measured, not assumed. I don't like the way it's writing, to be completely honest. I still feel like it has a very AI kind of writing.
+
+dex (32:54.465)
+does it feel does it feel more towards codecs? It still feels to me like pretty clawed vibed and that it's like at least like writing nice sentences.
+
+Vaibhav (33:01.472)
+Yeah. The the writing is
+
+I don't I haven't used Codecs enough to have a really strong discrimination factor there.
+
+dex (33:11.981)
+yeah, dude. Reading reading especially like design docs and plan and like research written by Codex is like it's very robotic. It's clearly not meant for a human to use.
+
+Vaibhav (33:20.29)
+Yeah.
+
+So the new architectural insights are not proposed in either docs is one, the per step exec step ring pointer. exec is synchronous, so a back thread cannot migrate OS threads mid step. Yes, we know that. Therefore the engine can resolve and lazily create the TLS ring once per step. And hand the VM a raw pointer. This eliminates the TLS. that's kind of interesting. From a push path entirely and makes all on-thread s on-thread start hooks unnecessary. The gap review found the seven.
+
+That's kinda interesting. That's cool. That would so like bas
+
+dex (33:55.223)
+TLS ring this is TLS is in like HTTPS or is this a different TLS?
+
+Vaibhav (34:01.013)
+No, no, this is like our our internal stuff. so that's basically what it's finding is that because I I guess one of the docs in here didn't talk about this. Because we know that the Bex thread cannot like I was saying earlier, it has to be pinned to an OS thread. It there's a lot of like bookkeeping t work that we had previously recorded, I guess, in these docs that we thought were that we had to go do just like indicate certain things, it seems like that's not necessary. And we can just like throw that all away.
+
+Which is interesting. I'd have to look into that if it's actually correct. Conte context is engine ID, back spread ID, and the tick base. That's c we do need a tick base.
+
+Changes the MOS once per exec step. An exec step for those of you that are questioning what the heck is an exec step? An exec step is executing one assembly instruction at a time. So every single time you execute one assembly instruction, it runs. Examples of assembly instructions are like load this variable from memory. Or or like store this variable from memory, add two numbers together, call a function. These are examples of like assembly instructions that are out there.
+
+emit it as a tag CTX. this is kind of interesting. Yeah, because this doesn't change very often, we can just like store this data once and then use like a tag CTX and use U32 to go do this. And now we have a very nicely embedded data that is guaranteed to be unique.
+
+That would reduce the amount of data that we're writing to disk. And if we're writing a lot sorry, to memory and we're writing less memory stuff to memory, then we can save a lot of context and it will basically make the throughput much better. This is interesting. I have to go think if the collision ratio ha works with a U thirty two or not.
+
+Vaibhav (35:46.104)
+The arena.
+
+Vaibhav (35:49.765)
+Inline serialization. I don't know what this is, I have to read this more. I don't have immediate reaction to seven. I I just don't have context.
+
+dex (35:54.798)
+Sorry. Vibov had a plan for today's episode and I decided it would be more interesting to mess with Fable Five.
+
+Vaibhav (36:04.342)
+Yeah. Pose yield capture was actu never actually an option. cap seven framed. Heat pointers aren't stable across yield, so the deep pop yes, this is correct. Okay, so it found one inconsistency that we had in the docks, that's good. speed scope's event focus is zero synthesis. Match.
+
+Vaibhav (36:34.258)
+Mm, not that interesting. Okay, so my like c my complete honest assessment on here is there's only like two real options here. One, it's possible that the dock that the team has been building is just really good and there's not that much more to get from it. so like therefore like Fable just couldn't do that much. Or two, like Fable's just not that different than Opus. and like it's there but it's not like an order of magnitude better. this is like my first assessment on this problem. Like it I don't really feel like it found anything that's like
+
+I yeah, it's just not that like it doesn't wow me right now as my first gut reaction.
+
+I probably would need to use it over some like longer time horizon and then just see, is it finding something interesting? Like one thing that's interesting is we actually had a conversation about this on the team yesterday. Like a U32 thread ID is actually quite dangerous. You actually can't have a U32 ID. and I'll I'll see what Opus says. Shouldn't we have U64s as thread IDs? and like can you help me understand why or why not and like what programs would break if we had U32 thread IDs versus U64 thread IDs?
+
+And let's see what it comes up with. because I know the answers to this question. In this case, we expect a U64 thread ID because you can imagine that how often the ratio of whether you use a U632 is U64 is when will you have your first collision? So let's say we have a thread that starts off as thread zero. How many threads can we spawn at what cadence and how long can a program run before we find another thread zero? And to give you context.
+
+dex (38:11.959)
+What is it? U sixty four is like every every atom in the universe gets its own threat ID, versus thirty two is much smaller.
+
+Vaibhav (38:18.241)
+Yeah, but
+
+Vaibhav (38:22.338)
+Yeah, I just wanna see if it will work. Let's see.
+
+If I give every thread a U64 thread ID, how long how long and how fast can I create threads before I get a collision?
+
+And you'll get an idea really fast. there we go. and like yeah, it's doing the same thing. So like basically it's like if you use a U32 thread ID, is like this is the kind of subtle things I would have expected a really good model to pick out without me having to tell it this. But like once you do this again, it's like if you use a U32, if you have a spawn rate of like ten thousand threads per second, you'll run out within five days.
+
+Like that's not an unreasonable amount of time for a program to be running. Even one thousand threads per second you'll spawn out within fifty days. And someone might say, that's too much. It's not that much if you have a lot like if you have like a mic ma like a giant service.
+
+dex (39:19.179)
+Yeah. If you're serving web traffic and every request gets its own thread, then you're gonna run
+
+Vaibhav (39:24.108)
+Yeah, exactly. So it's actually not that weird, for this to happen. So therefore like and I think
+
+So these are like this is like a small little test. Like if you do this, here's here's like the collision rate by the way for a U64. If you're creating one million threads per second, you'll run out in five hundred and eighty-five thousand years. Powers of two are insane. so like this is your collision rate.
+
+dex (39:55.084)
+And making ten billion threads per sec would be doing one on every cycle on a giant core that nobody actually has.
+
+Vaibhav (40:01.087)
+Yeah, exactly it's exactly it's like basically you'll never run out of threats. and like this is again like a b a great model to me would have proactively suggested this and it didn't seem like this one did.
+
+dex (40:08.204)
+Yeah.
+
+dex (40:16.523)
+Yeah. I can update you. I don't need to screen share my thread, but I can. so I have given it a race condition correlation approval thing where basically we have we have approvals that come out of clawed code and they go to an end I'll I'll draw it real quick. where is
+
+Vaibhav (40:21.11)
+Yeah.
+
+Vaibhav (40:39.01)
+while you do that. fadi will probably do an observability episode sometime later. but that was supposed to be today's topic, sadly. We found we were sidetracked.
+
+dex (40:40.929)
+Basic
+
+dex (40:44.822)
+Yeah.
+
+dex (40:48.217)
+I mean technically we did talk ab we did talk about observability. We just t went under the hood instead of talked about how to design it. so the way the old school human layer worked is you had a UI that talked to the demon over like REST s or SSE. the demon would run a mul multiple clawed code sessions
+
+Vaibhav (40:55.36)
+Yeah, exactly.
+
+dex (41:13.947)
+Claude Code would call an MCP server for handling approvals. So when Claude requests approval for a thing, the MCP server would write back to a socket and basically talk to the demon and tell it, Hey, there's a new approval. The demon would go store that in a database.
+
+And then basically serve it to the UI once it was updated in the database and then the user can like interact with the approval and say either like, you know, approve or they could deny it, right? Deny with like feedback basically. same thing you get in cloud code. and the issue is the correct solution to this problem
+
+is to add a parameter here because Cloud Code when it calls the MCP, it includes the like tool call ID from the upstream model provider. But this was not being sent through the flow. And so what would happen is it would try to correlate because these would come through and we would have no idea about the actual like because the UI lets you manage multiple different Claud Code sessions. The demon would have to guess which session this approval was about.
+
+Vaibhav (42:29.151)
+I see, yeah.
+
+dex (42:30.361)
+and so the correct answer is to like map the tool call ID into the database so that you can correlate the exact like claude code instance with with what session this one is about deterministically because this is guaranteed to be unique across tool calls. and that's the correct answer. And the demon actually the our our fable did the wrong approach.
+
+What yeah, so we added correlation, but it didn't pipe it through. It used a different key that is not guaranteed to be unique per tool call. So Fable still fails our at least it can't it can't one shot with a three sentence prompt debugging this very hard problem that I am glad I still keep around. So there are still there are still benchmarks that that the model can't solve.
+
+Vaibhav (43:09.973)
+Okay, so same results.
+
+Vaibhav (43:19.992)
+Yeah.
+
+Vaibhav (43:27.328)
+Yeah, I think this has generally been my insight. Like model releases, they're more hyped in general than the value they produce. Like Fable's probably better than Opus, I have no doubt around that. But like as we just saw right now, like it failed to identify, like, you know, in Dexter's case, it failed to that's me. I'm in Cancun, Daniel. Delsa music is beautifully playing. but Fable I think failed to identify in your case the correct architectural solution that required it sounds like a little bit more context.
+
+And that's maybe because like Cloud Code harness didn't do enough research or whatever it did. It just couldn't do it. And in my case, it failed to identify even from a design doc, which is self-contained, that, we're gonna spawn thousands of threads. And if you remember in my original design doc, I actually said that's constraint. I want to be able spawn thousands of threads. And I failed to identify that the UID should be a U64 rather than U32. And like that to me is like a model that's renowned for making like
+
+dex (43:58.317)
+Yep.
+
+dex (44:14.348)
+Yep.
+
+Vaibhav (44:22.294)
+breakthrough discoveries and all this other stuff. Like that would be that's not really a breakthrough. it just requires you to like go and think through that's like, you can't have thousands of threads and have thread IDs be unique if you're using a U thirty two.
+
+dex (44:33.815)
+Yep, basically being able to attend to tens or hundreds of constraints when designing a solution.
+
+Vaibhav (44:41.206)
+Yeah, exactly. And like I yeah, this is my suspicion going into it, which is like ma fable's probably just not it maybe it can help, like maybe it can det maybe it can do like ten constraints and not a hundred and there were for humans should do the other eleven to not a hundred on their own. But like
+
+dex (45:00.777)
+It might be it might be, you know, Opus was ten and Fable is fifteen or something and that's that's enough to
+
+Vaibhav (45:05.622)
+Yeah, like yeah, it it likely will do it. And like if you ask me, like, will I use Fable for most of my work, I actually will switch to using it. Because like from my perspective, like, if it does one more constraint than I have to go do, then that that's great. it's still
+
+dex (45:13.89)
+Yeah.
+
+dex (45:19.393)
+Yeah, that's that's, you know, one if you i if if you had to do, you know, five corrections per conversation and you can cut that down to two out of a hundred things the model could get right, you've just like doubled your effectiveness basically.
+
+Vaibhav (45:28.246)
+Nou de vor.
+
+Vaibhav (45:35.84)
+Yeah, exactly. so that would be my my gut reaction to most people. is like most model releases are hype. That's my summary.
+
+dex (45:44.598)
+Yep. cool dude. cool. what's up, y'all? this was a really fun episode of AI That Works. we went a little off script. We were gonna do Asian observability, but Fable 5 launched today, so we decided to dig in. So Vybob tried his benchmark on a very hard design dock that he's working on for the BAML VM and observability and efficiency. he had some interesting results, but it didn't catch everything. I ran it on my favorite benchmark, which is
+
+Vaibhav (45:46.658)
+Doesn't close that deck?
+
+dex (46:14.103)
+Debugging a weird race condition that we had in Human Layer several, several months ago and like checking out an old Git Shaw and seeing if the model could one-shot it. I mean, one shot versus like, hey, if I left this in a loop for a day, would it solve it? Is different kinds of things. So you have to kind of like bring your own understanding to the model and like it's like, okay, if this if Opus X could not solve this, even if you left in a loop for six weeks, but Fable can solve it in a couple hours.
+
+That's great. We haven't had time to do that level of experiments. But this was fun. You got to see a little bit under the hood of how it was very ad hoc how we jump in and test new models. So I hope you have fun watching the episode and thanks Bybob for sharing and thank you all for watching. Let's get into it.
+
+Vaibhav (46:56.376)
+Alright. and from anyone in the chat, any questions from anyone before we head off? Otherwise I'm gonna go hit the beach pretty soon. any up to date content of your own personal workflows coding sessions available? No, we'll probably do one another two weeks or so. You'll probably see like a live coding session where we solve one of these problems in real time.
+
+dex (47:14.231)
+We'll do I have a I have a bunch of cool new human layer features around like product separating out product versus technical requirements into two separate docs and we'll probably demo that in we'll do observability next week and maybe we'll do that the week after.
+
+Vaibhav (47:29.112)
+Any other questions? Otherwise we'll tap it out. Alright, we'll tap it out. Thank you everyone. Peace.
+
+dex (47:30.509)
+All right, y'all. Have a great day. Good luck.
+
+dex (47:37.485)
+Cheers. Good luck. See ya.
+

@@ -1,0 +1,29 @@
+[
+  {
+    "rationale": "Vaibhav is actively explaining and demonstrating a novel feature of his BAML virtual machine: 'colorless async await' and its runtime bridging capabilities. The viewer learns how BAML simplifies concurrency and integrates seamlessly with different runtimes (native, Wasm, Python) by witnessing concrete examples like how a simple 'print line' operation adapts its behavior across environments. This is a hands-on explanation of a core technology, showing how it works in practice.",
+    "action_type": "demonstrating / explaining architecture",
+    "start_timestamp": "03:09.915",
+    "end_timestamp": "04:37.048",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (03:09.915)\nAnd what the really interesting paradigm is, it's almost like colorless async await. And what that means is from a developer, yeah, exactly. So from the language's runtime perspective, there's async await. But from a developer's perspective, you don't have to think about it. only, exactly. You only use keywords if and only if you want parallelism. Many times when you're using async await, you don't actually want parallelism. Sometimes you do.\nDex (03:21.039)\ncolorless.\nDex (03:32.547)\nYou don't have to put in the keywords everywhere.\nVaibhav (03:50.189)\nExactly.\nVaibhav (03:57.518)\nExactly. You basically go do it. And we have a whole execution model that makes it work. But what's really interesting is this execution model supports probably the most interesting behavior that I've seen, which is because of the way that we bridge, because of the way what we call it is bridge into every other runtime. I think that's at the very end. We do something really fascinating, which is. For example, the same operation that you're calling, like for example, like print line. If you write print line in BAML, when you're running it on native, it just says print this, and set out. If you're running in Wasm, it actually prints the Wasm's console log. But if you're printing in Python, it actually uses Python's print function to go print it out.\nDex (04:37.048)\nFascinating.",
+    "hook": "Vaibhav demonstrates BAML's 'colorless async await' and how its VM bridges `print line` functionality across native, Wasm, and Python runtimes."
+  },
+  {
+    "rationale": "Dex is actively whiteboarding and explaining a practical solution for managing agent configurations and accessing multiple codebases in complex multi-repo environments. The viewer learns about the 'coordination repo' strategy, which leverages `additional_directories` in `settings.json` to allow a single Claude session to read and write across various repositories, offering a clean alternative to problematic Git submodules. This is a direct, actionable demonstration of a workflow solution.",
+    "action_type": "whiteboarding / demonstrating workflow",
+    "start_timestamp": "47:09.871",
+    "end_timestamp": "48:24.475",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (47:09.871)\nThe thing we found works also really well. The thing we found that works if you're like, you're just like, I don't care, I just need a thing that works, like this is our recommendation. And so you have your source, you have all your repos, and then we hook people up with this, and we actually made a template for this, I'll link this in the whiteboard. But it's called RPI coordination template. And it basically is just like a simple repo with a tiny little clod MD. And what is in here is basically you have a settings JSON that is permissions, additional directories. And so as long as all these things are checked out at the same level, if you run a Claude session from this directory, it will be able to read and write from those folders because they're added as additional directories. And then we put in the Claude MD basically, this is a coordination repo for multiple repositories.\nVaibhav (48:24.475)\nOkay.",
+    "hook": "Dex whiteboards a 'coordination repo' strategy using `additional_directories` to manage agent workflows across multiple code repositories."
+  },
+  {
+    "rationale": "Dex is demonstrating a practical technique for controlling when an agent invokes a skill. The viewer learns about the `disable model invocation: true` flag, which prevents the agent from seeing or invoking a skill programmatically, ensuring it can only be triggered by a direct user slash command. This is a hands-on demonstration of a specific configuration setting and its immediate effect on agent behavior.",
+    "action_type": "demonstrating / configuring",
+    "start_timestamp": "51:40.000",
+    "end_timestamp": "52:39.000",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (51:40.000)\nYou know, you can put your name, episode prep, description, and then you can say disable model invocation. True. And this will mean the model doesn't even see it in the context window. And so it's only meant to be used for, as a slash command. So if I say like, use the episode prep skill, it's probably not going to see that. It'll probably try to use the email prep skill. Yep. Cannot be used with skill due to.\nVaibhav (52:12.515)\ndisable model invocation. But if I do slash episode prep, this is still available to me.",
+    "hook": "Dex demonstrates how to use `disable model invocation: true` to prevent an agent from programmatically invoking a skill, making it a user-only slash command."
+  }
+]

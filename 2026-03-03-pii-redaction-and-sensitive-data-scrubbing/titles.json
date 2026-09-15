@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Is Your App Leaking User Data to OpenAI?",
+    "rationale": "Question format that speaks directly to developers worried about data leaks when using AI APIs. Creates urgency without being alarmist, and the question is one any developer building with LLMs has asked themselves."
+  },
+  {
+    "title": "How to Scrub Sensitive Data Before It Reaches Your LLM",
+    "rationale": "Actionable 'how to' format that describes the concrete proxy pipeline technique from the episode. Highlights the architectural pattern (intercept, clean, restore) which is the most transferable takeaway for developers."
+  },
+  {
+    "title": "Why a Second Model Catches What Your First One Missed",
+    "rationale": "Leads with the outcome/benefit and surfaces the surprising insight that a second model checking your work catches more than the first model doing the work - a counterintuitive result that earns the slight click-bait without being misleading."
+  }
+]

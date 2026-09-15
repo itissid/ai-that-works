@@ -1,0 +1,736 @@
+Vaibhav (00:00.501)
+All right, we are back to another episode today joined by Kevin. How's it going, Kevin?
+
+Kevin Gregory (00:02.21)
+Okay.
+
+Kevin Gregory (00:07.97)
+Good, how are you, Vyvov?
+
+Vaibhav (00:09.983)
+Good, we are actually 60 seconds early, which is way better than we normally are.
+
+Kevin Gregory (00:14.614)
+I know, is this a first time? Is this new for us?
+
+Vaibhav (00:17.569)
+It's probably the first time I'm early to be completely honest. I swear I'm always late. We just changed the meeting time. I just changed my lateness schedule.
+
+Kevin Gregory (00:20.302)
+You
+
+Kevin Gregory (00:25.934)
+Normally we have Dex on here who basically just entertains us for a couple minutes.
+
+Vaibhav (00:34.197)
+And sadly, today he is out doing some startup founder stuff, which does require some time and effort. All right, let's get started. So welcome, everyone. Today we're going to be having a really fun episode of AI That Works. This is a show where we try and show real-time effort of how to use AI models in really practical ways. This is our monthly episode where we do No Vibes Allowed. The whole point of No Vibes Allowed is you get to watch us code in real time. We chat about it. share our processes and talk about something very practical.
+
+Kevin Gregory (00:41.037)
+Yes.
+
+Vaibhav (01:01.949)
+that talks about both how we engineer things on our teams and how we use models for agentic engineering. I'm joined by Kevin. Do you want to give a thing?
+
+Kevin Gregory (01:11.726)
+Sure. So, Kevin Gregory, I've been on a couple of episodes before, but I'm an ML, AI engineer at Evolution IQ, where we build disability insurance claims guidance systems.
+
+Vaibhav (01:24.499)
+Yeah, Kevin's underselling it. He's built a large portion of their agent engineering systems while he's been doing this and he's been really improving their stuff behind the scenes. He's been there for a while and Evolution IQ, I think, was recently acquired for how much?
+
+Kevin Gregory (01:37.583)
+We were required for $730 million about a year and a half ago.
+
+Vaibhav (01:40.189)
+Yeah, so not a tiny company out there. And then my name is Vaibhav. I work on a program language called BAML. And today's episode, I think, is going to be one that I think isn't really done much with AI stuff, which is how do you actually build design docs using AI? How do you use agent engineering to build various kinds of design docs? I think.
+
+Kevin Gregory (01:45.292)
+Yeah, yeah. Pretty big acquisition.
+
+Vaibhav (02:05.939)
+This is something that we do a lot on the BAML team because a large part of building programming languages is actually having really good thesis and background research on how you go do something about this. And while you guys are in the chat, if you have questions, if you have thoughts that perhaps make your design process really good, just drop them in. But when we think about it, design docs are... And Kevin, I want your thoughts, but I kind of find that implementation can often be one shot if the design is phenomenally correct. But...
+
+Kevin Gregory (02:33.868)
+Yeah.
+
+Vaibhav (02:34.878)
+Phenomenally correct design is very hard to do.
+
+Kevin Gregory (02:38.753)
+Yeah, no, I completely agree. I mean, we've all heard the story of the guy who founded or the guy who built Cloud Code. From what I've heard, what he does is he basically just goes back and forth with the plan. And then whenever the plan is done, he just kicks it off and then starts another one. So yeah, and I found the same thing. If my design doc or my plan is really, really good, a lot of times Cloud Code cursor can get it in one shot.
+
+Vaibhav (03:04.477)
+Yeah, and I think a lot of people spend a lot of time in the planning phases of their system, but today I think I want to talk about what if you're doing an incredibly hard problem. I'll tell you an example of a problem that I'm working on right now that I have been working on for almost four days now. And I haven't even started coding yet. It's pure designing for four days. The problem is threading. We're designing our threading system for BAML. If any of you know how...
+
+Async IO works, if any of you know how threading models work in like core language runtimes, they're not what I would say the easiest thing to implement. There's a lot of design trade-offs in terms of what feels good, what feels bad. And I wanna show the process of how we're doing this and like how I'm actively doing this today. So I'll show you stuff, some stuff that's more polished. I'll show you some stuff that's I'm actually working on. I'll literally show you how I move forward with it.
+
+And the idea of this task is I don't predict that this task is one-shot implementable, no matter how much good work we do in design. But I do believe that if we design it well, we could break into four or five different chunks that are each individually one-shot implementable. And each of those could provide meaningful upgrades to the system.
+
+But before I go into that part, said, I'd love to know how you work through trade-offs and decisions where you are out of your depth. I think threading is probably one of those. I don't know how Go's threading model works. don't know how, I have some idea about async IO works in most languages, but I don't know like definitively how it works in V8. And I don't know definitively how works in CPython. So I'm gonna share my screen and like Kevin, just interrupt as you have thoughts. Same with, I'm not gonna be watching the chat as much.
+
+Kevin Gregory (04:30.605)
+Ha
+
+Kevin Gregory (04:36.705)
+Yeah.
+
+Kevin Gregory (04:40.823)
+Sure, I'll keep the chat open.
+
+Vaibhav (04:42.696)
+Yeah, and then like, let me keep it going. All right. Can you guys see my screen?
+
+Kevin Gregory (04:50.611)
+Can you zoom in a little bit?
+
+Vaibhav (04:52.582)
+Yeah, that was the other way. OK, so before we do anything else, I want to talk about general processes that are useful. So the first process that I personally find to be useful is actually what is
+
+is actually like
+
+Kevin Gregory (05:10.029)
+Yeah, we're getting asked to zoom in just a little bit more. Yeah, there we go.
+
+Vaibhav (05:13.81)
+Okay, the first process that I find actively useful is actually just the ability to go ahead and have a good way to read design docs. So we actually built, we've done a talk on this at the AI on conference. You guys will see it soon on YouTube. But it's this idea of fighting slop and slop. We all know we're going to generate slop. How do you do this? Well, we build tools internally to make slop really easy to understand. So like one of our engineers, Kai, wrote a whole thing about why we want date time.
+
+We want daytime in BAML because daytime is nice. want, if you're building agentic systems, you want a date way, a way to deal with dates. We wrote a whole BAP around it and part of it wasn't actually just doing this. It like doing a lot of background research and understanding how it's used in not our, just our system, but also other languages. And you go do this. So you build tooling that allows other users in the team to comment, like review design docs. And obviously like GitHub doesn't really work well for this because GitHub's not built for like sharing a massive amounts of markdown files really easily.
+
+So we added just a little bit of tooling. Then we went ahead and added a little bit more tooling.
+
+Vaibhav (06:18.964)
+Then we went ahead and added a little bit more tooling to actually connect all of this to Slack. So every single time stuff gets created, a Slack thread gets created for every single thing that reflects it on here. Because again, we don't have notification systems on our website. We don't want to build that. So we latch onto Slack as a notification system to make sure that design docs can actively be shared once they're in like a more ready state. So one way to kind of deal with decisions out of your depth is how do you involve more people in your team into it?
+
+and you have a couple different options here. And the easiest option in my mind is just make sure that people in the team can read it. And some of these threads, let's see if I can find a good one. And like we don't always use this, sometimes we just use Slack directly. But oftentimes people just read these and like, we'll just start leaving comments. And we did extra work like tag the person, connect the person in Slack to the person in our system over here.
+
+as you go do this. again, most of this stuff is hard. But we can actually see all the users here. And some people have different privileges. Like me and Erin have slightly different privileges. And everyone on our team gets automatically connected because if their GitHub account has their boundary ML email, they automatically become a member of the team.
+
+Kevin Gregory (07:19.244)
+Mm-hmm.
+
+Vaibhav (07:35.933)
+And members of the team have different privileges and random wild users that want to go do this. for example, if you guys go to beps.boundary.com, you should be able to log in with your GitHub and just see random work that we're doing. But yes, this tool is completely in-house. haven't really, if you're curious, it's actually fully open source as well. If you go to our repo. Where is this? TypeScript 2, somewhere in here. If you just ask Claude to find it, it's somewhere in here. I don't know where.
+
+Kevin Gregory (08:04.778)
+Yeah, this is, this is really, I really like this idea because some of the, one of the big things that I think that, that we struggle with, and I imagine a lot of other companies too, or a lot of other companies do as well, is you end up in like design doc hell, right? So we use, we use Google drive a lot. So we have Google docs kind of all over the place and we don't have a good way of, of tracking.
+
+Vaibhav (08:18.248)
+Mm-hmm.
+
+Kevin Gregory (08:28.736)
+what design docs are being discussed, what's been approved, what comments are aware. Most of the time people kind of just send it out. There might be one round of comments and people reply, but there's no sense of when you have a PR, it's merged and it's done. There's no sense of that. And so something like this, think it'd be really, really helpful, really helpful. I actually might steal this.
+
+Vaibhav (08:43.792)
+Exactly. Yeah. And the one I'm working on right now is spawn, because I'm building concurrency. And they have different states on here. You can mark special things as good for the LLM. So then other things working on new design docs automatically pull them into context as reference. And I'll show you how we do that in a second. And the other thing we have is this export ability, where you can just export things. But yeah, it is effectively a tool to just
+
+kind of likely able to leave comments and share information about them. Now there's a big assumption in this tool, which is the person that's producing the design doc, once they move it from draft over to proposed, actually goes ahead and has done the legwork to say that it is good and it is good to read, I trust you to go do this. We haven't built the notification system where you can ask specific people to review, that's kind of a pain in the ass.
+
+But we just tag people in Slack and say, hey, go read this. But now we're taking this a few steps further. Because again, the problem with any website back system is if you're doing a website back system, Claude can't edit it. So we have a thing that allows you to export all these BEPs. That gives you a nice little zip file. And when you have the zip file, what you get is you get a nice little folder structure that downloads every single BEP and every single version and gives you all the data about it and all the pages on here.
+
+The other thing I've been building on top of this next step is actually some cloud skills. I haven't checked this in yet, but this is a cloud skill that has like another CLI tool that I've been working on. That's a Python script. And the whole idea of this tool is this. this. Clear. just spent some tokens. no, that cost me money.
+
+It's really interesting. Just typing things into your CL internal now just randomly builds you. it's not really an MC. So let's do the next thing. So what I'll do is pull the data. So when it pulls the data, this CLI actually runs. There's a cloud scale called BEP. Let's see if it already uses it. Nope, it didn't use it. BEP pull.
+
+Vaibhav (11:04.721)
+I'm going to say bet pull. And what this will do is it'll actually just run the script and this will pull the data and tell you something's out of sync. So let's change this really fast. I'm going to go ahead and like change the script to like add some new data. And now let's run that poll.
+
+Vaibhav (11:25.691)
+And now you'll notice it's going to pull the data and actually tells me that this thing has two lines removed from readme-md. I guess the diff is wrong, so I should update the script. if I pull, I'll remove two lines from readme.md. I can even ask which two lines. And because this is all backed by Claude and Claude is using this, I'll show you in a second what the pull actually shows you.
+
+Kevin Gregory (11:39.349)
+Ahem.
+
+Kevin Gregory (11:48.758)
+So this is making sure that your local folders, your local apps are in sync with the, what you were showing us earlier in the UI.
+
+Vaibhav (11:56.742)
+Exactly. Cause we don't want the problem with using Git for this is then you can't build all the tooling that you want around this. Cause Git doesn't have a good way to really guarantee certain kinds of tooling. So it actually, as you can see, I'm just working with Claude to ask it which two lines it just did the thing. It pulled the thing. Now I say, yep, just use the cloud thing. And this will just kind of do the thing for me without me having to do any more work. And like, boom, my apps are now up to date.
+
+And it does all sorts of things like renaming. It's kind of robust for this. And this is kind of where I think the blend of software versus hardware, of software versus AI really comes in. I worked with Claude to write the script. haven't, I don't even know what this code is. I don't care. Cause this, this code is a means to an end. And this is what we mean by fighting slop at slop. You generate slop code, don't really care what it does. As long as this workflow is good and this is nice, I'm very, very happy with my life.
+
+Kevin Gregory (12:27.883)
+Nice.
+
+Kevin Gregory (12:43.638)
+Mm-hmm.
+
+Vaibhav (12:56.667)
+And this workflow is I can just say, like, I want a concurrency BEP. Let's go work on this. And then what I can do as a developer is I can spend all my time working with Claude on a concurrency system. And we'll talk about the concurrency system in a second. Claude can be editing this for me. I have to spend zero time thinking about this. I can do all the background effort. I can do all the effort around understanding how current currency models work.
+
+And then I can write a BEP for my colleagues to go review and read. And they can read on a nice little UI on a dashboard while I can edit with a Markdown file with Cloud. Does that workflow overall kind of make sense, Kevin?
+
+Kevin Gregory (13:26.316)
+Mm-hmm.
+
+Kevin Gregory (13:36.544)
+Yeah, yeah, it does. And I think that the key thing here is when you say fighting, like this is how you fight AI slop with slop, right? You're using slop to build these internal tools that make it really easy to get a really high quality document.
+
+Vaibhav (13:50.479)
+Exactly. Yeah. And then.
+
+Kevin Gregory (13:51.904)
+And that's okay because it's not customer facing. It's a pretty simple workflow. And it doesn't matter if it's sloppy or doesn't follow solid principles or whatever. If it just gets the job done and it helps you get to this state faster and easier, so then what you actually end up shipping is a lot better and more reliable, then that's a worthwhile trade off every time.
+
+Vaibhav (14:12.197)
+Exactly. For those curious, if you look into the BAML repo, you'll find the BEPS folder. That's kind of where this is. Yeah, I don't think I've ever looked at the code in the BEPS folder. It is a pure AI slot mess. like, the only way I add features to BEPS is via Slack and tagging coding agents to go add features. I have never even opened Claude myself to add features into BEPS because it's not worth it.
+
+Cool. If folks have more questions about this workflow, let me know. But otherwise, I want to share how we go really deep into a really hard problem. Any question on your end, Kevin?
+
+Kevin Gregory (14:56.979)
+No, nothing for me. Seems like the chat people are ready to get into the threading.
+
+Vaibhav (15:02.181)
+Okay, let's talk about threading. This is a super, super preview. So if you guys have opinions, share them as you do. So let's start off with the problems of threading really fast. And this is how we start. The first thing that we do when we often write BEPS, and at this point we've gone through like many versions of BEPS, this actually overrides like this previous version that Antonio on our team wrote. Oops. We're like.
+
+At least for me, the worst, why do we want threading? Well, if you're writing agentic workflows, you're writing any sorts of systems. what does BEP stand for? BEP stands for BAML Enhancement Proposals. It's a way to add new language features into the BAML language. So when you think about threading, I think the worst, worst, worst part about threading is actually the fact that you have colored functions everywhere. Most people don't do threading. We've decided as a society that async IOS
+
+more convenient than threading and easier to model for most people than threading. So we do async I O. And async I O is a really nice system that allows us to get pair, I wouldn't say parallelism, but rather concurrency because it doesn't run things at the same time. It actually runs things just once. And let me see if I can find the doc over here. It's on here. The problem with async I O however, is that if you've ever used TypeScript,
+
+you will often see a function like read file sync, read file async, because once you are in an async context, it is really hard for you to leave and go into a sync, once you're in a sync context, function create user. If create user was a database call, you can no longer write a wait here unless you mark this function as async. And I think that pain point exists almost as a legacy pain point. What is the TypeScript?
+
+And I think the reason that this pain point exists as a legacy pain point is because concurrency was not something that most languages had on day one. So if you don't have that, you now have two code bases. And many times I have run into this problem where somewhere deep in some nested stack, I had to use some async function. And now I have to fricking wait and I have to change the whole stack upstream to make it completely sync. Have you done that? Yeah.
+
+Kevin Gregory (17:20.915)
+it. Everything's gotta be, yeah. I've done it a couple of times, yeah. Everything has to be, you have to change it all the way up and down.
+
+Vaibhav (17:30.158)
+Exactly. And I think when you do agentic engineering and we want code to happen, you want to have the minimum amount of diff to make sure that the right thing happens in the right way. So that's one of the problems that we're dealing with is we don't want function coloring. We don't want to have an async version of the function and the sync version of the function just to support how our callers might want to use it. But we do want parallelism because if you're calling an LM, if you're calling five LM functions, you kind of want them to run.
+
+in parallel when they can work in parallel. So that kind of inspired us to think a little bit more. And I think the inspiration that we had is very similar to async I O, but the main difference is instead of a function forcing yourself to be async I O, we want to go ahead and say that the call site determines if it's happening concurrently or in congruence.
+
+So the example code is like this. You'll ask the fastest model. You'll go ahead and spawn, and you can name spawned context with various things. And each one of these will actually just run this code directly on here. So the return type of this is a future type.
+
+Kevin Gregory (18:42.365)
+interesting.
+
+Vaibhav (18:50.962)
+that your R2D2, why is superseded in the new missable row? It's just a slop artifact and we don't really care about reading superseded. So it's not a thing that has really bothered us. And you can see over here, each of these is a feature and then you can await any of the features and then you get the first response back.
+
+So the other thing that we want to be able to make really easy, and I should help that what helps us design these systems is actually starting off with one of the premises of VAML is to be a great language for application development. So when we do design work on here, we always think really hard about, there's a CloudMD that has some rules, but effectively the rules that we have are like, think really hard about what is a frequent behavior.
+
+And things that are the most frequent should be the syntactically the most convenient while not compromising correctness to some degree. correctness does have to win to some degree, but frequency is really important. We don't want to make it harder to do the right thing. That's important to us. So one of the things that we realized that a lot of people want to do is thread pools.
+
+Kevin Gregory (19:46.133)
+Mm-hmm.
+
+Vaibhav (20:09.169)
+If you want to run an array in parallel, you want to kind of say that, this thing is running on like, oh, it's not supposed to be this. I have a different version of this. But his idea is you should be able to say that I want to spawn things and run at most three things at the same time. So we have this concept of a queue. But the basic way that we did this work, and you'll see kind of how I do the inspiration for this, is especially now that this is BEP is getting more and more complete.
+
+Kevin Gregory (20:30.25)
+you
+
+Vaibhav (20:34.961)
+is we kind of have to come up with some analogy to some existing system. So we've done previous legwork to recognize that what languages do async await, what languages do virtual threads, what languages do OS threads. We know we don't want to do OS threads because they're extremely heavyweight and really complicated to get right. And most application developers don't want to think about OS thread levels. You don't want to be thrashing your threads.
+
+We do likely want to copy Go or Kotlin who have coroutines and many languages, Python has coroutines, et cetera, and go make that work. And again, we don't want async await because async await leads to the problem of coloring where we have to label every function as either async or non-async. And if you want to use fetch, now everything upstream must be async. So we want to avoid that problem when possible. So once we started with that, we basically just forced the model to go ahead and I'll go to this in a second.
+
+Kevin Gregory (21:05.706)
+Mm-hmm.
+
+Vaibhav (21:28.877)
+Every single part of this BEP has to kind of be written in a way that is somewhat readable. We invented something called middleware that allows you to do things like wrap a spawn with a retry over here. And that's kind of convenient because many times you want to be able to just retry arbitrary blocks of code. might want to say that a spawn has like, I'll talk about a few more examples.
+
+Kevin Gregory (21:42.41)
+Mmm.
+
+Kevin Gregory (21:51.754)
+you
+
+Vaibhav (21:52.612)
+a fallback where if it fails, just give me a value. And that guarantees that this feature can never error anymore. The error type is never as opposed to whatever it was given to be. And a few other options that we came up with, we'll go into this in a second. But as we go through this, one of the things that you'll notice about this BEP is that it's extremely thorough and complete with the examples.
+
+Normally I would be really lazy, but I don't have to be. I can literally say like, give me an example of retry. Give me an example of timeout. Give me an example of timing. And what does timing do? It takes the spawn. And every time you run it, it just logs how long it took to run the task name, the name of the task or that's given to it. So in this case, it would just log how long the extract took. And it tells you like, it'll run the retry and with the retries, it will log the timing of the total system, not each individual retry.
+
+Kevin Gregory (22:44.693)
+cool.
+
+Vaibhav (22:47.179)
+And obviously with retry and with timing is different than with timing with retry. This measures the full system. This measures the timing of every single retry individually. And one of the things that you'll notice when I go through this is there's examples like fire forget. And I'll read through the BEP a little bit more slowly in a bit, but I want to show the process first. And I want to show the level of thoroughness that we go into in here.
+
+Kevin Gregory (22:48.073)
+Mm-hmm.
+
+Vaibhav (23:11.887)
+We talk about unhandled spawns. We talk about how futures that spawn futures work, especially for example, if we do cancellation. We talk about rate limiting. We talk about the cancel token. And then we go ahead and like talk about how you do conditional spawning, how select works, for example, like if you want to pick one thread or the other, see which one got completed. But the point is this doc gets very, very thorough. Now, once someone reads this, it's...
+
+We found what we do is we actually record the Slack meeting using transcriptions. And I'll show you the meeting that we had about this talk recently. It's like a giant transcription language. Where'd it go? So we literally just recorded, we had a Slack huddle. We got the notes from the Slack thread and then we actually just have the huddle transcript. The notes don't really matter, but I literally would take the full huddle transcript and we were in person. it's just, that's why it's just me talking.
+
+Kevin Gregory (24:06.698)
+It's just you talking.
+
+Vaibhav (24:09.561)
+And it's a pretty long meeting, as you can tell. We were talking for like an hour and a half here, at least, maybe two, two and a half. I don't think we recorded the whole thing, sadly, because Granola broke on us. So I literally just went through, I copied this whole transcript. And after I copied this whole transcript, what I do next is, let me find my ghosty.
+
+Kevin Gregory (24:12.916)
+Yeah.
+
+Vaibhav (24:33.359)
+Vaibhav (24:38.321)
+Which one is this? This, this is the one. And you'll literally watch the message that I put. I literally say something like this. BEP34 is very complex. We make a, and I literally just reorganize this because I realized that this BEP, which is spawn is implicitly done very, it has so many design decisions that we have to make. Like cancellation, like canceling threads and canceling workloads is a whole complicated work stream.
+
+We have so many design decisions that we have to make that even someone reading the BEP doesn't have the full context. And I think I paste it in the transfer. At some point I do paste in the conversation. And I basically just forced the model to go ahead and just sprint out an outline of how it should rewrite the BEP. And this BEP, I want to say the summary, the motivation, the simplest form, the design decisions, and this time it outlines all actual syntax decisions that we make, like are future shareable?
+
+Can you like send futures across threads themselves? What happens when you await on a future multiple times? What happens when you throw? How are cancellations taken? The fact that a parent being canceled means that all children get canceled by default and you need to do work to detach themselves. Can you have a thought then on a future where you actually choose what it does in different situations? And like, go ahead.
+
+Kevin Gregory (26:03.497)
+So these are decisions that you'll discuss in your meeting or that is implicitly decided in the document. Both.
+
+Vaibhav (26:11.044)
+both. So some decisions got changed and got introduced because of the meeting and some are just locked into the document. And then what we did is I basically asked them all to look at these design decisions, look at, then pull out the more complicated ones and then pull out a whole bunch of examples over here for each of these. And then just call out what we're explicitly not doing. Cause that's important for people to read at the the back of like, here's just like, I'm not talking about task local storage.
+
+Kevin Gregory (26:18.515)
+Gotcha.
+
+Vaibhav (26:38.608)
+Like thread local storage is not in scope of this thing. We actually have removed select after talking about this design decision. Conditional spawning is just like, it's just a little complicated. It's not relevant of putting in here. And deadlock detection is something that we can do, but it's not something that we're going to talk about in this BEP. It's just out of scope.
+
+Kevin Gregory (26:41.491)
+Mm-hmm.
+
+Vaibhav (26:59.396)
+So like having a really good philosophy of what we do ends up being very useful. And what we end up doing is, I'll show you, the final optimization for this was actually like, I want to reduce the scope of this BEP to be much smaller and much more direct. And the final thing went from like 104 kilobytes is how big this total BEP was down to 62 kilobytes. So I reduced the amount of like verbosity by half. And I kind of have to go read the whole thing to make it actually good. And I'll show you what the final thing looks like over here.
+
+Kevin Gregory (27:00.382)
+Mm-hmm.
+
+Kevin Gregory (27:22.505)
+Interesting.
+
+Vaibhav (27:29.424)
+And now you can see that the BEP 34 V2 and I made it right in V2 because if I delete V1, which I'll notice is it will, if you replace in place for design docs, models will often just mess up. Yeah. Because like they're for complicated design docs, I've seen this a hundred percent of the time. And if you think about intuitively, it makes sense to like, why would a model
+
+Kevin Gregory (27:41.661)
+Really? That's really interesting to know.
+
+Vaibhav (27:52.773)
+Think about a human, humans get lazy and they're inconsistent when they edit things. Edit editing is a more hard exercise to be coherent in than rewriting from scratch.
+
+Kevin Gregory (28:05.097)
+Yeah, that's a good point. That's a good point.
+
+Vaibhav (28:06.862)
+Right? Like, take any software architecture, like take any agentic system you built. I guarantee, actually, I'm curious. you think about how much cleaner you would write it the second time around than the first time around?
+
+Kevin Gregory (28:09.533)
+you
+
+Kevin Gregory (28:20.647)
+Yeah, I think it's something similar where when you see a system that has a lot of tech debt, there's that part of it that just wants to rewrite the whole thing from scratch rather than kind of just editing it, right? It's the same thing.
+
+Vaibhav (28:29.625)
+Yeah
+
+Exactly. And I think there's like the sunk cost fallacy that a lot of people have, which is like, I'll just edit it. I'll keep editing. But oftentimes when you're doing like, in this case, I'm effectively doing a major rewrite where I want to like, re I want to be like, Hey, spawning is way different than every other bet that we've done before. It has so many more implicit design decisions that are being made that are not obvious. I want to just label them one by one by one. And then in a separate document, talk about prior art and like how other people do it.
+
+Kevin Gregory (28:54.313)
+Hmm
+
+Kevin Gregory (29:02.675)
+So the first document was the first document combining both of those two.
+
+Vaibhav (29:03.075)
+And it's...
+
+It was literally just interweaving all the design decisions all over the dock. And... Go ahead.
+
+Kevin Gregory (29:08.041)
+just interweaving. So that's how you were able to get it from the larger to the smaller, even though you're saying, here, discuss all these decisions in more depth. It's because you're splitting it out into two different ones.
+
+Vaibhav (29:19.437)
+Exactly.
+
+Vaibhav (29:23.148)
+Exactly. And now if you read the spawn doc, I'll show you what it starts off with. It still has a motivation section because every time you propose a language feature, there should be a user value here. It very much highlights function coloring as a very top level priority that we have, which is we don't want function coloring. And then it just starts off with the very simplest forms. you're not keeping all the versions. So I'll talk about versions and how we deal with versions in a second.
+
+Kevin Gregory (29:31.687)
+Mm-hmm. Yep.
+
+Kevin Gregory (29:36.989)
+Yes.
+
+Vaibhav (29:51.205)
+We talk about the simplest spawns and all the name spawns. And then we literally just start off with every single design decision. And we talk about why. Like when do spawn start? Do spawn start when you hit await or do spawn start immediately as soon as you spawn? That's a choice. Or do spawn start explicitly when you hit .start, right? Like threads don't start often until you hit .start.
+
+Kevin Gregory (29:54.665)
+Mm-hmm.
+
+Kevin Gregory (30:08.777)
+Hmm.
+
+Yeah.
+
+Vaibhav (30:15.288)
+in a lot of libraries. But in our case, we've decided that spawns actually start completely immediately as soon as you hit spawn, because why wait? A future is shareable. So once you have futures, you can actually await something twice. It's idempotent. It gives you the same exact response. Futures actually outlive their spawners. So you can have a future that gets returned by a function. Why? Well, that's just useful for marining paradigms. Map functions will do this. If you want to take an array of URLs and run them all in parallel, well, you make a future.
+
+Kevin Gregory (30:34.899)
+Mm-hmm.
+
+Vaibhav (30:45.296)
+We had a choice. Do we want a wait to be in front of the thing or do we want a wait to be a postfix like f.await, like Rust style? And like our target audience is Python and TypeScript devs. So we prefer looking like TypeScript. But if a lot of people end up doing a dot have like chained awaits, which often like if you're writing like you'll run into this, you write a web system, which is like await fetch dot dot json.
+
+Kevin Gregory (30:56.809)
+Hmm.
+
+Vaibhav (31:15.0)
+Await, you have to double catch your awaits over here if you do this, because the first one gets the metadata and the second one actually gets a payload. But that's one edge case. So we're OK with that pain, since it's already familiar to Python and TypeScript apps. Await re-throws errors from features. So if a feature has an error, Await just throws the error of the feature and it's completely type safe. Cancellation is a panic.
+
+Kevin Gregory (31:22.674)
+Mm-hmm.
+
+Vaibhav (31:41.175)
+One of the things in the Bama language that we have is errors are completely type safe and we infer whatever error message, error type a function can throw, regardless of you doing that. The problem with inferring error messages and having like exhaustedness on errors is it's very easy to have a wild card accidentally like hide a cancellation. So we have two kinds of error messages. One is like an error that you deal with. One is an error that you
+
+Kevin Gregory (32:04.039)
+Mm-hmm.
+
+Vaibhav (32:10.096)
+that you kind of have to like explicitly catch. If you want to avoid cancellations, you have to explicitly say, no, if I get a cancel signal, ignore it and give me this value instead. But by default, it'll just get rethrown. When cancellations happen, when a wait points happen, but I think the big difference you can see, let's see if can pull this dock side by side.
+
+Vaibhav (32:38.23)
+Snap, window right. All there we go. I wanna pull up the other dock.
+
+Vaibhav (32:51.196)
+One big thing that you should be able to hopefully see almost immediately is like, just like how this doc starts versus this one. And like almost immediately there's way less pros. I think I'm zoomed in more than one of them, but I'll zoom out. So it's the same size. Almost immediately there's way less crows.
+
+Kevin Gregory (32:59.323)
+Mm-hmm.
+
+Vaibhav (33:11.024)
+There's the mental model is kind of like garbage. So I got rid of that. The motivation is way thinner and way easier to read. In my opinion, it just less text like size-wise. And then it starts off directly with like just like the very, very basic example. Talks about the most common use cases is that fact that you can name stuff for debugging use cases.
+
+Kevin Gregory (33:11.303)
+Yeah.
+
+Kevin Gregory (33:20.381)
+Mm-hmm.
+
+Vaibhav (33:37.072)
+And then it goes straight towards like the previous example, just started talking about middleware. Well, why are we going to middleware right away? We should talk about the design decisions that we actually made and it's way easier for someone that's just skimming to digest it.
+
+Kevin Gregory (33:48.435)
+Yeah.
+
+Yeah, I think it's important to remember that the models tend to read this all like a human would, right? And so if you just jump into the kind of an immediate rest, you start with something very specific and you don't have this like layered top-down approach, it's gonna be a lot harder for the models to understand and implement.
+
+Vaibhav (34:07.339)
+Exactly. So we spend a lot of time just thinking about how we're going to go have a model think through this. And once it helped, this is probably one of the most complex design docs we've done to date, which is why it's very different. we did have a cancellation, if anyone's ever tried, is a really, really hard concept to go model. But for us, we know our target audience. It's people like Evolution IQ who are building massive agentic workflows. Well, we know the default here, which is if you're actually going to go ahead and
+
+Kevin Gregory (34:13.05)
+Mm-hmm.
+
+Kevin Gregory (34:31.336)
+Mm-hmm.
+
+Vaibhav (34:37.005)
+cancel like I'm an app developer. I spawned an API that I spawned some library code that does deep research and spawns like 500,000 agents to go do stuff. And something comes back to me and gives me a result faster. I kind of want to cancel all the work that that, that, that research started and just kill it. And who cares what that thing said? And so, cause before API calls didn't really cost money.
+
+Kevin Gregory (34:56.464)
+Mm-hmm. Yeah.
+
+Kevin Gregory (35:04.936)
+Yeah, I know they do. It's a tool use, yeah.
+
+Vaibhav (35:06.095)
+And now, like every API call you make, it's a tool. Exactly. It's money. So you kind of want the right to be in the app developer's hand to decide when they cancel work. And I think at the bottom, we talk about prior art and what happens here. it's not enough detail. OK, so this is like one quick readout here. I immediately see that this prior art section is very weak.
+
+Kevin Gregory (35:24.828)
+Mm-hmm.
+
+Vaibhav (35:33.688)
+So what I would do is I'd say I want to sub page on prior art about design decisions that we made on a board controller, for example, like a board controller is probably the best example. So let's, show you exactly what I'm going to Resume full session as is. Okay. This is pretty good, but the biggest miss here is a lack of understanding for the end user on why we didn't go with explicit cancellation tokens. For example, like go or a board controller in TypeScript.
+
+Obviously there's a syntactical error and both languages have made different trade-offs. In the case of Go, every function has this thing called CTX. So if you're layering things through like 17 different layers of functions, every single one of them will now has to carry CTX and pass it down. While this is technically more explicit, it is a burden for app developers that are first being welcomed into the language to just have to...
+
+know this magic parameter and they later learn that it's about cancellation and we want to avoid that burden. On the second hand, TypeScript has a different philosophy. There is no philosophy around passing in a cancel token. So 99.99 % of the time, no one uses an abort controller and no APIs in TypeScript are ever cancelable by default and no library has cancellation semantics really built in.
+
+and we don't really want to be in either of those worlds. So we prefer the implicit cancellation of Python, for example. So you'll notice that I'm not actually trying really hard to teach the model anything here. I'm very explicit in this learning. Make this a subpage. I'm very explicit in the learning here because what I don't want to do by accident
+
+Kevin Gregory (37:09.2)
+Mm-hmm.
+
+Vaibhav (37:22.255)
+is I don't want the model to really make its own inference. I will ask it about its own inference once it's done, but I want it to really capture the thing from the design discussion that we had, more true to myself. But I'm not gonna put it in the main readme. I'm gonna make a separate sub page about this because I know for someone that's new to reading this BEP.
+
+Kevin Gregory (37:34.013)
+Mm-hmm.
+
+Vaibhav (37:44.899)
+they will probably prefer like why we didn't pick existing semantics in a whole different page because it is somewhat nuanced and detailed and we likely want code samples about this.
+
+Kevin Gregory (37:57.096)
+We've got a couple questions come through in the chat. So one is about versions of all these different documents. Do you keep the different versions? Models go nuts when they see multiple versions of something.
+
+Vaibhav (38:08.195)
+Yes, so we actually have two different ways of working with BEPS. One is this what I showed you where you download all the BEPS and you work off of them because you kind of often need context of other BEPS to design other BEPS. The BEPS are not usually designed in independence. But the other approach we have is actually this approach. Let's say we're working on reflection, for example. Actually, this is approved. We're working on reflection.
+
+Kevin Gregory (38:21.873)
+Mm-hmm
+
+Vaibhav (38:35.439)
+You'll notice that we do have versions built-ins. Actually, let me pick one that actually had a lot of versions. Patterns, we're working on patterns and text. There's seven versions on this BEP. Every single version of this BEP has its own comment chain, has other things driven by it. There's a quick little thing to remind you you're on an older version. You can edit comments on old versions. They're read-only. You can't see them ever again. But if you export this BEP, I'll show you what we do.
+
+Kevin Gregory (38:53.274)
+Thanks.
+
+Vaibhav (39:08.001)
+We actually, when you export just a single BAP, you actually get all the versions baked in place. You also get all the discussions and all the questions that people have, and you get all the comments and everything baked into agent context.md. So, sometimes if you're working on a BAP and you want to refer to other versions, then you have to go through this workflow. Ideally we can merge the workflows, but this is the problem of slop based design. Like you kind of have, you kind of just do what you need to do at any given time to make it work.
+
+Kevin Gregory (39:12.071)
+Thanks
+
+Kevin Gregory (39:21.179)
+is very cool.
+
+Vaibhav (39:36.847)
+But this is kind of the approach for versioning. You do want versions. It's useful for humans. It's useful for agents. But the reason that we don't use Git is because you often, like, one, comment tracking is really hard on Git for various diffs once you start doing diffs. And also, we want a very linear history for our BEPS. It needs to be purely linear. You push to it, and that's it.
+
+Kevin Gregory (39:37.282)
+Mm-hmm.
+
+Vaibhav (40:01.326)
+So the versioning story is slightly simpler and that's what works for us at least. We might switch to a Git-based approach eventually, but at least for now this works well.
+
+Kevin Gregory (40:14.375)
+I'm curious how much because we're spending a lot of time and this is kind of what we talked about upfront with how important it is really really getting a good design doc now because you can almost one-shot it maybe not with threading but how much more time would you say you've spent now doing this kind of work than you two three years ago?
+
+Vaibhav (40:36.398)
+I think I'll show you an example of a BEP that I would not have written in nearly as much detail without this. One of the things are middleware BEP, for example. I wanna show how many examples we have in the middleware BEP.
+
+Kevin Gregory (40:49.478)
+Mm-hmm.
+
+Vaibhav (40:56.014)
+Our middleware BEP, which is like a way to add middleware into the system. Like you want to say that this scope of code has a cost limit of $5. That'd be nice to have. It's like, don't spend more or like, Hey, use a clod, use like the clod SDK with the string passed in or run like a retry with a timeout on this fetch. It's kind of like our middleware BEP. And I want to show like how complicated and we talk about all sorts of things. Like, why don't you do wrapper functions and everything here too. But.
+
+Kevin Gregory (41:04.71)
+Yeah.
+
+Kevin Gregory (41:18.087)
+Mm-hmm.
+
+Vaibhav (41:25.998)
+when we write this, one of the expectations we have is like this prior art. I want to see code snippets of like real systems. And I just, I would have been lazy. I would have said Express has this. I would have said Python decorators have this. And Python decorators I know off the of my head also write the code. But I no way would have found like the poly.net mechanism of writing middleware. I don't know .net. So it's just not something I think about. So I think there's small things like this that would have made a big difference.
+
+Kevin Gregory (41:41.222)
+Yeah.
+
+Vaibhav (41:55.349)
+And then when you actually go down, like I wrote all sorts of middleware here to prove that it works. I wrote like with retry, retry, and I actually wrote out all the code. Then I went and implemented timeout and timeout uses spawn. And because I have all the bets in context, it can actually go do that and write how timeout would be written. Then I wrote timing. Then I wrote fallback. Then I did composition, but then I started doing more advanced things. What if I want to retry that has
+
+Kevin Gregory (42:03.962)
+Mm-hmm.
+
+Vaibhav (42:25.002)
+a back off of a certain type, where you have exponential back off or like jitter or constants. If you want to read the BEPS, you should go to BEPS.boundaryml.com. If you want to see the BEPS repo, that's in the BAML repo. We have a monorepo pattern. But then it's selective error handling. What if I want to retry on only uncertain errors? Well, like now you can pass this in and your code looks like this.
+
+you're running this code called fetch with this API call, this section of code named fetch with API calls. It has a retry of three and it'll only retry in timeout error or rate limiter. Everything else will not retry on and just throw the exception. like authentication errors will not run the retry loop. And then we built a circuit breaker, which is like, it's kind of like a rate limiter, but slightly different. You can look into the pattern later if you're curious. Then we built a rate limiter.
+
+Kevin Gregory (43:16.369)
+Mm-hmm.
+
+Vaibhav (43:20.238)
+Then we went further and said, how do you compose different compositions here? And just this level of example building is just not something I would have ever done before. There's like zero time I would have spent on like doing this. I was like, I built a caching system. I want to say like, hey, run this block of code with a cache with this key. And again, I would kind of know it works, but the point of discovery for whether or not there's a bug here would be much later.
+
+Kevin Gregory (43:27.833)
+Mm-hmm. Yeah.
+
+Vaibhav (43:47.912)
+rather than earlier. I discovered during implementation, like, holy cow, we have to redesign this thing. And I like this, basically the best engineers would make less skill issue problem would have less skill issue problems. So their implementations would be better because their intuition is better. But now like everyone, everyone's median kind of rises in my opinion, and your median is so much better than it used to be.
+
+Kevin Gregory (43:49.54)
+Mm-hmm.
+
+Kevin Gregory (43:53.873)
+Yep.
+
+Kevin Gregory (44:06.182)
+Mm-hmm.
+
+Kevin Gregory (44:14.555)
+Right, for sure. That's fascinating.
+
+Vaibhav (44:18.062)
+How much time do you spend on writing apps? I spend like, or not apps, but like writing design docs. I spend a lot of time like writing design docs and plans for almost all of my work now. It's like 50 % or more.
+
+Kevin Gregory (44:27.047)
+Yeah, I think I yeah, I would say I would say it's more than 50 % Most of my time I spend writing docs coming up with plans I like to keep it I err on the side of more detail and I think it's similar to kind of you know what we've seen I'm not going into more detail than you're threading one, but I I spend most of my time reading design documents and plans and iterating on them and because the code you kind of just
+
+Again, if it's good enough, can kind of just one shot it. So you just send the design doc and the code kind of writes itself. And then you review the code and, or, and then you, and then you merge and then you're done. So now that the job of hands on keyboard typing code is kind of just been solved.
+
+Vaibhav (45:08.748)
+Yeah.
+
+Kevin Gregory (45:18.107)
+I have a lot more time to write these design docs and it's so much more important to do that since you're not writing the code. You have to, you know, if you're giving instructions to someone how to do it, all the stuff that's kind of in your head that you, or assumptions that you've made, you have to make sure it's really explicit in the doc. And it also helps question, and it also helps question your assumptions, right? Like it comes up with,
+
+Vaibhav (45:35.817)
+I 100 % agree.
+
+Kevin Gregory (45:44.601)
+It finds that you're assuming different design patterns and things like that that you didn't realize you didn't even realize that you were assuming and that might not be best.
+
+Vaibhav (45:53.74)
+Yeah, exactly. Like the cost limit one is kind of interesting. When I was in the middle where I was like, I want to build a cost limit here. Why did I say like this thing runs and I want to spend at most $5 here. Well, in order to implement this, you have to implement a thread local variable. Like you just need thread local storage. There's no way around that. Well, if you're going to do that, well, then like, there's really not much around this except doing that. And in order to go make that happen, well, then it's kind of your responsibility to discover this problem.
+
+Kevin Gregory (46:10.768)
+Mm-hmm.
+
+Vaibhav (46:23.509)
+And it might've been impossible for me to have thought about that really hard and said like, holy cow, we actually have thread local storage. like, but LMS, like LMS will write every piece of code that you ask them to you. You can say, I want you to challenge me with what should not be possible in this design, but it's going to actually be done here.
+
+Kevin Gregory (46:29.424)
+Mm-hmm.
+
+Yeah.
+
+Kevin Gregory (46:43.824)
+You know, I think this is also something that you brought up in a previous episode where you and Dex were talking about. It was, you don't, if you just tell the LLM something, it's going to assume you're correct because they've been trained to basically to trust you and that you have contacts that they don't. And so something that's really helpful is almost like a, here's what I'm thinking for something, but I'm not sure what other ideas do you have for this design pattern or this part of the system. I found that to be
+
+Vaibhav (46:57.035)
+Yeah
+
+Kevin Gregory (47:13.114)
+very, very helpful because it will just assume what you're saying is correct and then it'll implement it when it may not be. So it's...
+
+Vaibhav (47:18.605)
+Yeah, exactly. I think someone asked, how do you keep track of everything in your head while you go do this? The answer is, one, get good. But two, the real answer is not get good. The real answer is build tooling so that you don't have to keep track of everything in your head. The fact that we built this tooling lets you download every BEP and go do this. I don't keep track of everything. I write the BEP and I literally say, can you go check every other implemented BEP and see if we are.
+
+Kevin Gregory (47:35.77)
+Mm-hmm.
+
+Vaibhav (47:45.838)
+if we're consistent with it and the syntax is correct. And if there's any like weird interactions. I do try and like have my own model of it, but these things are nuanced and they make a lot of mistakes very easily. Sam on our team just make it a really good suggestion. We used to name our BEP folders. You'll see this over here. Our, where'd it go? And Kevin, I'll get you. I think we're going to end very soon. We used to name our BEP folders with just the numbers.
+
+Kevin Gregory (48:09.05)
+Yeah, I've got to jump here and now.
+
+Vaibhav (48:15.435)
+And now we don't, now we name them with numbers plus the name because if you do LS and the model does LS, it sees exactly what that bit is without having to read anything. And just constantly reinforces where it has to go do the work. So I think there's small kinds of tooling that you can build along the way to make this really, really helpful. But I mean, that's it for today's content. If you guys have more questions, happy to stay on and help answer them afterward with the fact, but I think that's it. Kevin, thank you for joining, tons of fun.
+
+Kevin Gregory (48:22.246)
+It sees the name. Mm-hmm.
+
+Kevin Gregory (48:43.078)
+All right, yeah, thank you so much.
+
+Vaibhav (48:45.079)
+Hopefully you guys got some interesting insight on the tooling. you're interested in checking it out, go to beps.boundaryml.com. Or if you want to go read how the code works, or don't read how the code works, ask Claude to read how the code works, check out the GitHub repo and ask it to the, check out, get up and ask it to like ask Claude to say where's the BEPS folder and how do I run it. It'll get you set up and it should do everything for you.
+
+Cool. Always good to see you, Kevin. See you soon. Any questions from anyone? While I take the questions, I'm going to go ahead and really quickly just record an outro. All right, everyone. Today's episode is going to be tons of fun. We're going to go ahead and talk about how we do design docs for extremely complicated concepts.
+
+We're going to show you some internal tools that we built of how we share Markdown files with comments integrated with Slack, and also talk about what level of detail we go into with our actual design docs for a really complicated feature, threading in the Bama language. Let's get started. Do you also document your IPR artifacts for future revisiting? We do have some documentation, but honestly, we just use the documentation that Riptide has on them. But personally, we have a
+
+almost a no code review philosophy on the team. And there's a high level of expectation that we build systems that prevent regressions rather than go ahead and just like have all this documentation. just don't find the docs, docs are often not a good source of truth. So it's way easier to spin up cloth code and ask it how something works every single time. One of the things that I have over here,
+
+is repos. One of the repos that I have is like, I have like the Go repo downloaded. I also have like repos. I have like the entire rough folder downloaded. have, I think I have a bunch of other languages, repos, TypeScript Go. I like TypeScript Go downloaded. I think I probably have like V8 somewhere on my computer as well. I just download all the other artifacts.
+
+Vaibhav (50:56.788)
+And every single time I want to know how something implements, I don't read the docs. I don't search the internet. I just have Claude search through each of these languages and tell me how exactly how they implement something.
+
+Vaibhav (51:09.36)
+No, we make no design docs for fighting slop at slop. I mean, sometimes we do like a planning phase, like those are mostly a workflow system. So like we just make sure the workflow is good. So like I think right over here, was, let's see if I can find this. This, the thing that I showed you earlier today, that was all about, that was all about like bet pull bet push where it could like sync with the cloud.
+
+new terminal.
+
+What I did was, claw dash dash resume. I can just show my entire chat log.
+
+Vaibhav (51:50.773)
+I think this is the one, probably this one, which is the biggest file, one megabyte. That's probably it. I just started at the beginning and I just had a message that said, I'll make a CLI that should just, I don't have the full log, but I basically made a CLI that I just told it to make the CLI for me. And I just iterated on it a few times in parallel to my main work stream while I was actually reading the BEP. And I just said like, go make the system work until I have all the tools that I want. And I was like,
+
+I handle non-TTY mode and just make that good. Or like, where is it? There's a couple other commands that I have. And I was like, I just asked it what features are missing via the CLI and it suggested some stuff and I just told it which of the ones I care about. So I'm not really thinking that hard about this kind of workflow. I'm just like letting it riff. And models are really good at one line tools and like building this kind of tooling. Do you build and maintain compiled version of the full architecture?
+
+of the whole system. Do you know what that means? Igor, I'm not really sure what you mean by that.
+
+account for software architecture that does.
+
+Do you think we could define a comprehensive skill for software architecture that does a good job while constantly updating gaps? No, I don't think so. I think if you're actually, if you think about it, imagine this, you're shipping code at agent speed. If you're shipping code at agent speed, I don't personally see how it's possible to really update documentation at agent speed. I just find it so much.
+
+Vaibhav (53:29.708)
+The caching value that you get from compressing information down is so low. And maybe the best analogy for this is how you implement a feature. Oftentimes when I implement the feature, I need the nuance of the system as it relates to that specific feature. It is almost impossible that I'll get a cache hit for the nuance of that system being captured in the document. So therefore I have to do a research task anyway. So instead I find it more valuable to organize code and build systems that make it easier to go ahead.
+
+and find what the state of the system is as an absolute truth, rather than having to put arbitrary things into my markdown files.
+
+I think you're asking, BEP only contains incremental features, whereas the whole architecture just incrementally evolves. So you then need to reverse engineer architectures from reading all BEPs. I mean, in some ways, yes, but I think the main difference is like BEPs, while they're designed to only talk about one thing at a time, that's very standalone. The way that you often deal with how things interact with each other is really about...
+
+thinking about type systems and like core theory around that layer. And if you're not breaking the type system rules and other rules like that, most of the BEPS should compose and whether or not they compose with other features is actually a big thing that we think about in here. So like when we design interfaces, we have to think about how they compose with features and how they compose with other classes and built-in types. And we spend a lot of work thinking about that.
+
+How do you think through the naming for BAML? How do you think through the naming of BAML? Do you always start from the user familiarity with Rust and TypeScript, or do you have some sort of preferencing for good naming? Honestly, don't actually, maybe I should show, we actually try our best not to come up with names. I think the threading BAMP should have it.
+
+Vaibhav (55:33.42)
+It's a new one, the old one. I'll show you what I mean.
+
+Vaibhav (55:40.653)
+Right now there's almost no excuse to not come up with a good name. One, we'd run it by more people on our team as often as possible. That's highly, highly useful because no one of us is actually right all the time. We spend a lot of time, I think the task group is a good example. We rename this from Q to task group. And I think at the bottom it talks about like, it does have a name restrictions. I have to update the doc to show all the naming criteria.
+
+One of these docs has it, but we basically just ask a model to spit out like 15 different names for this. Here, let me show you one that actually has this. I haven't pushed the spawn prep up yet, which is why it's kind of in a half-baked state. Like over here, when we were deciding what to call baml.wrap.retry where like these methods live for all the built-ins in the standard library, we had, I think the first name I came up with is baml.wids.retry, and that was so dumb. So I actually don't...
+
+I actually don't do this in this way. We just ask the model to be like, are like 15 words that we could put into here? And then we just like look at sample code and read it and then build intuition for what is good. When we were deciding the run keyword, I think there's somewhere in here. Let's see if I can go to markdown.
+
+Vaibhav (57:06.952)
+what? can't search. yeah. Design trade-offs, why run? See if I can pop something into there. Reading markdown files in VS Code is so bad, I should really open this in Obsidian. Let me pull it up really fast.
+
+Vaibhav (57:27.542)
+Can't even grip.
+
+Vaibhav (57:34.188)
+It's somewhere over here. Let me find the why run section. Maybe it's after this one. Oh, yeah. We actually, for example, when we were designing the run middle, we were like, do we like the word do more? Do we like exec? Do we like call? Or do we like run? And like, what are the trade-offs here? And I didn't even think about it. So was like, oh, we have a CLI command called run. Is that going to be confusing? But when you read this, we just chose run because it reads the best. When we were designing thread groups, we had, I think, list of like,
+
+five or six, seven different words. And we just like pick the one that read the best. And what's interesting is the model actually has a pretty good intuition for reads the best because you can ask a new thread with cleared context, which of these five examples do you like? And you just as clawed to generate all five examples with all five words. And you just have it explain which one does it understand the best.
+
+And then we do often start with who our end user is. Our end user is like an application developer. It's not a systems engineer. It's not a Rust engineer as sad as it is. It is an application developer and a model is really the key person, no key things that we care about. So we care about making sure that naming is very consistent and not overridden with like the same word means different, like static and C++ is very confusing.
+
+because depending on what line of code it's in, it means something totally differently in different scopes. The only preference we do have is we do prefer snake case over camel case. Igor, you're asking, if we find that the original BEP missed the fundamental use case, do you go back and build a new BEP or do you go back and fix the old one? It varies. That's actually a really good question. think a good analogy for this is actually our catch BEP.
+
+When we did error handling, we built match, and then we also wanted to go build catch, where catch is also completely type safe and understands your error semantics, and we wanted to behave like match. But one of the things that we didn't think about when we did this was actually patterns and text. So those of you that are familiar with destructuring, you might have an idea of what that looks like. And patterns are frickin' great. And if you don't know what destructuring is, hopefully you'll get a quick little idea.
+
+Vaibhav (59:52.926)
+of
+
+Vaibhav (59:56.588)
+But the idea of patterns is like, can say that this thing is of user type and I care about the name and age field and user, or it's an array and I want the first and the rest should come back as an array or various kinds of patterns. And it talks about why you might want to go do this. And like, this is one thing you could write. You could say match, see that this is a user type. And if it's a user type, me the name and the age and then call greet. Or you can just write this. And this goes back to the same philosophy.
+
+If agents are writing code, the more lines of code they have to write, the more likely that they'll make a mistake. So let's try and make syntax that is both understandable and also repeatable. So in this case, it gets even more complicated. I have a user, if the role is an admin, grant access. If the age is greater than 18, call greet them, otherwise greet a minor. But compare this code to this code. One is just strictly easier to read, at least in my opinion.
+
+And if you can prevent this kind of error from happening, you get way nicer behavior in terms of like, like exhaustiveness and a few other correctness behaviors as a side benefit. But this was clearly a thing that we missed when we first designed match, but we didn't actually miss it. We knew that we had to go do this, but we explicitly decided that it's out of scope. I would argue that it's really the developer's responsibility to make sure that the scope of everything is captured upfront. And if you don't know the scope,
+
+ask other engineers on your team if you got the scope right. And if you really truly miss something, hopefully it's because your user behavior changed in a way that you didn't have. And if you miss something that was truly fundamental, that wasn't about user behavior changing, just a missing like functionality, I would go back and review your processes to see how you actually missed that. But in general, we historically haven't really had to like.
+
+once BEPs are implemented, they're, they've been pretty good. And every now and then we run scenarios like, and match, we need let or not in front of the keyword? So that was like a decision that we to go back on, but we often update that in a future BEP. And then what I do is I ask Claude to at some point at some cadence, take every BEP that is like, that is of status, like accepted or implemented and just like actually go make sure it matches the implementation to some degree.
+
+Vaibhav (01:02:16.083)
+Hopefully that answers, I know that was a long answer, but hopefully that answers your question, Igor, in terms of how we approach this.
+
+Vaibhav (01:02:24.445)
+What's been the most aspect of the patterns, but man, the patterns, but was an intense step. we had a lot of different emotions around this, and it makes sense. Let's see if I can.
+
+Vaibhav (01:02:40.298)
+Let's see if we can talk about this.
+
+All right. I think the hardest thing about the patterns map, if you guys are curious, and we can talk about interesting language semantic stuffs, I like talking about this stuff, is actually like, how much do we value different things in different things? Let's go to, nope, I'm not gonna screen share until I know exactly what I'm screen sharing, sorry.
+
+Vaibhav (01:03:16.341)
+find the task.
+
+Vaibhav (01:03:21.739)
+Patterns is in here somewhere. Actually, I think I showed it here. Probably the most interesting about patterns was actually about like, one, think we all agreed that we want patterns. Patterns are phenomenal. This type of code is just so much cleaner. Working with arrays is so much nicer. You can just write things like this. When you just get the first element, go do things with it. Destructuring on let assignments is really, really nice. People often do this in TypeScript all the time. They do this in Rust. It's just a really nice pattern.
+
+And like really complicated code like this just becomes something that you can just glance at and you immediately understand. But the hardest thing about the patterns map was actually not patterns itself. It was actually designing what we wanted to do. And like, for example, when do we use a let keyword? Do we use it every single time we create a binding or do we minimize the amount of places that let happens? And it's like an argument for consistency versus ergonomics.
+
+And because we let you match on types, not just like bindings, like many languages do, we actually went through and we had to go think about like, hey, in an array, why am I getting a binding when at the top, if I write a thing, it's actually a type. And I'll show what that means in a second, but they're just consistency things. But what really helped was actually just like writing how we're going to prioritize this.
+
+which is do we care about consistency first, or do we care about ergonomics and frequency? So we just wrote down the frequency of what we believe everyone wants to do in different types of pattern matching scenarios. So when you're at the very top level match, we expect that the first thing you care about is matching on a type. And then you want to destructure. And then sometimes you want to rebind the variable to something else. And other times you want to do combinations of them. But for every single scenario, just
+
+stack rank this. And what's interesting is I think we all agreed on the frequency assumption. So then the main question was actually not about which of these is the most frequent. It's do we care about frequency over consistency or consistency over frequency? And once we came to that conclusion, it was actually very easy to go do this and make a decision there. We had all sorts of different conversations around.
+
+Vaibhav (01:05:39.73)
+like how patterns can be done. But patterns is a fun one. You can go read the BEP if you're interested in how we decided on what it does. It should be implemented very soon, actually. Avery's been working on it. Any other questions? After which, I will probably hop off. It sounds like there's a big message.
+
+I'm trying to convince a friend to get up to speed, Agentic AI and Bam on particular, going through that series. response was 54 episodes. Yes, I did see your message about helping get up to speed on this. We should make a much better way to make a getting up to speed that just highlights certain episodes that is much more walkthrough. Maybe one of the episodes in the future will just be us agentically engineering this and building that sort of pipeline out that just
+
+stacks the most frequent ones or like gives you like a, think someone built someone in the chat perhaps, or someone in Slack just messaged me about a search app they have. So maybe we can make that kind of agent a little bit better. Where it's like a talk to Viable index and get our thoughts on this and we just plumb in the episodes as context.
+
+Vaibhav (01:06:53.572)
+we are going to have that comparison. We're really, really excited to show you some of the stuff that is really, really nicely done in BAML versus TypeScript. And hopefully you'll have some metrics on how much better Claude is at actually writing BAML code over TypeScript, both in accuracy and cost, like accuracy of the system in terms of how many bugs it makes.
+
+But I think that's it for today's episode. Hopefully you all had fun. Tons of fun chatting about training our design doc process. If you go read some of the BEPS and you leave comments, let us know. We'll definitely go read it. If you try out the BEPS platform from your own work and like try and like gate cloning it into your own thing, like let us know. If it's useful, I'm sure we're happy to continue open-source supporting it.
+
+Adios amigos, have fun.

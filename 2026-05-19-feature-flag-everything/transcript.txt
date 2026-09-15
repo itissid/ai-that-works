@@ -1,0 +1,530 @@
+Dex (00:01.241)
+What's up y'all we're back with another episode of AI that works we're gonna be hanging out talking about Feature flags today. We'll get more into that in a sec. I'm joined by vibe of vibe of please introduce yourself
+
+Vaibhav (00:17.689)
+Well, I make a programming language called BAML. We're imminently going to release it. We've started giving out to a folks for the new stuff that we're doing. But the idea is let's build an agent-first programming language. What about you Dexter?
+
+Dex (00:30.733)
+We're helping coding agents solve hard problems and complex code bases. I'm the founder of company called HumanLayer. Bye Bob. I see we have your team in the back there and they're all just hanging out watching TV. Is this what programming looks like in 2026? They're just running their agents overnight. No humans needed.
+
+Vaibhav (00:44.97)
+If,
+
+For anyone looking for a job, we do let people just watch their agents on the big screen and we all just watch it like a live sporting event. It's fantastic. Exactly.
+
+Dex (00:57.342)
+yes, the Ralph Wiggum fish bowl as we like to call it.
+
+Cool man. So I was poking around the internet and there is apparently it seems like many Vibe coders have discovered the magic of feature flags and realizing that they can skip code review and pull requests by just shipping something to production and leaving it behind a feature flag. And that is their license to ship things that are not finished or not fully baked.
+
+I'm really excited to hear from you today about how you think about feature flags and what they're for and what they're perhaps not for and maybe we can get a little spicy with it.
+
+Vaibhav (01:42.638)
+Yeah, I mean, if anyone's ever worked at a large company, feature flags exist all over the code base. It's impossible to write any code without feature flags. Otherwise, you just risk impacting millions of users. But I think what's interesting is with the paradigm of AI, feature flags are a lot more, I think they have more use cases than what we have ever imagined before this.
+
+Vaibhav (02:10.53)
+So I'm excited to chat about it. Do you want to take over the screen share and bring us to the Scala Draw so we can just do a rough hatch of it and then go over it?
+
+Dex (02:19.469)
+Yeah, sorry, I got distracted for a sec. Someone on the internet called me retarded.
+
+Vaibhav (02:24.012)
+Well, we can do that over here too in real time.
+
+Dex (02:27.417)
+Yeah exactly. Does anyone in the chat have any opinions about my level of personal intelligence?
+
+Dex (02:36.857)
+just gonna show
+
+Dex (02:40.377)
+Amazing. You got the link?
+
+Vaibhav (02:42.948)
+I have the link.
+
+Dex (02:44.441)
+Okay, so I have not been a staff engineer at a large company, but I have read a lot about Martin Fowler. And I think my understanding with feature flags was they became a way to, you would have some idea and you would realize that it would need like code changes over here and code changes over here and code changes over here. And it wouldn't really be ready to like ship to anybody. Let's say you're building a web UI.
+
+and you want to like, have the top bar and then you have the sidebar. And like these are two separate features and there's a bunch of data layer stuff in between it. And like, you didn't want to ship this page to any customers until all of the code was in. But that meant that you had to merge this massive change, big merge. And so feature flags became this way of basically saying like, when a user uses your app,
+
+Dex (03:43.403)
+you would basically, let's say you have like a side nav here with a bunch of options and only one of these options is like the link to go to the new page and you would say, you know, feature flag on.
+
+They see the button.
+
+Dex (04:02.497)
+Otherwise, they don't see it. You know what I mean? And so you can ship parts of a feature to production without actually giving it to users. And the main goal here was like, you could do testing and experiments. But I think the original goal was basically to avoid this like, hey, now I have 5,000 lines of code that I need to get in and none of it has been tested in production yet. And so you would flag it on for internal people and you would flag it on for...
+
+Vaibhav (04:02.753)
+that's funny.
+
+Yeah, exactly. Very, very basic system.
+
+Dex (04:32.077)
+beta users and then you would eventually flag it on for everybody and remove the feature.
+
+Vaibhav (04:36.907)
+Yeah, it's basically like effectively to, think the way I think about this is you have some amount of automation you want to add. How do I do this? You want to have some amount of auto, what is, why is my lines looking weird? Okay, we're going to do like sloppy lines. Okay. I think the way I've always thought about it is you have some amount of automation that you want to have in your pipelines. So let's say we draw these lines and like Azure.
+
+actual automation curve goes up. The thing is, in order to have increased automation, you actually need increased granularity in your system. I was actually going to do it on the other axis. Automation down here, sorry. As you want this, you actually want like granularity to go up. does this mean? So like, if you think about how much automation you have, like one way is you have like staging versus release.
+
+Dex (05:16.961)
+Okay. Yeah, you can move it, dude.
+
+Vaibhav (05:35.425)
+And that is one kind of granularity that you have. Sorry, maybe I did the wrong access. I don't really know. But staging versus release is one kind of granularity. And like, why do you do this?
+
+Dex (05:42.893)
+That makes sense.
+
+And so code is either pre-production and is deployed somewhere or all the code is deployed to production.
+
+Vaibhav (05:52.234)
+Exactly. And that's highly useful. You don't want to break your users. You want your internal teams breaking first. You want your dev team doing it. Another level of this is dev versus staging versus release. So you can see how you can add this stuff on here, but like this level of granularity stops being very useful, very, very fast. There's only so many different branches you can have. And like, if you're actually at like a super mega corp, then like you actually have this.
+
+Vaibhav (06:20.162)
+And by user, mean like internal user.
+
+Dex (06:23.915)
+Yeah, this is that idea of the developer sandboxes, right? It's like each person gets kind of their own environment so that people aren't fighting over who gets to test their thing on staging today.
+
+Vaibhav (06:29.696)
+Exactly.
+
+Vaibhav (06:36.339)
+Exactly. Exactly. So everyone else gets their own environment. They can go do this and you can see why are we doing this? We're doing this because we want to have the more people you add to your team, the harder it is to have automation without having more and more granularity across the way. But again, very quickly, like this is the best you can do. You can have individual versus Deb versus staging versus release. You really can't go any more than that. The value of feature flags is you add another slicing of the code, which is actually just like, I can choose what things are.
+
+available on a in a sub release level like in the same release I can have different configurations of the system that's running.
+
+Dex (07:12.855)
+Yeah. So let's say you have dev over here and you have staging over here and you have prod over here. Instead of having like this whole bucket of like, okay, there's one version here. Let's see. you have like these different like versions instead I can say, okay, I'm going to take this slice of the code base and deploy it. don't know if this is right way to think about it is like we have this like.
+
+development thing that is being actually shipped to all the environments, but it's only visible to, it's like a different dimension that you can slice along, right? I don't think this is a good drawing of this.
+
+Vaibhav (07:42.786)
+Yeah.
+
+Vaibhav (07:49.866)
+Exactly. Yeah, but in theory, like this, this is exactly the right point. You basically get slicing control. That's very different. There's also another huge benefit. If you're ever shipping a really complicated feature, and I think people don't think about this enough, and we'll talk about why this is really important for agents and agentic development teams really quickly, which is that you can turn off features without doing a full deploy. And that is highly, highly, highly useful.
+
+for experimental.
+
+Dex (08:20.084)
+so you can basically, this goes to prod, and then I can basically actually say, without redeploying prod, can say, just flip that off. And there's some API somewhere, or some database, DB.
+
+Vaibhav (08:28.574)
+Exactly.
+
+Vaibhav (08:34.247)
+Exactly. That guarantees this. And you can see how this is really useful for really risky code. Let's say, for example, one of the stuff that we used to do is when we worked at Google, we did a lot of work around performance to make the AR system on the phone really, really fast. One of the things that we did was we did a whole refactor of some of the core algorithms once. And when we deployed that, we deployed it to super low-end phones.
+
+You can test it locally, can test it in-stage, you can test it as an individual developer, but you don't know what the end user's actually going to do, what expectations are they going to have. Feature flags are a fantastic way to go ahead and deploy it to prod, measure metrics on it, and actually just turn it off while your team analyzes and crunches the numbers, and then decide to turn it on later if it's actually good.
+
+Dex (09:27.769)
+Okay, so it's not just about like, hey, let's try this feature out or let's test it or let's give it to a couple users and see if anybody screams, but you're actually going to measure the difference between the performance of the new version and the old version.
+
+Vaibhav (09:38.454)
+Yeah.
+
+Vaibhav (09:42.315)
+Yep. And you can actually get like behavioral changes in a really nice way when you go do this and you can measure things around this. again, if someone screams, you might've done a full rollout and you can say, nope, turn this off right now.
+
+Dex (09:56.791)
+Yep. Okay. How would you, how would you draw this like, cause this is the screen test version of like, we shipped it and it actually is bad. Let's hurry up and just go quickly, turn it off. Like do a, you know, programmatic rollback. But what, how do you think about like experimentation here? Can you, can you try to kind of draw that out?
+
+Vaibhav (10:08.854)
+Yeah.
+
+Vaibhav (10:16.077)
+Yeah, I think Zeke talked, it's really just A-B testing. like, I'm to use like simple examples because it's easier. If you have, what you're really doing is you want to have group A and then group control. And you can literally just have them see different slices of the app. So I'll use your little orange thing. Group A can be the only one that sees the orange feature. And because they're being measured at around the same time horizon,
+
+and the time is exactly the same, you can basically guarantee that there's no like, I mean, there still might be depending on how you select it for group A versus the control, that's like kind of your job is select good experimentation sampling. But let's just say you sample like 2 % or 5 % of your traffic randomly, you likely will just get like a good deviation on if this feature is making a difference on here. Now, obviously, if your group is highly selective, you've done that you haven't done a good job of like being actually you.
+
+modeling group A to be very similar to like your control group, then yes, you might get different deviations, but this gives you at least a good understanding of what the slices are and not what you're doing. And now you can measure the metrics, whatever metric you define for this feature. It could be revenue, could be click through rate, could be engagement rate, could be like error rate, whatever you want to define.
+
+and then you can decide if you want to do a full rollout. So it's actually fairly straightforward to build this out, assuming you have good metrics and really clean data to help you segment these things from different individuals. But I think the more interesting question is actually how the heck do you actually do this from why is this useful for agentic code? Like why, this was obviously useful for mega corps in the past.
+
+Very few startups actually do this. They do this for like landing pages and like other things, but very few startups actually do this for like large scale, like backend changes from what I have seen. But why is this good for an agentic system? Dexter, what's your top guess?
+
+Dex (12:18.681)
+so the most exciting thing here, and this is going to be a little bit of a tangent, but we talk a lot about like harness engineering. talked a lot about, but, basically the idea of like things that agents are good at are things with back pressure, right? So if I have my agent and I'm passing in like a set of specs or whatever,
+
+And like specs in this case, like we look at like the core Ralph Wiggum case where it's like, you know, the spec is like, here is how the programming language works. And here is how various short programs should behave. Right? So the agent is going to do all kinds of really complex stuff, like build a compiler and build a lexer and a parser and all this stuff. Right?
+
+and it's gonna build all these really complicated components and then it's going to, you know, do a test loop where it, you know, is going to like write a program.
+
+Dex (13:24.909)
+based on specs. And then it's going to compile it.
+
+Dex (13:34.903)
+And then if that succeeds, it's going to run it.
+
+And at any one of these points, can get really, with no human in the loop, you can get really good, what we'll call back pressure, which is like, okay, something didn't work. The agent can inspect it and figure out what's wrong, right?
+
+This is really good for certain classes of problems. What it is not good at is, I'm sure you've seen, what is a thing that agents are really bad at assessing whether it's good or not in like an automated way.
+
+Vaibhav (14:09.676)
+Anything that is not measurable or doesn't have some sort of indicator outcome. So whether my users are happy or not.
+
+Dex (14:19.907)
+So one that I think is really bad, and I'll tell you because I did this yesterday, is I was building some, let me just pull up this server.
+
+Vaibhav (14:26.815)
+Okay.
+
+Dex (14:39.097)
+I was having an agent make some UI.
+
+Let's see.
+
+Dex (14:53.049)
+NPM run dev. Okay. So I was having an AI make some sloppy ass motion graphics. And it tried really hard to make stuff look good, but at a certain point it just has these weird issues where it like can't quite get the overlaps right. There's like gaps in these lines and stuff. It's just like, it's not good at assessing visual things.
+
+Even if you give it, this is with a feedback loop to like use a browser and take screenshots and all this kind of stuff, right? And so in my mind, one of the things that AI is really bad at is UI. Because the agent is going to, let's say you have your specs of like how the website should work.
+
+Vaibhav (15:19.616)
+Okay.
+
+Dex (15:39.961)
+And so it's gonna build a front end and a back end and a database and all this stuff. And then when it goes to test it, the best thing it can do like naively locally is you can, you know, take screenshots. You can like hit the API end points is pretty, is actually pretty good.
+
+Right? That's quite deterministic. It can look at the results and make assertions about the behavior. But like taking screenshots of the web app is not really a good back pressure thing because AI vision is just like not good enough to get things pixel perfect. And so the thing that you can use feature flags for that I think is really interesting is like deploy it and track the metrics. And so your model can be shipping, you know, if it has a thesis of how to make the UI better.
+
+It can ship three versions of your app.
+
+Dex (16:39.619)
+version two and rather than like looking at the button and deciding like that's a button that looks good like like basically doing a taste approximation it can go and pull the data of like conversion rate on this page is three percent the conversion rate on this page is seven percent and the conversion rate on this page is like five percent
+
+Vaibhav (16:49.792)
+Yeah.
+
+Vaibhav (16:53.344)
+Yeah, exactly.
+
+Vaibhav (16:59.38)
+and then it can just like
+
+Dex (17:02.657)
+And so thou you've actually given the model when you deploy this, you've given the model the ability to actually get its own back pressure again, in a way where it's actually going to be constructive of like, can reflect on what was done and have something a little more quantitative.
+
+Vaibhav (17:02.764)
+Yeah, exactly.
+
+Vaibhav (17:16.543)
+I
+
+I so freaking wish I could show you guys real production data of how to do this, but I can't because it's customer data. But I had a customer do the exact same thing where they took all their data coming in that they stored and they're storing like every single BAML function and they access the API to go get it. And they literally just have an agent say, go analyze my call pattern.
+
+I'm going to be migrating to Gemini 3.0 Flash instead of 2.5 Flash where the cost is 20 % more. Look at my usage pattern of everything that's happening. Look at all the traces. Figure out how I can migrate to Gemini 3.0 Flash and then cut 20 % cost somewhere else so that my cost doesn't change, but I can use the latest model.
+
+And I like, that's such an interesting way to go check that out. And watching that agent run was a really incredible, just a very interesting experience. I'll try and build a sample database and then show the same thing. But it's very fascinating when the agent has access to all this data. I think there's another element of this, though, that we're not talking about, which is I think that while it's great to give agents access to
+
+access to this data. To me, a big part of why we want agents to have, why we want feature flags with agent to code and why people are talking about this is actually, it actually relates to the fact of like how your rate of shipping code. If you go, if you scroll back up a little bit Dexter to the top part where we had dev versus prod versus staging, I want you guys to think about what, what is the, what is the real reason to have all these things?
+
+Dex (18:42.819)
+Yeah.
+
+Dex (18:55.618)
+Yeah.
+
+Vaibhav (19:01.449)
+The reason that we often have all these things is like, up one more, the visualization, the graph. Yeah. The reason that we add all these things is because oftentimes this is actually related to your head count. As you add more head count, you need more and more granularity. So every single individual member of your team can continue to ship without blocking other people or interfering with other people.
+
+And why does that matter? Well, that's because code often has like conflating inner conflating effects where like one piece of code almost always impacts another piece of code. And you want to be able to like test and merge and do all these things separately. Well, what is an agentic engineering team? It's a team that is shipping code so freaking fast. And now you need to measure everything. And that's why feature flags to me are incredibly useful because if a team is actually measuring things, well, then like
+
+every single agent shouldn't actually like, it should be allowed to merge to prod, but it shouldn't be able to turn things on on prod. And those are two different kinds of things. If you can't merge, then you basically pay a huge tax of not being able to understand if users actually liked your feature or not. If you want to merge a thousand, go ahead.
+
+Dex (20:09.955)
+Well, even that feels like the agents, if the agent, you said like agents should be able to merge to prod, but not turn things on in prod. And it's like, that seems to imply that like, okay, user is going to go look at the feature in prod. And then if it's okay, then they're going to turn it on. But I think the real magic is like, turn it, like turn it on at like,
+
+Vaibhav (20:29.957)
+Sorry.
+
+Dex (20:36.249)
+0.01%, make sure nothing's broken, and then like gradually ramp it up over the next couple days or hours or whatever it is and let the agent review the ramp as it goes and make sure we're not impacting metrics.
+
+Vaibhav (20:49.355)
+So here, I'll write down this in a side-by-side thing.
+
+Dex (20:53.806)
+Yep.
+
+Vaibhav (20:57.611)
+Right? And when I think about this, it's like, this is kind of like the engineering workflow. And I'm going to make this a little bigger. Deploy. So if you just take regular software engineers, we have this loop. If you think about what the loop ends up being, like, I don't know how to draw a circle. Can you draw a circle here, Dexter? Or not a circle, like an arc? Like this loop between write and test code is incredibly hot. It's an incredibly hot loop.
+
+So like, it's actually really easy to continuously like have an agent iterate on this because it's fast. We tried to make the create a PR and deploy faster by doing interesting things. Like we added more granularity here, like code rabbit and like other like tools like code rabbit that basically like try and build this loop a little bit faster, but there's still a big Delta between this and deploying.
+
+And like as an engineering team, we've said is feature flags give us a little bit more granularity post deployment. well, okay. Staging like basically like deploy, deploy environments is like what we have. And then we have like feature flags.
+
+Dex (22:02.553)
+Are you saying like there's a long time between creation of the PR and the deploy? There's a lot of work that has to happen and CodeRabbit can do some of it, but you still need manual review and that's quite a bottle.
+
+Vaibhav (22:08.711)
+Yeah.
+
+Vaibhav (22:12.498)
+Yeah. And this is kind of why like all these things don't ship very fast. This is like why, like, I have a, let me, let me get my, let me get a slide that I have that is nice for this.
+
+Vaibhav (22:29.268)
+I don't have any more. but this, this gap over here is kind of why I think we're really bottlenecked. Like this whole section is basically the bottleneck. And this is kind of why I feel like we can ship that we can write code at really fast speed. can debug prod issues at really fast speed. Cause like debugging is fast. this, this statement is actually pretty fast. Cause like you can get logs and all this other stuff over here. This, this section is really fast.
+
+Like we get all bottleneck down here. And this is why everyone is like, we're shipping slop all the time because the bottleneck of like actually deploying is kind of messed up. And you can, I think the key part about feature flags is can you do something interesting to make this no longer the bottleneck in your engineering life cycle. And if you can do this, you can build really, really interesting systems around this. So like, what does it take to go do this? Well, I think there's a couple of things you can do. again, feature flags help a lot with this. One of the things you can do.
+
+is you can add another step here. I'm gonna move manual review and delete this one. You can add another sub here that's like run experiment with prod data. So you can imagine literally pulling down data from prod and as a part of the code review process, pulling it down, running a quick little test and being like, does this actually work? And I'm gonna change the color here so it like sticks out.
+
+Dex (23:54.083)
+So this is like CI checks.
+
+Vaibhav (23:55.947)
+Yeah, where you literally run, hey, does this new code impact offline metrics in any interesting way with prod data? Boom, done. What else can you do? Well, what if you did deploy it, but you deployed it with your feature flag turned off? And then what you did is you turned on your feature flag for a very, very small amount of time. I don't know where this would go. Yeah, that'd be great. Here, I'll let you.
+
+Dex (24:19.981)
+I can move this stuff over if you want.
+
+Vaibhav (24:25.886)
+Here, I'll this over here. Turn on.
+
+Dex (24:28.281)
+Can you imagine if we had to use an analog whiteboard for this show? It would be a disaster.
+
+Vaibhav (24:31.434)
+I would die.
+
+or miniscule amount of time. So this is different than turning on from a small percentage population. You're just literally turning it on for a very, very short duration. So it's like two dimension or some subset of traces or exactly, but it's very different than like 0.1 % of your population. There's like two dimensions on which feature flags can be turned on. There's time and then number of users impacted, but we're really doing.
+
+Dex (24:49.923)
+You just want one trace basically. Or like, you know, get...
+
+Dex (25:03.491)
+So you would turn this on for everybody for like 10 seconds or something?
+
+Vaibhav (25:06.474)
+or like a small percentage of your users, it doesn't really matter, like something to give you a sampling. And this is kind of like the...
+
+Dex (25:11.757)
+Yeah. Okay. So there's two, there's two dimensions of how you activate your feature flags. lot of people think of it just in terms of how many people or how much of the population, or maybe in a specific cohort, you only want to turn it on for people who are like the most active or the least active, but then it's also how long do you turn it on?
+
+Vaibhav (25:17.962)
+Exactly.
+
+Vaibhav (25:21.994)
+Yep.
+
+Dex (25:32.633)
+and what do you do with the, most importantly, what do you do with the outputs of that feature flag? Like turning it on has some effect which changes the state of the world that you can actually just go then go react to.
+
+Vaibhav (25:45.387)
+Exactly. So you want to go do this and then you kind of want to collect a bunch of data about your system, some, some metrics that you've defined very similar to what you're running in CICD checks with broad data or data sets that you have in your eval or whatever. You want to collect some metrics and then based on those metrics, you might want to say, okay, now let's either roll, roll this back or like, undeploy it, or you want to go ahead and like say, okay, now let's roll this on for
+
+Dex (25:59.523)
+Okay.
+
+Dex (26:07.47)
+Yep.
+
+Vaibhav (26:12.156)
+an unbounded time period or maybe a slightly longer time period with first larger chunk of our users or for a longer duration of time. And as you're doing this, the whole point of this whole system, exactly. The whole point of the system is to build a more granular and granular version of your code base. So everything is incremental. And like, as you say, adds back pressure constantly in your system. And this is where I think exactly.
+
+Dex (26:34.265)
+So this would be undeploy and iterate. This would be, you know, progress.
+
+Vaibhav (26:40.604)
+Exactly. And now you can see how a user can actually deploy stuff and turn this into a red loop because deploying stuff is no longer risky. There's still some risk, but there's way less risk if everything is always kind of off by default on any merge. And you can quickly turn things on and off. Now, not every feature can go do this. Some features have real cost consequences to doing this. like, for example, if you're doing a database migration,
+
+Dex (26:50.776)
+Yeah.
+
+Dex (26:57.006)
+Yep.
+
+Vaibhav (27:08.094)
+you now have to do a dual write system where you actually write to both databases for some time to go do that. And that might incur real cost and like customer impact if you're doing that. There's consistency issues. You need to have two versions of your code base running at any given time and they both need to be merged and checked in. And like, I'm not saying that this all comes for free, but I think...
+
+Dex (27:29.751)
+Right, it adds a lot of complexity and I actually posted something on Twitter yesterday about like basically like a lot of the, we do a lot of work with like staff engineers on larger teams with like, know, thousands of engineers or hundreds of engineers and they spend a lot of their time running around cleaning up feature flags because it's like someone did an experiment and maybe the feature flag never got cleaned up and it's just sitting at 1 % and like the experiment just like never, never finished. And so the feature flag got like.
+
+Vaibhav (27:45.034)
+Ugh!
+
+Dex (27:57.505)
+left there, there's dead code paths, or maybe it got pumped up to 1 % and then got turned off and then everyone got distracted and moved on to the next thing because it's not a fire, and then you just start accumulating more and more dead code. And as your team turns over or people move around, you lose that kind of, it becomes very hard to keep track of what's important, and it means every time you make a change, you've created more and more like,
+
+This is like general refactoring, right? Have you read this Ron Jeffries post about like refactoring?
+
+Vaibhav (28:28.842)
+I haven't read the post, but I have opinions on refactoring.
+
+Dex (28:34.765)
+Let me show you, we'll run through this really quick, I think this is relevant. But he basically says like, okay, you have no code. And then you go write code and everything is good. And then as you go, you start to have these tangles of code in your code base that a little hard, but you just kind of work around them. It slows you down a tiny bit, but it's not that bad. And then as you go, you accumulate these things that need to be refactored and it actually starts to slow you down because you don't want to go touch that code or you need to move around it.
+
+And then eventually it's like every feature takes you longer and longer because you have so much mess. And what people want to do is they want to go do a big refactor where they just kind of like clear a bunch of it out at once. And then like basically the idea is like this is the wrong way to do it. And the right way to do it is like the next time you build a feature, instead of just like shipping it and going around, you take twice as long and you go clean up the parts of the code base that you touch. And then as you do this over time, you're like,
+
+Vaibhav (29:29.897)
+Yeah.
+
+Dex (29:32.569)
+cutting new paths and it's slower, but then eventually you ship a feature that gets to reuse some of that work over time. And so, I don't know, this is how I think about code bases getting, how to think about technical debt in a code base. And I'm curious, what have you seen? What works? Do you think this is nonsense? Yeah.
+
+Vaibhav (29:48.648)
+Yeah, this is kind of what we do with our team. This is how we do it on our team. But every now and then we do basically just nuke it and rewrite it from scratch. And that's worth doing as well, because the cost function is so cheap now. Like the cost function is actually doing this. If you have really good testable interfaces, this is way cheaper than ever before. Like, Bun did this, right? They're like, we have really good testable interfaces. We have piece of software that can test this. And like, boom, problem solved.
+
+Dex (30:14.797)
+Yep. Cool. Are there other downsides of feature flags or did you want to say more on that?
+
+Vaibhav (30:16.201)
+But yeah, I think.
+
+Vaibhav (30:21.381)
+No, the main downside is just like, think one, key insight is like, think of feature flags and like two dimensions in general. There's like the dimension of how many of your users are getting it. And then the time horizon. And you can leverage that to actually make a really good automated pipeline. And the main downside is just slop. Like you, you accumulate dead code over time. Like you said, so like, if you're going to accumulate that code, then like fix it. Like you just don't have a choice. It's part of the consequence of wanting to ship really fast.
+
+If you're going to merge more code and run more experiments, you got to pay the tax of cleaning up more code and turning experiments on or off and committing to something.
+
+Dex (30:57.081)
+Is there a world where AI can clean up our feature flags for us? Have you guys thought about this?
+
+Vaibhav (31:02.865)
+I mean, we actually do. So here's the way I think about code bases. And when we're designing some of the stuff at VAML, here's how I think about it. I think code should be linear. At any given time, code should just have a linear branch where you can actually view it. And this is your deploy branch. But what you really want to say,
+
+Dex (31:24.131)
+So no, none of this tangled merging and things like that. You just think of it as like linear history.
+
+Vaibhav (31:30.983)
+Well, I think that's nice for your main deploy, but what you really want to say is for any given deployment at any given time, I am also running experiments.
+
+Dex (31:42.361)
+Vaibhav (31:43.784)
+right, at any given deployment. And whenever I redeploy, so you're actually not, and I'll talk about how this is possible and what you need to make this possible, but these are effectively feature flags of various versions of the code. You're kind of doing like a cross horizontal, and then you merge into your main branch and all these experiments effectively turn off on every merge. But a merge is committal. And then you decide which of these experiments you want to bring back up and keep running.
+
+Dex (32:06.713)
+Vaibhav (32:14.419)
+but not every single one of them actually has to make its way over, if that makes sense.
+
+Vaibhav (32:20.985)
+So you might just only decide only two of these experiments have to actually make their way over into a new thing when you actually merge. like, yeah, because maybe this one actually merges in, this becomes a solid experiment, and now you start running it in. Yeah, exactly. And you might add a totally new one that wasn't even in there before. And I think this is how we really want to think about code. You kind of want to say, like, you've allocated like 10 % of your traffic total or some slice of your traffic.
+
+Dex (32:26.765)
+and you might add a new one as well.
+
+Vaibhav (32:50.469)
+to like running experiments and you just keep running and the running experiments. But instead of merging all that code in, you kind of want to have a side channel to deploy this code. And as you deploy the side channel, you're basically bounded on what based on your business risk, you can choose what kind of risk, risk tolerance you have. You choose that risk.
+
+Dex (33:08.835)
+So you kind of have like a, it's almost like a Kanban thing where you say like, we're only allowed to have like 10 live experiments at a time. And if you want to ship a new one, you got to chuck it.
+
+Vaibhav (33:18.729)
+Yeah, well, I mean, or they get less percentage or you're kind of like fighting for experimentation. And the idea is once you go promote something to be in the main branch, that kind of decides what's happening along the way. Well, that basically resets the board and now everything else has to like kind of redeploy on top of that experiment. And I think that kind of view.
+
+Dex (33:20.099)
+Something like that.
+
+Dex (33:32.345)
+That lets up more headroom for new experiments.
+
+Dex (33:42.529)
+Okay, I think I get that.
+
+Vaibhav (33:44.458)
+is how I think about this. This is like the easiest way. I think this is what we need. We need some system that allows us to have experiments that are orthogonal to our main deployment branch. Otherwise, you end up in the world that you're talking about, which is like, have two versions of my code, and I really have like 50 versions of my code, because people are testing two database migrations all at once, and you can't really have that.
+
+Dex (34:06.937)
+I was gonna say Joshi asks, any top of mind concern when feature flag involves DB schema changes, how do you keep the dual schemas working?
+
+Vaibhav (34:15.593)
+you just do a dual write system. You do a dual read, you do a single write, a single read, dual write, a dual read. And then, or you really carefully slice your users to make sure that they do that. And then you also have, you just have to make sure it's backwards compatible. It does.
+
+Dex (34:28.823)
+Right, if you want to, you can't have it so that people on the experiment cannot be moved back off the experiment, otherwise you kind of defeat the purpose.
+
+Vaibhav (34:34.395)
+Exactly. Exactly. Otherwise it's not an experiment. kind of need, you need to be able to gradually migrate people into the experiment. One off the top of my head, one way to do this would be to say you do an offline migration of some percentage of your users to, as like some preselected percentage of your users to the new database schema. You migrate all their historical data. You then do an online experiment where any new rights that they have get written to the old new databases as well. And then you actually turn on the feature flag.
+
+and let users experience a new database schema. But database schema changes are hard. But that's why I would say that you kind of have no excuse to get your code right in the beginning for like lower down the stack. Like just spend the extra hour prompting with Claude to get it right.
+
+Dex (35:22.205)
+And this is kind of how you would do a schema change, even if you wanted to make it backwards compatible schema change that...
+
+Vaibhav (35:31.677)
+Yeah, even without feature flex, yeah.
+
+Dex (35:32.097)
+even if you weren't using feature flags, you would create a new table with a different schema. If it wasn't just add a column to the table that is optionally used or not used, really need to change how things are looking, then it's like, okay, cool, we make a new table. And then you move out like the new end, and maybe even a new API endpoint, and the new endpoint uses the new path, and the old endpoint uses the old path, and that way you can deploy. Because you basically, every deployment in a large distributed system is an experiment.
+
+Vaibhav (35:41.278)
+Yeah.
+
+Vaibhav (35:52.563)
+Yep.
+
+Vaibhav (35:58.619)
+is a rollout. Yeah, exactly.
+
+Dex (35:59.747)
+Yeah, it's a rollout, exactly. So you have to be able to support clients on old versions, APIs on old versions, a mix of the current version and the previous version. That's why people love SaaS so much, because at any given time, you have two versions in play. You have the currently deployed one and the new one, versus if you distribute something like a programming language where there could be 50 versions deployed out in the world, or you're shipping an on-prem app where customers upgrade on their own cadence.
+
+Vaibhav (36:23.192)
+yeah. Yeah. It's hard.
+
+Dex (36:26.605)
+then your backwards compatibility challenges become really, really hard.
+
+Vaibhav (36:30.332)
+Yeah, exactly. yeah, database schemas are just a known hard problem. But that also means that there are known good solutions to them. You don't have to invent anything. So I wouldn't stress too much about this. Yeah, I think that's it. This is fairly straightforward to go do. highly recommend it. Not the stuff I just drew. I think that actually requires very interesting runtime semantics.
+
+Dex (36:47.395)
+Cool.
+
+Vaibhav (36:56.678)
+But the stuff on the left is fairly easy to go do. You can build an automated pipeline that uses feature flags as a rollout mechanism to collect data. And then literally you have cloud access to that data to merge and prod. I think it's a lot of infrastructure work, but I suspect it's maybe a week of work at most to tie everything together.
+
+Dex (37:16.729)
+Yep, and I think one of the failure cases I see here is people try to over automate this on day one versus like building it up incrementally. It's like, okay, start with the CLI or MCP that could query this data and, you know, launch a coding agent session and ask it, hey, how is this doing? And then like walk it through making the code change, whether it's iterating or rolling it back or removing the experiment or whatever it is. And then eventually you can get to the point where you have this like automated back pressure where like,
+
+Vaibhav (37:21.782)
+yeah.
+
+Vaibhav (37:28.018)
+Yeah.
+
+Dex (37:44.481)
+Every time a new feature flag increases a metric, well, that causes a signal to go back to turn up the feature flag and it like incrementally rolls itself out. Or you even have an agent making these decisions of like, Hey, here's the data. Here's the code. Here's the, here's the, here's the thing that changed. What do you think we should do? And that's where things get really interesting, but like, don't try to do that from day one because you're going to spend three months building a software factory instead of actually like shipping value incrementally and like learning.
+
+Vaibhav (38:02.468)
+Exactly. Yeah.
+
+Dex (38:12.682)
+and adapting to actually make these systems work for exactly your system and your team and your deployment.
+
+Vaibhav (38:20.167)
+Yeah.
+
+Dex (38:22.115)
+Cool, any other questions?
+
+Vaibhav (38:24.838)
+I think that's it. Have we got anyone else on there that's excited to ask any other questions? Otherwise, we'll call it a day.
+
+Dex (38:35.385)
+Short and sweet, I love it. Do you wanna do the outro? Should I do the outro?
+
+Vaibhav (38:39.272)
+Go for it. I trust you. You got the screen share going.
+
+Dex (38:42.221)
+All right. Okay, so today on AI That Works, we talked all about feature flags, about how feature flags were originally created to avoid large merges, how the amount of automation you add to a system is based on like the amount of granularity you can have in shipping and shipping small slices to a test group.
+
+the difference between back pressure on deterministic systems versus using feature flags and feedback on the performance of code to feedback into the agent and improve your code and your systems, especially UIs and things that are hard for agents to actually validate themselves. And then we sketched out a full on feature flag based deployment pipeline with feature flags. It's just one ingredient in your list of ways to iterate on code, decide if it's good, decide if you've built the right solution, et cetera.
+
+and some really advanced crazy stuff that ViBob is thinking about in terms of like parallel experiments as they map onto your code base and budgeting how much experiment you have at any given time. So this is a really fun episode. Look forward to digging into some of this myself and shipping more dynamic code.
+
+Vaibhav (39:52.808)
+Let's do it. Let's get started.
+
+Dex (39:54.521)
+Let's get into it. Okay. Thanks everybody.
+
+Vaibhav (39:57.956)
+I guess that's it actually, this is Adios amigos.
+
+Dex (40:02.051)
+Good stuff, see you next week.

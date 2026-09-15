@@ -1,0 +1,261 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+	--radius-sm: 0px;
+	--radius-md: 0px;
+	--radius-lg: 0px;
+	--radius-xl: 0px;
+	--color-background: var(--terminal-bg);
+	--color-foreground: var(--terminal-fg);
+	--color-card: var(--terminal-bg);
+	--color-card-foreground: var(--terminal-fg);
+	--color-popover: var(--terminal-bg);
+	--color-popover-foreground: var(--terminal-fg);
+	--color-primary: var(--terminal-accent);
+	--color-primary-foreground: var(--terminal-bg);
+	--color-secondary: var(--terminal-bg-alt);
+	--color-secondary-foreground: var(--terminal-fg);
+	--color-muted: var(--terminal-bg-alt);
+	--color-muted-foreground: var(--terminal-fg-dim);
+	--color-accent: var(--terminal-accent);
+	--color-accent-foreground: var(--terminal-bg);
+	--color-destructive: var(--terminal-error);
+	--color-border: var(--terminal-border);
+	--color-input: var(--terminal-border);
+	--color-ring: var(--terminal-accent);
+}
+
+/* Solarized Dark - Default theme */
+:root,
+[data-theme="solarized-dark"] {
+	--terminal-bg: #002b36;
+	--terminal-bg-alt: #073642;
+	--terminal-fg: #93a1a1;
+	--terminal-fg-dim: #657b83;
+	--terminal-accent: #268bd2;
+	--terminal-accent-dim: rgba(38, 139, 210, 0.3);
+	--terminal-accent-alt: #2aa198;
+	--terminal-border: #657b83;
+	--terminal-success: #859900;
+	--terminal-warning: #b58900;
+	--terminal-error: #dc322f;
+	--terminal-selection: #2aa19899;
+}
+
+/* Solarized Light */
+[data-theme="solarized-light"] {
+	--terminal-bg: #fdf6e3;
+	--terminal-bg-alt: #eee8d5;
+	--terminal-fg: #657b83;
+	--terminal-fg-dim: #93a1a1;
+	--terminal-accent: #268bd2;
+	--terminal-accent-dim: rgba(38, 139, 210, 0.3);
+	--terminal-accent-alt: #2aa198;
+	--terminal-border: #93a1a1;
+	--terminal-success: #859900;
+	--terminal-warning: #b58900;
+	--terminal-error: #dc322f;
+	--terminal-selection: #93a1a140;
+}
+
+/* Catppuccin Mocha */
+[data-theme="catppuccin"] {
+	--terminal-bg: #1e1e2e;
+	--terminal-bg-alt: #313244;
+	--terminal-fg: #cdd6f4;
+	--terminal-fg-dim: #9399b2;
+	--terminal-accent: #cba6f7;
+	--terminal-accent-dim: rgba(203, 166, 247, 0.3);
+	--terminal-accent-alt: #f5c2e7;
+	--terminal-border: #6c7086;
+	--terminal-success: #a6e3a1;
+	--terminal-warning: #f9e2af;
+	--terminal-error: #f38ba8;
+	--terminal-selection: #9399b240;
+}
+
+/* High Contrast */
+[data-theme="high-contrast"] {
+	--terminal-bg: #000000;
+	--terminal-bg-alt: #1a1a1a;
+	--terminal-fg: #ffffff;
+	--terminal-fg-dim: #cccccc;
+	--terminal-accent: #00ff00;
+	--terminal-accent-dim: rgba(0, 255, 0, 0.3);
+	--terminal-accent-alt: #00cccc;
+	--terminal-border: #666666;
+	--terminal-success: #00ff00;
+	--terminal-warning: #ffff00;
+	--terminal-error: #ff0000;
+	--terminal-selection: #ffffff4d;
+}
+
+/* Framer Dark */
+[data-theme="framer-dark"] {
+	--terminal-bg: #181818;
+	--terminal-bg-alt: #2f3439;
+	--terminal-fg: #eeeeee;
+	--terminal-fg-dim: #999999;
+	--terminal-accent: #fd5799;
+	--terminal-accent-dim: rgba(253, 87, 153, 0.3);
+	--terminal-accent-alt: #20bcfc;
+	--terminal-border: #333333;
+	--terminal-success: #32ccdc;
+	--terminal-warning: #fecb6e;
+	--terminal-error: #fd886b;
+	--terminal-selection: #fd579933;
+}
+
+/* Gruvbox Dark */
+[data-theme="gruvbox-dark"] {
+	--terminal-bg: #282828;
+	--terminal-bg-alt: #32302f;
+	--terminal-fg: #d4be98;
+	--terminal-fg-dim: #928374;
+	--terminal-accent: #a9b665;
+	--terminal-accent-dim: rgba(169, 182, 101, 0.3);
+	--terminal-accent-alt: #89b482;
+	--terminal-border: #504945;
+	--terminal-success: #a9b665;
+	--terminal-warning: #d8a657;
+	--terminal-error: #ea6962;
+	--terminal-selection: #d4be9840;
+}
+
+/* Monokai */
+[data-theme="monokai"] {
+	--terminal-bg: #272822;
+	--terminal-bg-alt: #3e3d32;
+	--terminal-fg: #f8f8f2;
+	--terminal-fg-dim: #75715e;
+	--terminal-accent: #66d9ef;
+	--terminal-accent-dim: rgba(102, 217, 239, 0.3);
+	--terminal-accent-alt: #a6e22e;
+	--terminal-border: #75715e;
+	--terminal-success: #a6e22e;
+	--terminal-warning: #e6db74;
+	--terminal-error: #f92672;
+	--terminal-selection: #f8f8f240;
+}
+
+/* Rosé Pine */
+[data-theme="rose-pine"] {
+	--terminal-bg: #191724;
+	--terminal-bg-alt: #1f1d2e;
+	--terminal-fg: #e0def4;
+	--terminal-fg-dim: #908caa;
+	--terminal-accent: #c4a7e7;
+	--terminal-accent-dim: rgba(196, 167, 231, 0.3);
+	--terminal-accent-alt: #ebbcba;
+	--terminal-border: #6e6a86;
+	--terminal-success: #9ccfd8;
+	--terminal-warning: #f6c177;
+	--terminal-error: #eb6f92;
+	--terminal-selection: #6e6a8633;
+}
+
+/* Tokyo Night */
+[data-theme="tokyo-night"] {
+	--terminal-bg: #1a1b26;
+	--terminal-bg-alt: #16161e;
+	--terminal-fg: #c0caf5;
+	--terminal-fg-dim: #a9b1d6;
+	--terminal-accent: #7aa2f7;
+	--terminal-accent-dim: #3d59a1;
+	--terminal-accent-alt: #bb9af7;
+	--terminal-border: #3b4261;
+	--terminal-success: #9ece6a;
+	--terminal-warning: #e0af68;
+	--terminal-error: #f7768e;
+	--terminal-selection: #515c7e4d;
+}
+
+/* Vesper */
+[data-theme="vesper"] {
+	--terminal-bg: #101010;
+	--terminal-bg-alt: #505050;
+	--terminal-fg: #ffffff;
+	--terminal-fg-dim: #a0a0a0;
+	--terminal-accent: #ffc799;
+	--terminal-accent-dim: rgba(255, 199, 153, 0.3);
+	--terminal-accent-alt: #99ffe4;
+	--terminal-border: #505050;
+	--terminal-success: #99ffe4;
+	--terminal-warning: #ffc799;
+	--terminal-error: #ff8080;
+	--terminal-selection: #ffc79933;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	body {
+		@apply bg-background text-foreground;
+		font-family: "IBM Plex Mono", "Consolas", "Monaco", "Courier New", monospace;
+	}
+
+	::selection {
+		background-color: var(--terminal-selection);
+		color: var(--terminal-fg);
+	}
+
+	input,
+	textarea,
+	select,
+	button {
+		font-family: inherit;
+	}
+
+	@keyframes pulse-success {
+		0%,
+		100% {
+			opacity: 1;
+			color: var(--terminal-success);
+		}
+		50% {
+			opacity: 0.5;
+			color: var(--terminal-success);
+		}
+	}
+
+	.animate-pulse-success {
+		animation: pulse-success 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+
+	@keyframes pulse-warning {
+		0%,
+		100% {
+			opacity: 1;
+			color: var(--terminal-warning);
+		}
+		50% {
+			opacity: 0.5;
+			color: var(--terminal-warning);
+		}
+	}
+
+	.animate-pulse-warning {
+		animation: pulse-warning 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+
+	@keyframes pulse-error {
+		0%,
+		100% {
+			opacity: 1;
+			color: var(--terminal-error);
+		}
+		50% {
+			opacity: 0.5;
+			color: var(--terminal-error);
+		}
+	}
+
+	.animate-pulse-error {
+		animation: pulse-error 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+	}
+}

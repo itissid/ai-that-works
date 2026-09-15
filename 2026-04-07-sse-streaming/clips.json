@@ -1,0 +1,26 @@
+[
+  {
+    "rationale": "This clip delivers a powerful, counter-intuitive insight: streaming is a fundamental architectural decision, not an add-on. Vaibhav explains that if streaming isn't designed from the ground up, adding it later becomes 'an infinite amount of plumbing.' This resonates deeply with developers who've tried to retrofit complex features, highlighting a critical system design takeaway and offering actionable advice to plan for streaming early to avoid significant rework.",
+    "start_timestamp": "34:44",
+    "end_timestamp": "35:05",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (34:44.625)\nAnd that's really the hard part about these systems, which is as you go build this out, this is why not ever, even Cloud Code just recently added streaming. Dextro was kind of surprised to see that, just because it's not a thing that is trivial to do in your code, because if you don't design for it, adding it later is like an infinite amount of plumbing.",
+    "hook": "Why streaming is 'infinite plumbing' if not designed from the start."
+  },
+  {
+    "rationale": "This clip provides a clear, actionable comparison between WebSockets and Server-Sent Events (SSE) for long-running AI tasks. Vaibhav explains that WebSockets, despite being bidirectional, are often a poor choice due to their ephemeral nature and the complexity of managing state and race conditions in long-running background processes. This offers a surprising insight for many developers who might default to WebSockets, making a strong case for SSE's simplicity and robustness in specific scenarios.",
+    "start_timestamp": "59:43",
+    "end_timestamp": "01:00:58",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (59:43.595)\nWhat's the challenge with WebSockets? The big challenge with WebSockets is if you're building any of this stuff, almost definitely these are long running tasks. If they're long running tasks, that means they're typically going to run it in some background process, or they shouldn't be running in your main process. And WebSockets are very ephemeral connections. Like the minute someone disconnects, someone reconnects, you have to go maintain that lifecycle. It's much harder to maintain that in a bug-free way, especially with like state race conditions. It's much easier to say that you have a single model of truth. a, like, again, for me software is about how do I reduce bugs as much as possible. If there's multiple events that can read and write from the system, subscribing to race conditions is incredibly hard. You're basically using like global variables to modify race conditions. And most people just are not good at using global variables.",
+    "hook": "WebSockets are a trap for long-running AI tasks: Here's why."
+  },
+  {
+    "rationale": "This clip introduces the concept of 'semantic streaming,' a powerful technique for controlling the granularity of LLM output. Vaibhav explains how to guarantee that critical fields (like a title) are fully completed before streaming, while other fields (like a summary) stream token-by-token. This is a concrete, actionable insight directly related to the 'Batched Async Concurrency & Semantic Streaming' takeaway, providing a clear 'aha' moment for how to build more intelligent and user-friendly reactive UIs with LLMs.",
+    "start_timestamp": "48:36",
+    "end_timestamp": "50:00",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (48:36.771)\nOkay, that's great. Now I want to use semantic streaming on the actual summarization page so that the summary itself comes back in a chunked form. So what I want to do is I want to stream the summary as it gets filled out, but I want to guarantee that the title and the URL are always completed and not really open to and require completion. Yeah.\nVaibhav (49:02.177)\nAnd you'll notice that this page is just, it literally just gets the text of the page and then calls a BAML function. This BAML function over here just does this and just gets a title and then gets the summary. So you'll see exactly what happens here. So what we did is we actually said this gets marked as stream.notNull. The summary has no premises such as that. It's allowed to be null. It's also allowed to be empty.\nDex (49:48.11)\nSo that means that a chunk streamed out from the LLM provider web request, but the title is null. And so we know we don't have enough information to actually render anything. So we don't emit any event.\nVaibhav (50:00.653)\nExactly.",
+    "hook": "Stream LLM output intelligently: Semantic Streaming with `stream.notNull`."
+  }
+]

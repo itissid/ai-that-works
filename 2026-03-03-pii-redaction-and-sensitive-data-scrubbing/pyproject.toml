@@ -1,0 +1,9 @@
+[project]
+name = "2026-03-03-pii-redaction-and-sensitive-data-scrubbing"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "baml-py>=0.219.0",
+]

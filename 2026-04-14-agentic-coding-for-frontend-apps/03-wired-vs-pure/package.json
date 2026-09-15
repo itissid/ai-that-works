@@ -1,0 +1,35 @@
+{
+  "name": "03-wired-vs-pure",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "storybook": "storybook dev -p 6008",
+    "dev": "vite",
+    "server": "bun run server.ts",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "hono": "^4.7.7",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.1",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@storybook/addon-docs": "^10.3.5",
+    "@storybook/react-vite": "^10.3.5",
+    "@tailwindcss/vite": "^4.0.6",
+    "@types/bun": "latest",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.544.0",
+    "storybook": "^10.3.5",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss": "^4.0.6",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3"
+  }
+}

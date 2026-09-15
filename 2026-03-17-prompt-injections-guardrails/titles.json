@@ -1,0 +1,14 @@
+[
+  {
+    "title": "How Do You Stop Users From Hacking Your AI?",
+    "rationale": "This title uses 'hacking,' a familiar and powerful term for developers, to frame the problem of prompt injection in a way that is immediately understandable. It poses a direct question that the episode promises to answer, creating a strong hook for any developer building user-facing AI applications."
+  },
+  {
+    "title": "Building a Multi-Layered Defense for Your LLM",
+    "rationale": "This title reframes a specific AI problem into the more general, and more familiar, software engineering concept of 'defense-in-depth.' It speaks directly to the target audience by focusing on a practical, structural solution ('multi-layered defense'), signaling that the episode will offer concrete architectural patterns."
+  },
+  {
+    "title": "Ship Secure AI Without Sacrificing Speed",
+    "rationale": "This title leads with a powerful benefit that resolves a core tension for developers: the trade-off between security and performance. It immediately grabs the attention of anyone working on production systems where latency is critical, hinting at the episode's advanced techniques like parallel guardrail agents."
+  }
+]

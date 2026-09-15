@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Is Prompting Enough for Production AI?",
+    "rationale": "This title works as a hook because it directly questions the most common approach (prompting) and positions the episode as the next level of expertise. It speaks directly to developers who have tried building things and realized simple prompts aren't enough for 'production' systems, making them eager for a more robust solution."
+  },
+  {
+    "title": "The File System is Your Best AI API",
+    "rationale": "This title uses the most surprising and concrete insight from the episode as a slightly click-baity hook. It promises a non-obvious, practical trick. It will make experienced developers curious, as it reframes a familiar concept (file systems) as a powerful tool for a new problem, which perfectly encapsulates the episode's theme of practical engineering over hype."
+  },
+  {
+    "title": "From Prompting to Production Engineering",
+    "rationale": "This actionable title frames the episode as a clear learning path, moving from a basic skill ('Prompting') to a professional discipline ('Production Engineering'). It appeals to the audience's desire for career growth and signals that the content is serious, practical, and focused on building real-world systems."
+  }
+]

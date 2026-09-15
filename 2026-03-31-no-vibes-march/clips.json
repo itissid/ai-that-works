@@ -1,0 +1,26 @@
+[
+  {
+    "rationale": "This clip directly addresses the core challenge of testing non-deterministic AI systems by introducing the 'quorum runner' concept. It's a concrete, actionable insight that explains how to handle variability in AI outputs, which is a key takeaway. The explanation of how a quorum runner works (e.g., 'run it up to five times, at least three must pass') is a clear 'aha' moment for anyone used to traditional pass/fail testing. It resonates because it offers a practical solution to a common problem in AI development.",
+    "start_timestamp": "32:29",
+    "end_timestamp": "33:20",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (32:29.835) \"Well, what you really need is you want something where you can actually design the thing that is running tests at the same time. So you want to be able to choose how you run the test. So in this case, this is a quorum runner. A quorum runner says run it up to five times, at least three must pass. And if at least three pass, this works. Well, what is a quorum? A quorum is just a thing that returns a lambda that takes a test. It knows how to run that one test and then produces a test report. So it just tells you exactly how it's going to run itself. So this quorum says you'll run this up to and you'll run this five times and you'll guarantee that at least this many of those times passed and you'll just produce a quorum test for this.\"",
+    "hook": "Testing non-deterministic AI? You need a Quorum Runner!"
+  },
+  {
+    "rationale": "This clip highlights a critical flaw in applying traditional pass/fail testing to AI, directly supporting the 'Scenario-Driven Testing & Named Metrics' takeaway. Vaibhav's explanation of how a system optimized for a simple 95% pass rate could easily be gamed (by always returning false) is a powerful and counterintuitive insight. It creates an 'aha' moment by showing why nuanced, named metrics are essential for evaluating AI systems, especially when false positives/negatives have different costs.",
+    "start_timestamp": "09:54",
+    "end_timestamp": "10:50",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (09:54.202) \"Exactly. Exactly. So we're already getting in some nuances. We're now have a 95 % pass rate. Well, now you'll notice some other nuances here. So what I really want to say is this is a 95 % pass rate. That's my target is kind of what you want. Well, if I have a target of 95 % and this is what's working, if this black box is being optimized for this, it's very easy to just have a black box that always returns false. And now you've built a system by accident that is that\"\nDex (10:24.941) \"that passes 95 % of the cases.\"\nVaibhav (10:27.257) \"Exactly. what's kind of interesting is I almost have like two criteria. I almost have like a name metric where it's like...\"\nDex (10:37.131) \"you have two scores. have the like, did it get it correct, and then like, did it accidentally, yeah, okay.\"\nVaibhav (10:45.265) \"Right. So, and you're already seeing how nuanced testing is becoming.\"",
+    "hook": "Why traditional pass/fail testing FAILS for AI."
+  },
+  {
+    "rationale": "This clip provides actionable advice on leveraging AI for rigorous design, a key takeaway. Vaibhav's strong statement against 'vibe coding' for complex systems, followed by Dex's explanation of using AI to 'dump out everything it's thinking' for 'brain surgery,' offers a clear, practical workflow. It's an 'aha' moment for developers who might be tempted to jump straight to coding with AI, emphasizing the high leverage of thorough, AI-assisted design discussions to prevent costly downstream errors.",
+    "start_timestamp": "55:04",
+    "end_timestamp": "55:51",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (55:04.437) \"The point of that is it's useful to have a strong background in your code base to be able to navigate these systems. And I hope by this point, you all can very clearly tell if I had Vibe coded this in the traditional Vibe code coding style, this would not work. There's so many assumptions that the system got wrong already. So it started doing this and it...\"\nDex (55:27.725) \"We talk about it as like these markdown docs are basically an opportunity to have the model dump out everything that it's thinking so that you can do brain surgery on it before, like, okay, here's all the patterns you wanna follow, here's all the decisions that you think are the right decisions, give me as many opportunities and give the model as many opportunities to tell you at a high level what it's thinking so you can re-steer before you drop down a level, basically.\"",
+    "hook": "Stop 'Vibe Coding' your AI projects! Design with AI first."
+  }
+]

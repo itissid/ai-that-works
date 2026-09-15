@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Can Your AI Agent Build UI Without a Mockup?",
+    "rationale": "This title is a question that challenges a standard development practice (design-then-code). It hooks developers by suggesting a way to bypass a traditionally slow step, which is the episode's most surprising insight. It implies a faster, more direct workflow, which is the core benefit discussed."
+  },
+  {
+    "title": "The 5-Second Feedback Loop for AI Frontend Dev",
+    "rationale": "This title uses an actionable frame by presenting a desirable, concrete outcome: a \"5-second feedback loop.\" This directly addresses the developer's pain point of slow iteration cycles and promises a practical technique to achieve high-speed development, which is the central theme of the episode."
+  },
+  {
+    "title": "Your UI Component Is the New Figma File",
+    "rationale": "This title leads with the most surprising and impactful outcome: eliminating the need for traditional design tools. It creates a hook by reframing a familiar artifact (a UI component) as a replacement for another (a design file), which encapsulates the episode's core thesis."
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Build Faster by Coding Slower",
+    "rationale": "This title uses a paradox to create intrigue. It speaks directly to the developer's goal (building faster) while challenging their typical method (coding immediately). This hook perfectly encapsulates the episode's core thesis: front-loading effort in the design phase with an AI leads to a faster overall delivery of a complex feature."
+  },
+  {
+    "title": "How to Create a Perfect Blueprint for AI Coders",
+    "rationale": "This title is actionable and uses the powerful metaphor of a 'blueprint.' Developers immediately understand that a good blueprint makes construction easy and reliable. It frames the episode as a practical guide for collaborating with an AI, focusing on creating a detailed specification that an AI can then execute flawlessly."
+  },
+  {
+    "title": "What if the Code is the Easy Part?",
+    "rationale": "This title poses a provocative question that challenges a core assumption for most developers. It directly targets the episode's most surprising insight: that the iterative, text-based design collaboration is more critical and difficult than the final code generation. It creates curiosity and promises a new way of thinking about building software with AI."
+  }
+]

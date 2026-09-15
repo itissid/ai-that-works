@@ -1,0 +1,1285 @@
+Rhys Sullivan (00:00.216)
+Yeah, it's good.
+
+Dex (00:00.416)
+Yeah, are you using a real mic? Nice. What's up, dude?
+
+Rhys Sullivan (00:04.962)
+That's...
+
+Dex (00:08.972)
+Wait, now we lost, now we lost Bye Bob. He was showing off his fancy mic and we lost him.
+
+Rhys Sullivan (00:08.98)
+now we lost you.
+
+Dex (00:16.024)
+Nope, nada. The universe has decided that nope, we got nothing, dude.
+
+Rhys Sullivan (00:16.28)
+Fully gone.
+
+Rhys Sullivan (00:24.248)
+I'm just glad I'm not the one.
+
+Dex (00:25.772)
+Mario, make sure you leave all of this in, by the way.
+
+Rhys Sullivan (00:29.528)
+Not them.
+
+Dex (00:30.968)
+Nope, that was thin.
+
+of
+
+Rhys Sullivan (00:35.414)
+I think too much
+
+Dex (00:38.019)
+Two more tries, yeah, we're gonna time box it and then me and Ries will get started and ViBov can rejoin if he can.
+
+Rhys Sullivan (00:43.574)
+I was just doing the over under.
+
+Vaibhav (00:47.29)
+Alright, how's this?
+
+Dex (00:48.652)
+Alright, we're back. Amazing.
+
+Rhys Sullivan (00:49.462)
+There it is.
+
+Vaibhav (00:51.345)
+Alright, we are back. I am alive, internet is working, things are happening.
+
+Dex (00:55.47)
+Hell yeah. Dope. Yeah. Let's do a quick intro and then we'll get into it. I'm Dex. I'm founder of HumanLayer. This is the AI That Works show where we talk about getting into the nitty gritty of AI, AI engineering, and context engineering, and harness engineering, and all sorts of systems engineering. Basically, there's a lot of engineering that happens on this show.
+
+Getting beyond the demo and getting under the hood and learning to do real stuff, I'm joined by Vaibhav.
+
+Vaibhav (01:28.99)
+I'm Vyva, I'm the co-founder of Foundry and we make a programming language. Today we're out here in San Diego. If you can see, I don't know if you can see. Is it all white? Get wrecked. It's super sunny. No, think the HDR is too high here. But it's a fun sunny day and we'll be chilling out by the water.
+
+Dex (01:38.382)
+Alright, we got you a nice mic, now we need to get you a nice camera.
+
+Rhys Sullivan (01:38.444)
+fully west out.
+
+Dex (01:52.02)
+And we're joined today by Reece Sullivan, who is a very cool builder. I've been following a lot of his projects, building in the open on Twitter, a ton of really dope open source stuff, and a lot of relevant expertise to what we're talking about today. But welcome, Reece.
+
+Rhys Sullivan (02:08.728)
+Yeah, thank you. Yeah, I'm Maurice, the founder of Executor. It's kind of a global source management tool. So you can add MCPs, API, GraphQL, anything you want your agent to call in one place. And then it exposes all that to whatever agent you want through code mode, which we're going to chat about.
+
+Vaibhav (02:11.454)
+Thank
+
+Dex (02:28.909)
+Amazing. Cool. So today I want to talk, we'll do a recap at the end, but today I'm really excited to talk about, there was this tweet that went out yesterday that actually has since been deleted. Did anyone get a screenshot of it? Of, okay, cool. I did.
+
+Rhys Sullivan (02:40.022)
+No, I didn't get a screenshot of it.
+
+Vaibhav (02:45.894)
+screen share or put on the whiteboard.
+
+Dex (02:48.269)
+Yeah, let's, okay cool. So I'm going to share my screen. I got the whiteboard. I'm actually reusing a whiteboard from a couple months ago where we talked about MCP versus tool calling and stuff. We probably won't reference any of that, but just in case we do, sorry, we're gonna dox Josh on this one. But I'm just gonna scroll down to the bottom here. And let's see, Posh from OpenAI says, mostly you haven't noticed this, but Codex has a new feature called Code Mode.
+
+It's gated behind an opt-in flag and still marked under development. I'd like to share where this is a big deal, put bluntly, and then the tweet got deleted. I'd love to kind of talk. Reese, do you have the whiteboard up? Are you able to draw some things on here?
+
+Rhys Sullivan (03:34.668)
+Let me find it. Is it in the chat?
+
+Dex (03:37.621)
+Yes, it's in the studio chat. If you go to studio chat, cool. And then I invited Reese to come talk about code mode. I guess I can probably crop out Josh from this one. It's fine.
+
+Rhys Sullivan (03:39.394)
+Cool, I'm in. Yeah.
+
+Vaibhav (03:52.39)
+Docs is Docs.
+
+Dex (03:54.336)
+Okay, so we have multiple ways to do tool use, right? And we talked about this before, but we have basically inline tools and just basically structured output, right? Ask the model to make JSON and you write it in your, it's like custom to your program, harness slash program slash agent, whatever you wanna call it. And then we had this thing called MCPs, right? MCPs, which is like,
+
+Dynamic plugins. can extend your, it basically enables your users to extend your software. And then the last one is, the thing we talked about last time a couple months ago was like bash, which is basically like one bash tool, let everyone just.
+
+call slash bring a CLI. And we talked about the trade-offs between MCP and bash between when you wanna actually like just like build first class tools. And I will go grab one picture from up above that I think is relevant here and drop it back down here again. We had this idea of like basically like if you have tools that are like really, really common you may wanna build these as first class tools into your system.
+
+and then you allow users to bring MCPs in for the long tail of things that you don't want to build first class integrations for. And you kind of like basically educate your users on how to use them well. And then if a tool becomes really popular, then maybe everyone starts using Notion, then you pull that in and make it first class so you can really context engineer it and improve the performance. And the thing I want to talk about today is code mode. Yeah. Go ahead. Yep.
+
+Vaibhav (05:23.965)
+Thank
+
+Vaibhav (05:38.597)
+Yeah. And one thing for people to keep one. I see one thing. One thing that would just let people think about is when you think about like MCP versus bash, just remember that they're basically the same thing. Like they're really just a way to do dynamic, broad, long tail things by having one single definition that enables that capability. But the slide different and all of them are obviously implemented due to structured outputs tool calls, same exact mechanism as everything else.
+
+But the main difference is that semantically they mean different things from our programs and we architect things differently based on what type of long tail mechanism we're really using. So even though these are all like variants of the same thing, you might be like, there's no difference here. Just they're semantically different because we organize our programs differently around them. And our user expectation behaviors operate differently as well.
+
+Dex (06:33.089)
+Yep. And just to put one example on here, maybe you have a tool name called bash and your args is like, may have like a create pull request tool if you're using an MCP or you may have a bash tool and the parameters are just, you know, args, GHPR create dot dot dot. Is that track?
+
+Rhys Sullivan (06:50.945)
+I don't
+
+Vaibhav (06:51.78)
+Exactly.
+
+Dex (06:54.476)
+Yes.
+
+Rhys Sullivan (06:54.744)
+box here should actually probably be CLIs, not bash. Because to me, yeah, to me it's where the tours are. so MCPs contain a container for tours, same with CLIs. And I know if we want to jump into this one yet, but bash is a function of the execution environment, where you'd execute the tool calls.
+
+Dex (06:58.975)
+Okay, because that's the... yeah.
+
+Vaibhav (07:01.341)
+I
+
+Vaibhav (07:08.893)
+Yeah, I agree.
+
+Dex (07:23.969)
+That's true, yeah, you could have just bash versus something else, which I'm sure we're get into. So I'm gonna let Reese, I don't know if you're ready, if you're ready to get handy with the whiteboard, do you want to like sketch out code mode for us and I'll just kind of follow you on the stream here.
+
+Rhys Sullivan (07:39.0)
+Yeah, let me think about how to best show this. So code mode is basically the concept of, I'm trying to think about how to best visualize it on the whiteboard. Yeah, start sketching it.
+
+Dex (07:50.862)
+can start sketching it if you want. So if we have like a code mode tool, basically the argument to this would be to actually write like a JavaScript function here that executes, right?
+
+Rhys Sullivan (08:03.894)
+Yeah, exactly. the way that I would think about code mode is you'll tell your agent, write me a script for this, and it will write you a file on your computer. It'll write you a TypeScript file to execute some code. And code mode is basically just that same scripting concept, but it's something that you can just plug into your agent as a tool. And what I think is interesting on bash and code mode here is they're very different than the...
+
+tool on the right here which is MCP and Create Ball Request since it's a tool that then lets you call other tools.
+
+Dex (08:40.299)
+Yeah, so local script would be like write a script and then run with bash, right? You would run, so your tool call would be like write and then this would be some JS or Python or whatever and then you would call bash where you would actually run the script.
+
+Rhys Sullivan (08:46.497)
+Yeah.
+
+Vaibhav (08:48.829)
+Yeah.
+
+Vaibhav (08:57.149)
+you
+
+Rhys Sullivan (09:03.65)
+Yeah, exactly.
+
+Vaibhav (09:07.773)
+you
+
+Dex (09:08.351)
+And then code mode I'm going to put over here basically as like the next or another alternative kind of like manifestation of that,
+
+Vaibhav (09:11.133)
+you
+
+Vaibhav (09:15.005)
+it.
+
+Rhys Sullivan (09:19.222)
+Yeah.
+
+Vaibhav (09:20.421)
+And code mode is like a combination of those two commands just in one, right? From what I understand.
+
+Rhys Sullivan (09:26.277)
+like sort of I would actually
+
+Vaibhav (09:28.221)
+It generates a code and basically just runs it.
+
+Dex (09:32.248)
+But part of it is like in your code mode environment, you're gonna pull in all your MCPs or other tools basically. so like, right, would get like MCP, GitHub, create, I'm obviously like butchering how you would name these things, pull request. And then you would do this, and then you would do like, const prurl, yeah go ahead.
+
+Rhys Sullivan (09:32.45)
+Yeah.
+
+Vaibhav (09:51.696)
+Thank
+
+Rhys Sullivan (09:55.738)
+I'll jump in. You can actually do...
+
+In the implementation that I did, can do like proxy objects with TypeScript. And so when this like tools.github.create, if you're familiar with T-OPC, it works in the same way where you're not actually calling that function when you call it, you can call a proxy function and then insert whatever special logic, whether that's like caching, re-limiting, authentication into it.
+
+Vaibhav (10:03.932)
+is.
+
+Vaibhav (10:24.731)
+Yeah. Is this, is it fair to think of code mode as for everyone's doing this is like, what, firstly, why do I want Allen to write code on the fly and execute it is the first question we should talk about. And the second question to talk about is like, what is the execution environment in which that code runs? And I think those two things together effectively define the difference between like code mode, generating code and a few other things. it's, it's that, is that, it's that combo.
+
+Rhys Sullivan (10:37.591)
+Yep.
+
+Vaibhav (10:53.178)
+It's like, is the power of writing arbitrary code from an LLM and executing it? And two, what is the execution environment? Is that correct,
+
+Rhys Sullivan (11:02.071)
+Yeah, that's right. I think we should actually start with what that execution environment is. like, taking a step back, the way that I think about CLIs, APIs, GraphQL, MCPs, of these, is basically they're just tools. And what is the tool? It's just a function. And what is a function? A function is a name, input arguments, and output arguments.
+
+And when you think about how you can represent all of the actions your agent can do as an ID input and output, you can then get really flexible with barric runs. And so, let dive into the whiteboard.
+
+Vaibhav (11:48.12)
+It turns out we built a lot of things called software that does that exact same thing and it's really flexible.
+
+Rhys Sullivan (11:51.96)
+Yeah, exactly. And so you can see how we've done this for two years. Before we gave the agents a batch tool, we would throw that. We'd be like, hey, here's your context window. Here's write, read, create web tree, open PR. We would create all of these verbose tools, and we would dump them all into the context window and be like.
+
+Dex (12:18.548)
+And the model needs to know the name and the input schema and all the parameters for all of them, which, like, among other things, eats a lot of context.
+
+Rhys Sullivan (12:26.199)
+Yeah, and we'll get into this in a second, but also like live reloading these tools is pretty hard because you don't want to bust the prompt cache. And so there's just kind of a lot that...
+
+this model has in that you have to dump all the tools in context. You can't dynamically load tools. You can do the evolution of this, that if you go use Charsgpt, what it does is it exposes a search tools, tools, and an invoke.
+
+Dex (12:59.786)
+Yeah, Claude does this too. It like offloads your tools to search if you have too many.
+
+Rhys Sullivan (13:03.361)
+Yeah, and it's actually not using, it's actually not using any, there's not like an execution environment here. And so when the model, and so this like, this argument would be, you know, like function name.
+
+Vaibhav (13:04.964)
+And then it's... Yeah.
+
+Rhys Sullivan (13:24.429)
+name, hogs.
+
+Vaibhav (13:28.7)
+And then you lose all the type safety and everything that you get from the benefit of tool calling.
+
+Rhys Sullivan (13:33.37)
+I think you still sort of get, I don't know that type safety matters too much in this one. My main problem with this one is you're still dumping the entire response into the modus context. And so you can imagine a create GitHub PR tool that would have.
+
+Dex (13:52.298)
+You get a giant blob of JSON, right?
+
+Rhys Sullivan (13:54.85)
+Yeah, you get a huge bubble of JSON. And so what people have found, probably starting with like, flood code, is, well, what if we give the bad agent bash plus CLIs? And so now this like, people are still putting...
+
+like write tools in, but now there's the bash tool. I would say like bash is kind of our first execution environment, going back to that concept. And the way that I think of the execution environment is it's a place where you can invoke tools, chain them together and filter their output. And also in some like live reload the tools.
+
+Vaibhav (14:33.031)
+you
+
+Dex (14:35.424)
+And you can do that with bash, right? You can like pipe things together. It's just really janky and weird.
+
+Rhys Sullivan (14:40.313)
+Yeah, that's why bash worked so well. Let me actually jot this down.
+
+Dex (14:49.504)
+Yeah, keep going. I'm trying to keep up and just add some more things here, but.
+
+Rhys Sullivan (14:52.849)
+Yeah, so library loading, chaining, pulls together. I would maybe say like accessing a larger ecosystem. I would like put that down kind of as a footnote, but I'll say what I mean on that one in a second. Filtering output. So on accessing a larger ecosystem, when you give your agent bash,
+
+Vaibhav (15:15.516)
+you
+
+Rhys Sullivan (15:22.035)
+it's able to access things like the GitHub CLI and now you're not like creating bespoke tools for the GitHub CLI.
+
+Vaibhav (15:26.332)
+you
+
+Dex (15:29.226)
+And you can even do NPX stuff where like you don't even have to install it. It doesn't matter. As long as Node is installed on the machine, you can go run the thing.
+
+Vaibhav (15:30.748)
+you
+
+Rhys Sullivan (15:36.506)
+Yeah. And what I would especially call out is the live reloading of tools. Because when we look at things like code mode, so code mode was introduced probably like, I think, eight, maybe like 12 months ago. It started in an Apple paper. One of the reasons it's actually a really challenging problem is the things that batch solves, especially around being able to live reload.
+
+Vaibhav (15:36.78)
+you
+
+Vaibhav (15:40.86)
+you
+
+Vaibhav (15:51.452)
+It's been a while. Yeah.
+
+Rhys Sullivan (16:06.105)
+I've reloaded Anyways.
+
+Dex (16:09.643)
+Right, and the same thing with bash, right? You can install a new package and then it's just available.
+
+Vaibhav (16:11.516)
+Wait, I think we're getting, I think we're getting super, super technical really fast. I think there's a lot of people that are just like, probably maybe want to catch up really fast and have not seen this stuff. Why the heck? Why can I not just use the spoke tools? Like what is the power from an end user? What capability, what practical outcomes do I win by running arbitrary code? I think we should discuss that really fast and just catch everyone else. This is like very technical and like we're going to like
+
+Rhys Sullivan (16:14.382)
+Yeah.
+
+Rhys Sullivan (16:22.562)
+Yeah.
+
+Dex (16:23.116)
+Yeah.
+
+Vaibhav (16:40.448)
+Why reloading? Why the heck does it matter? Right? Like it's talking about tangible practical outcomes for a user.
+
+Rhys Sullivan (16:42.455)
+Yeah.
+
+Rhys Sullivan (16:45.945)
+Yeah, that's a good call up. The problem with bespoke tools is you're gonna be basically limited in what they define. And there's good number of problems. Oh yeah.
+
+Dex (16:57.005)
+Let's keep going with the PR example. So it's like with bespoke tools, have your context window with your set of tools that are enabled. then you can only, your user asks for a thing, and then the model might do a tool call, and you can basically only call the tools that are in that tool set, basically, right? But with Bash, the model can call something like,
+
+Rhys Sullivan (17:03.192)
+Yeah.
+
+Vaibhav (17:22.928)
+Okay.
+
+Dex (17:27.533)
+plus CLI tools, the model can run something like, know, brew install gh. And then in that same context window without busting the cache, it can run ghpr create. Does that?
+
+Vaibhav (17:27.547)
+I think the
+
+Vaibhav (17:40.923)
+Yeah, and I think the key part to note here for everyone is this is not, like I know we're talking about busting the cache, that's nicer efficiency, but it's not just about busting the cache. The problem is, if you think about software and redeployment times, if a user asks me for a new feature in BAML, I have to update the BAML pipeline. I have to add that language feature into the BAML, do a release, and the user has to upgrade. That means the power of the software relies on me as the developer. The power of Bash.
+
+is that the power of the software relies on the person running the system. The person running the system has full autonomy on exactly what they can, what, what capabilities that they want to include. And there's this really nice, go ahead.
+
+Dex (18:22.157)
+Well, and it's like so like...
+
+There's another sell day too, It's like the user, with MCP the user can add tools, but they're still like static per context window. In this case, the model can add tools.
+
+Vaibhav (18:33.974)
+well, you could just have an MCP server that you dynamically add tools to and now you have dynamic tool set and MCP service as well. Like MCP allows for this.
+
+Dex (18:41.729)
+Yeah, I mean can't be... MCP allows the user to... But the list tools only happens at the beginning of the context window. The model's never going to relist the set of tools in the server.
+
+Vaibhav (18:51.139)
+No, you can't. You can just tell the model to relist tools. And I think it calls a list tools action again. And you can read, register the tool. That's an implementation detail of the harness more so than anything else. Like the API exists in tech, but you can do it. Yeah. The second thing to really keep in mind here is when you're actually doing this capability unlock and the power goes to the user. The most important thing is we're taking this other benefit that the models have been trained. There's tons of data on bash.
+
+Dex (18:57.069)
+UMMMM
+
+Dex (19:02.655)
+Okay. Alright, keep going with the point you were making.
+
+Vaibhav (19:19.333)
+Like this doesn't just coincidentally work. It works because like most of the internet and most of software navigation and most tutorials on the web just tell you to run bash commands. So it's not a coincidence that the model just happens to be good at this. It's the way that we've done stuff. So it's actually even in the case of at least coding and a lot of workflows that people have, bash is way more aligned to the training data than any of these bespoke tools are. And we can do post training and get it closer and you can get some benefit.
+
+but a lot of value prop just comes straight from bash. And for example, like whenever I see, I don't know if you guys recent Dexter, I know for example, whenever I see clogs starting to do said commands, I'm like, it's fucked. It's like, cause there's just, that's not a command that I as a developer use very often and I don't know what else uses said. And she was like, so the edit tool has value for that reason, because it's better than said. And because it's just not demonstrating data on it. Do you guys agree with that kind of thinking?
+
+Rhys Sullivan (20:04.909)
+Yeah.
+
+Rhys Sullivan (20:17.527)
+Yeah, I agree with that. also, this is anecdotal, but like I've noticed that people basically describe when the models have access to bash that they're like happier to do more tool calls. Like they, I think that they, it's...
+
+Yeah, when you give them kind of a place where they're like, you can express whatever you want and do as many talk-a-wizards you want, they seem to invoke a good amount more. But that's kind of more anecdotal.
+
+Dex (20:43.533)
+you
+
+Vaibhav (20:52.398)
+Yeah. And like, that's probably because bash is designed to be, is like run one command that run another command. And again, it just goes back to how the internet frames back. How many of you like do pipe commands by default, like 90 % of the time I chain, maybe one and command, right? Normally. And I, if I my users since also my chain one, so it makes sense that the models are kind of replicating that behavior. I think the problem with bash though, is if you've ever worked in a company,
+
+Rhys Sullivan (21:08.142)
+Yeah.
+
+Vaibhav (21:20.826)
+and obviously all three of us have, and I'm sure many of you on stream have as well. What do do when your bash file gets to be like 500 lines long? What do you tell someone on your team?
+
+Rhys Sullivan (21:32.921)
+and rewrite it to, yeah.
+
+Dex (21:33.473)
+Rewrite this as a program.
+
+Vaibhav (21:35.456)
+Exactly. Rewrite as a program. And I think that's kind of what people are hitting up against now where models are getting more capable. And like we went from bespoke tools to bash and that was good, but now we're trying to make it do more bash. And like, we all know that like said, and like XRs and all these other bash commands are bad, just write for loops and other simpler constructs that represent same idea in like a program. And you can get way more power.
+
+that comes from like the capability and reliability perspective because that's how we as humans have decided that software is more maintainable. And that's, think in my eyes, the power of code mode. It's the next step after bash.
+
+Rhys Sullivan (22:17.721)
+Yeah, I think what's really incredible about bash is like, the loading of tools, accessing the broader ecosystem, filtering the output so you don't dump a ton of tokens into context. And yeah, really, it's just like the first kind of execution layer. It really shines. But then when we, I think what's interesting is to look at the limitations of it. And I'm like actually a bit of a bash hater here. I mean, I...
+
+Dex (22:44.693)
+I hate I think bash is going to be considered harmful by the end of 2026. People are going to want to move away from it. Yeah, yeah.
+
+Rhys Sullivan (22:50.199)
+been tweeting about this for so long and everyone's been calling me wrong and I put the code XTweet as like vindication.
+
+Vaibhav (22:55.162)
+Wait, are you guys also Nix users? Okay, I'll just check it.
+
+Rhys Sullivan (22:58.36)
+No.
+
+Dex (22:59.435)
+No, I believe in nicks, but.
+
+Rhys Sullivan (23:01.411)
+So there's like a bunch of things.
+
+Vaibhav (23:03.754)
+No harm on Nix by the way, Nix is great software.
+
+Rhys Sullivan (23:07.289)
+This is a, let me go, yeah, let me just go actually grab the, I've written up at one point, like all of my issues that I take with bash. Okay.
+
+Dex (23:09.409)
+Sorry, Reese, go ahead.
+
+Dex (23:18.636)
+Hahaha
+
+Vaibhav (23:20.117)
+there we go. That's what we need.
+
+Rhys Sullivan (23:22.393)
+Let's see. So let's see which of these are actually relevant. Sharing signed in state between agents is like more of a problem when you're using MCPs than it is bash because you like sign into them and it works well. But then it's like.
+
+Vaibhav (23:41.562)
+Can you zoom in Dexter by the way?
+
+Rhys Sullivan (23:46.69)
+I'll code those two. This is a big one. So like the Google CLI, I'm pretty sure you can only be signed into one account for that whole CLI at once. And so just to give a bit of, well, like empty out.
+
+Vaibhav (24:02.522)
+On the full machine, by the way, not just like per session. It's like the machine can log into one.
+
+Dex (24:08.762)
+global state, we love that, right?
+
+Rhys Sullivan (24:10.873)
+We'll work this.
+
+Vaibhav (24:11.534)
+And there's ways to hack around it and you can pass like an off command every single time, but it effectively it's just one for like all intents and purposes.
+
+Rhys Sullivan (24:18.637)
+getting there.
+
+I'm getting the real command here because I realize that people are gonna run these things. Yeah, so you run this command and then you're like, Google login and now you've got one account tied to this CLI. And there's like, when you think about what the Google Workspace CLI is doing and I had like my agent go and read the code for it, it's purely an API wrapper, right?
+
+Dex (24:25.813)
+Yeah, don't get slop squatted. Don't slop squat the audience, please.
+
+Rhys Sullivan (24:48.961)
+And so then we get the question of like, why can't we just let the model is called the API? Like you don't need these bespoke CLIs for every API endpoint.
+
+Vaibhav (25:01.474)
+And to talk on Reese's point a little bit, this behavior, if you think about why are sandboxes getting so popular? Well, if you want to offer a Google CLI to your users, you don't have a choice. You need a sandbox because you have global state. You're basically screwed if you don't do this.
+
+Rhys Sullivan (25:15.415)
+Yeah.
+
+Rhys Sullivan (25:21.345)
+Yeah, and I actually haven't dived into bash too much on like the, like there's just bash, which is a pretty good implementation. But you can't use things, yeah. But you can't use things like the Google Workspace CLI in it because it's depending on like the full kind of like bash ecosystem. And so when you look at making.
+
+Vaibhav (25:32.058)
+Yeah, we use it actually.
+
+Rhys Sullivan (25:49.083)
+There's a ton of agents out there that don't need a sandbox. But when you introduce these CLIs and these dependencies, you've introduced a whole ton of overhead that now your users are like, now the people that are trying to consume it have to take on. And you're also excluding a whole, I would say, non-technical audience that's like,
+
+Dex (25:59.448)
+you
+
+Rhys Sullivan (26:14.458)
+They don't want to have their, like, there's a huge audience that wants their agent to be able to read their emails, but doesn't want to, but like doesn't know what a CLI is and isn't running a dangerously skip permissions that doesn't get covered by that. Other callouts that I'll make on YA, I just like bash is, and I get pushed back on this one a lot, but like you don't know everything that the agent can do with that CLI. And...
+
+Dex (26:20.886)
+you
+
+Vaibhav (26:30.954)
+you
+
+Vaibhav (26:38.874)
+and you think that's a bad thing.
+
+Rhys Sullivan (26:44.366)
+Yeah, because for the GitHub CLI, there's like delete project endpoint in there. yes, there's auto mode, but I want to be on the course where the AI companies try and convince major tech companies that it's fine for them to run in auto mode with.
+
+Dex (27:04.599)
+for Haiku to decide what is safe and what is not.
+
+Rhys Sullivan (27:07.906)
+Yeah. Like if you're a company, you want to completely block or delete actions from the agent.
+
+Vaibhav (27:18.615)
+that. can I devil's advocate for this one? Because I haven't we had this problem with humans for a long time. Like you're a company of like 10,000 or 100,000 employees, like one of them will accidentally delete the repos. He just fix that by making sure that like you build access control patterns so that one of them doesn't delete the repo and you just like do that.
+
+Rhys Sullivan (27:20.962)
+Yeah.
+
+Rhys Sullivan (27:41.028)
+That's true. The like maybe counterpoint that I would give is the, so delete the repo might be like an extreme example. The one I'd maybe more go to.
+
+Vaibhav (27:50.137)
+Yeah, there's various levels of harm. I do understand that that can happen. Some harm will definitively happen.
+
+Rhys Sullivan (27:56.699)
+Yeah, the one that made me go to is like, like a friend of mine wants to set up their like open claw to be able to access the email, but they never wanted to be able to send any emails and for like blocking those actions.
+
+Vaibhav (28:08.909)
+Yeah. Yeah. Not every software is as well permissioned as GitHub and Slack, GitHub and Stripe. Those two are. Yeah.
+
+Rhys Sullivan (28:13.402)
+Yeah, and even if they were well-permissioned, it's like you have two options on that one. Your user account still needs to be able to send emails. so you kind of can't like...
+
+Dex (28:34.549)
+So you have to go make a service account. If you want to play by their rules and use their fine-grained auth, then you have to create a separate account, provision it, know when you're switching into it and out of it, and hope that you did it right.
+
+Rhys Sullivan (28:38.871)
+Yeah.
+
+Vaibhav (28:40.954)
+Yeah.
+
+Vaibhav (28:45.005)
+Valid? Valid? Okay. Yeah, I agree. Okay, I'm convinced. I'm convinced. Access control patterns need to be rethought. there's an opportunity for you, octa or oct zero, go for it. But otherwise, I agree. By default, it's really hard.
+
+Rhys Sullivan (28:48.953)
+Yeah.
+
+Rhys Sullivan (28:57.518)
+Yeah.
+
+Dex (28:59.147)
+You know, all right, let's keep going through this list and then I have one that I think is missing from here actually that I want to talk about.
+
+Rhys Sullivan (29:07.49)
+Yeah, this is my like biggest pain point with Ash is you have no idea what's read-only and what's destructive. there might be some like spec.
+
+Vaibhav (29:17.261)
+And it kind of goes into the list all tools. Like there's no information that lets you query the tool corpus effectively. There's no audit. There's no audit system, effective.
+
+Rhys Sullivan (29:22.904)
+Yeah, exactly. And so, yeah, and so when you, yeah, when you have like, when you like are using the Google Workspace CLI, it's dropped all of the like HTTP semantics of like get, put, delete, et cetera. And like, that's a huge, that's a like huge pain point because I'm actually like fine with get or actions running automatically. I mean, it depends, obviously there's like some companies.
+
+Dex (29:24.993)
+I think.
+
+Vaibhav (29:45.068)
+So.
+
+Vaibhav (29:50.465)
+Well, I mean it's just get in post though, let's be real. Modern internet is pure get in post.
+
+Rhys Sullivan (29:54.936)
+Yeah.
+
+Dex (29:56.248)
+People are, OG REST is coming back, man. I know a lot of people who will say that, so Twitter REST was like 2011, they decided we're just gonna use Git and Post, and it was one of the first really big APIs that went super viral was the Twitter API, and they just had Git and Post, but it's a lot of CDN-style semantics where if you use all the HTTP verbs, you can take advantage of some interesting cache and validation, and basically to get the most out of your CDN, I think you do actually wanna start using all the verbs.
+
+Vaibhav (29:59.829)
+No chance. No chance.
+
+Vaibhav (30:21.496)
+Yeah.
+
+Dex (30:28.481)
+But anyways, we're way off topic. Keep going.
+
+Rhys Sullivan (30:30.329)
+Yeah. The wildcard one, I'll like nix that one because like you can write esoteric bash command like approval things. Yeah. And that one feels like the known what's destructive feels like a duplicate. And then I like the last thing I'd say on bash is just like not very shareable. Like it's like I guess you can do like here's your install command and then each of you like a wolf to that.
+
+Vaibhav (30:39.93)
+You shouldn't, but you can.
+
+Rhys Sullivan (30:59.897)
+But...
+
+It's just like, there's a lot of friction in how bash works today, I would say.
+
+Dex (31:10.987)
+Yeah, the one that's missing from here, sorry, go ahead, Bob, and then I'll move on to this. Okay, the one that I actually care about a lot since we talk about like context engineering all the time is like output shaping is really like hard in Bash. And I wanna like just take this example from over here that we were doing for a while, which is like, okay, I wanna create a PR, right? And so if I do this in like,
+
+Vaibhav (31:12.929)
+And... Go ahead. No, go ahead Dex. No, no, you got better YAP concept than me.
+
+Rhys Sullivan (31:25.26)
+Yeah.
+
+Dex (31:39.041)
+basically MCP world or custom tools world, this thing is going to return a whole lot of tool output, right? Sorry, let me just.
+
+response, JSON.
+
+Dex (32:00.204)
+So you get this big response JSON and that whole blob is gonna go into your context window, because the tool doesn't know which of those things you might need. And so if you're doing another operation and then like, let's say the assistant wants to return back just the URL, right? So in this world you have the, so let's say this contains the URL directly, right? But it also contains a shit ton of extra noise.
+
+Vaibhav (32:18.201)
+Yeah, then you make another tool call or another LL call.
+
+Dex (32:27.36)
+So in bash, you could do this by taking your GHPR create and changing it into GHPR create and pipe it into jq.whateverlongpath.httpurl, right? And then the model doesn't actually see the whole thing, it just sees the URL instead of that like giant JSON blob. And so your response JSON from the bash tool call is like pretty small.
+
+But it still requires the model knowing to do that and if it accidentally doesn't do that, then you just ate 5,000 tokens of extra context that you didn't need. And what's really interesting to me, and you see this with, the worst one for me is like, bun run test into head dash n40 or whatever, where it runs the five minute test suite.
+
+Vaibhav (33:18.655)
+my god, I hate this crap.
+
+Vaibhav (33:24.984)
+And then it's like, oh, something failed. I didn't get which one failed because I used head or I used tail. And I have to run the whole test again.
+
+Dex (33:25.75)
+test suite.
+
+failed but I didn't see it. Yeah. And then so it runs it again into grep, you know, error or fail and the model just like keeps doing this shit over and over again. We've gotten a little bit better about this of like automatically offloading it to context and that tool works but the model itself actually is still obsessed with like cleaning up the output before it sees it which means you keep running this test suite over and over again.
+
+Vaibhav (33:51.394)
+Yeah.
+
+Vaibhav (33:56.502)
+Yeah.
+
+Dex (33:56.791)
+And what I really like about the promise of code mode is being able to run up a code block of const pr result equals tools.github.createpr. And if you know the schema, you can basically say console.log pr result dot whatever dot HTTP URL. You do some deep path.
+
+Vaibhav (34:21.784)
+Yeah, it's the same and then you get type checking on this so like you actually get a compiler at the time you generate the code that this is invalid code otherwise.
+
+Dex (34:28.95)
+Yeah.
+
+Dex (34:33.697)
+And this is a really... Yeah, go ahead.
+
+Rhys Sullivan (34:33.753)
+actually don't, I don't run type checking is like too slow. That might change your TS, not at the moment, because like they're actually pretty good at not writing TypeScript.
+
+Dex (34:39.391)
+Okay, you don't run type checking on the code block.
+
+Vaibhav (34:39.746)
+you just need a better language.
+
+Vaibhav (34:45.558)
+what language.
+
+Yeah, you just change that to writing like the language that actually the fast compiler and then this is not a problem.
+
+Rhys Sullivan (34:53.601)
+Yeah, this is a really cool part of CodeMover. It's like you can be super flexible with it.
+
+Dex (34:58.413)
+So the thing that I actually really like though is you can say const pr result equals const pr result equals dot dot dot. You can do these kind of like things where you accumulate results. And this is a really, this is terrible code and this is like Python pseudo code. We switched to Python instead of JavaScript. But like then you just console dot log the thing that you want. And so let's say there is a lot of data and all of it matters and you don't just want the PR URL.
+
+What you're able to do is instead of know, tool one and then you get the JSON and then you do tool two where you take this, like parts of this output JSON and pass it into the next tool. Maybe you're doing like a SQL insert of everything you got. And then you get a response from there and then you run tool three. But actually you only actually care, like these are implementation details, right? You only actually care about some like small field on the end here.
+
+And in code mode, can just actually, result one equals tool one, const result two equals tool is, tool two of result one dot filter, et cetera. You can do all this logic on it, which hides a bunch of the intermediate stuff.
+
+Vaibhav (36:17.976)
+I'm gonna write this out for you next.
+
+Dex (36:19.629)
+result to... Yeah.
+
+Sorry, yeah, I don't know. I know, Reese, you're probably getting here, but this is like one of the most interesting things to me of code mode is being able to...
+
+Vaibhav (36:33.238)
+Yeah.
+
+Vaibhav (36:36.726)
+I mean, you go from basically going club calling, like the number of hops, the model drops to upper bounded. like it's like guaranteed two calls as opposed to end calls. If you know what you're running.
+
+Dex (36:48.939)
+Yeah, and so code mode gets you a lot more flexible of like, you could write a custom tool that is like fetch data from source A.
+
+and pipe to source B, but this is like a very specialized thing and you have to make one of these tools for every single combination of source and destination. Whereas like in code mode, you just have the fetch calls and the insert calls and the model can stitch them together really easily doing a thing it's really good at, which is writing.
+
+Vaibhav (37:06.23)
+Yeah.
+
+Vaibhav (37:29.537)
+Can I
+
+Dex (37:35.243)
+Bye, Bob's gonna... Yeah. yeah, so the model can do this.
+
+Vaibhav (37:38.269)
+This is actually, this is probably the most interesting part of code mode. And like we've been running a bunch of, benchmarks. trying to see what models, what languages models are good at. turns out, languages are very, models are very, very good at Python primarily because of this one feature in Python. can run Python dash C and just write arbitrary code. And that is basically a superpower to a model. It's like code mode without any special code mode. Nope.
+
+Dex (38:04.855)
+I mean most languages have that. You have, you have Ruby-E, you have, that's true, okay.
+
+Vaibhav (38:09.043)
+Russ doesn't have this. does.
+
+TypeScript doesn't have this, Rust doesn't have this.
+
+Rhys Sullivan (38:14.042)
+When you run Python-C, where's it getting the tool definitions from on this one?
+
+Dex (38:22.593)
+That's a point. Yeah, it has to like import. Yeah, so you'd have to basically like get those tools installed into your runtime.
+
+Vaibhav (38:23.351)
+What do mean the tool definitions?
+
+Dex (38:33.421)
+Which means you need to have UV and management and things like that.
+
+Vaibhav (38:33.715)
+Yes, so what you can do.
+
+Vaibhav (38:39.096)
+What you can do is you can take this to the next level and just swap it to your Python-c command and just call uv run and run that script directly. then, and then it just works with all the import commands and everything as long as you tell it that. So it just works out of the box with like custom virtual environments per script. Because like uv allows you to single file scripts now.
+
+Rhys Sullivan (38:46.909)
+interesting.
+
+Rhys Sullivan (38:52.942)
+Nice, that makes sense.
+
+Rhys Sullivan (38:57.71)
+Yeah.
+
+Rhys Sullivan (39:02.522)
+I'm not letting my model write Python.
+
+Dex (39:02.571)
+Yeah.
+
+Hahahaha!
+
+Vaibhav (39:06.391)
+Ethically, I agree there's an ethical argument about here about Python being a questionable language.
+
+Rhys Sullivan (39:11.054)
+Hahaha
+
+Dex (39:11.477)
+Alright.
+
+Alright Reese, we've been yapping for a bit, what's your take on all this?
+
+Rhys Sullivan (39:20.09)
+I would go back to the with bash for CLI for a second and just like very explicitly to call out that like what is the output to this get up, yaw, create command. And like the answer is that you have no idea because it like it's one of the most that's true. Yeah. And so like, I think that you'll like see a much better success with CLIs like this one.
+
+Dex (39:34.283)
+And getfprcreate is probably a bad example because the model actually does know exactly what that returns, but most CLIs it doesn't know.
+
+Rhys Sullivan (39:48.987)
+But the, oh, we haven't even talked about skills plus CLI. Like there's a thing where people will ship skills with their CLIs and...
+
+I just don't know that that's actually needed unless you're getting into combining actions. But you have to chip a skill with your CLI now because the model doesn't actually know the CLI that well. And so it has to leverage that skill to know what the output is. And then I dropped in a screenshot here of when you add the GitHub API, the output, there's like a, that needs to improved. But this is what the model sees, right? It's like,
+
+Dex (40:19.403)
+Hahaha
+
+Vaibhav (40:20.887)
+you
+
+Can you zoom in? What does it say?
+
+Sorry.
+
+Rhys Sullivan (40:27.893)
+Yeah, so this is this is the GitHub API with the create endpoint. And this is like the TypeScript representation of it. And so the model gets, hey, this is the input and this is the output. And then there's like varying code mode implementations. Yeah, I need to fix the output or something.
+
+Vaibhav (40:39.328)
+as told the useless.
+
+Vaibhav (40:43.875)
+Wait, why does it say pull request? can't do anything with that. Does it just give you the number or is that like a type? Sorry, the dash is maybe throwing me off. I realize that this is...
+
+Rhys Sullivan (40:54.458)
+No, no, that's a bug on my end. I need to go fix that. Yeah, let me get, I'll find a better screen, better one.
+
+Dex (40:54.914)
+Ha
+
+Vaibhav (40:56.471)
+Okay, okay. I was like, it's not subtraction, I'm certain of that.
+
+Vaibhav (41:10.967)
+But I do agree in general, type information is incredibly powerful for informing the model of what to expect.
+
+Rhys Sullivan (41:18.298)
+Okay, here's one of an actual output. And yeah, so the model knows what the input will be, what the types are. In my implementation, I gave it basically the ability to control what depth it goes to, because for a lot of them, they do actually have pretty nasty nested arguments. And so that's an interesting...
+
+Vaibhav (41:18.741)
+Like a string is...
+
+Vaibhav (41:24.513)
+there we go. Nice.
+
+Dex (41:42.273)
+and you want to recurse through the types and you can basically say like, only give me two levels of depth and everything else, just leave the reference in and I'll look it up if I need it kind of thing.
+
+Rhys Sullivan (41:50.876)
+Yeah, exactly. So that's super nice from a token efficiency point of view. Another cool out I would make is readability of what the model is doing. So this is a screenshot from...
+
+one of the, codecs. And this is, I was like, hey, go through my email and like, see if I got anything from like Anthropic or OpenAI on like the open source programs. And this is one tool call that it wrote to like take the Google APIs, list it, filter that list, slice it for each item, get the like.
+
+email like details on that specific email. If it's interesting, add it to an array, it to like filter it out. And what I think is really cool about this is like when I see the model write these crazy bash commands, I have no idea what it's doing. But like, I mean, I've looked at this one before, so it's like more immediately obvious what it's doing to me. But it feels a lot more readable than bash commands.
+
+Like the expressiveness here of being, yeah.
+
+Vaibhav (42:59.548)
+Yeah, mean code also just like syntax highlighting, right? It's just nice. It's way better than reading a bash command.
+
+Rhys Sullivan (43:04.803)
+so actually this didn't have syntax highlighting. I just gave it to chatgbt and I taught it to add syntax highlighting to this code blog.
+
+Dex (43:15.543)
+Hahaha
+
+Vaibhav (43:15.742)
+Well, what I mean is like you can take arbitrary code and if you take code and syntax highlighting it, then we can just like do that very easily.
+
+Dex (43:26.571)
+I mean, technically you can syntax highlight batch, but it's just not very expressive as a language. amazing. He literally took a screenshot and said to highlight it.
+
+Rhys Sullivan (43:31.067)
+Yeah.
+
+Vaibhav (43:31.444)
+Yeah.
+
+Vaibhav (43:36.63)
+That's funny.
+
+Rhys Sullivan (43:36.643)
+is the Welcome to the Future.
+
+Dex (43:39.841)
+Damn. Dude, should we just replace the syntax highlighter in our IDEs with an image model?
+
+Vaibhav (43:42.57)
+when I will say it.
+
+Rhys Sullivan (43:46.038)
+Hahaha
+
+Vaibhav (43:47.786)
+When we were first doing PAMEL, the hard part about making it broken language was showing syntax for it. You wouldn't believe the hours I spent in Figma coming up with new syntaxes and highlighting it manually, just so someone wouldn't be disgusted by a plain white file. And I would have saved so many hours by doing this thing.
+
+Dex (44:05.067)
+Yeah. Okay, Reese, there's one question I have, and I think we talked about this on Sunday, but I'd love to hear your take on this kind of for the audience is like, you you mentioned the model doesn't know the output schema of GHPR create. What is stopping me from basically running like GH dash dash help?
+
+Rhys Sullivan (44:06.82)
+So yeah, we're gonna...
+
+Rhys Sullivan (44:13.496)
+Yeah.
+
+Rhys Sullivan (44:22.393)
+Yeah.
+
+Dex (44:29.119)
+and then the model runs ghpr dash dash help and then runs ghpr create dash dash help. Like why is this not good?
+
+Rhys Sullivan (44:37.914)
+I mean, I feel like this immediately is why it's not good, right? Like you've now taken like three tool calls to... One of the things that I'm thinking about is like, how do we scale agents to like tens of thousands of tools? And it's not that they need tens of thousands of tools. It's just like, you want your agent to be able to do everything that you can do. And when you get into that...
+
+Vaibhav (44:47.049)
+you
+
+Rhys Sullivan (45:04.194)
+Like the things that I've got added to my agent are like my post-hoc, my axiom, my stripe, work OS, like all of this stuff. And like I was setting up, I was setting up like a new post-hoc environment and I just told it, it's a one-off. Hey, like update the, like make this post-hoc project. And that's like.
+
+Vaibhav (45:10.164)
+you
+
+Thank
+
+you
+
+Rhys Sullivan (45:29.538)
+If we look at what that looks like in the postdoc world, you have to use the postdoc CLI and then run dash dash help, dash dash help. Whereas when you've got this pattern of being able to do tool search and then invoke it, the model just immediately gets it on what the right things to call are.
+
+Vaibhav (45:38.262)
+you
+
+Dex (45:47.37)
+Okay, so like in the sort of tool search world, you basically, instead of running GHELP, you're like search PR create, and the response is gonna be something like this schema that you dropped in before, right?
+
+Rhys Sullivan (46:03.289)
+Yeah, I'm still figuring out what the right responses to give to the agents are, because you could either do, like you could just do tour names in this one. Alternatively, you could do tour names plus a brief definition of them. It's like how much do you want to burn on tokens to give them immediate search results versus having a describe tool as well.
+
+Vaibhav (46:04.244)
+you
+
+Vaibhav (46:23.134)
+Thanks for watching!
+
+you
+
+Vaibhav (46:33.195)
+No, we actually were thinking about this. We've been thinking about this a little bit, which is like, maybe, maybe the question is like, at some point, if you want to give the person, you have two choices, either dump all the context all the time and every query is extremely expensive, or you give some sort of granular output of context of what you're willing to give to the end user, in which case discovery is expensive. And there's no, there's no middle ground there.
+
+Dex (46:33.76)
+Okay.
+
+Rhys Sullivan (46:56.218)
+Yeah.
+
+Vaibhav (46:59.232)
+Like the middle ground is you predict the intent of the user and then you give them that. And that's kind of what like ad systems do, right? Like they predict your intent. Google search predicts your intent based on your history and says, this is rank one search for you. So I'm trying to maybe, maybe what I'm trying to figure out is like, I think for most users, they probably understand like, yes, we can do like dash dash help everywhere, or we can do describe, but it sounds like a, it doesn't sound like I want one or the other. It sounds like I just want to be able to do both at all times.
+
+Rhys Sullivan (47:30.735)
+Yeah, that's kind of what I exposed to the model is like try and just give it primitives that it can compose basically. And so like let it control the depth, let it control when it gets described. And I found like pretty good results with that so far.
+
+Vaibhav (47:35.286)
+You
+
+Vaibhav (47:45.942)
+My assumption is like every single CLI tool will kind of have to evolve to do the same kind of thing where you have both search and describe effectively built in by default rather than
+
+Dex (47:58.254)
+So you want instead of gh dash dash help you want gh search and gh describe and then
+
+Vaibhav (48:04.394)
+Nope.
+
+I don't even want that. just want to say like GHPR create. And I want to tell me that there's no such thing as PR create. Did you mean this? and, and then I just wanted to tell me that like in my default, I just type in commands.
+
+Rhys Sullivan (48:14.564)
+interesting.
+
+Dex (48:18.443)
+then you still need the description, right?
+
+Rhys Sullivan (48:19.141)
+So my inclination is that's not a thing that should live in the CLI. I'm trying remember if I've still got this in executor. But with executor, when the model screws up a tool call, it will throw an error with the closest matching path to help it get into it. And I think some shells do this as well with CLI commands. That's like, did you mean this? And...
+
+Vaibhav (48:45.417)
+Yeah. But those shells can't possibly have the same information as the bespoke CLI tool itself. Like for example, like, like when the compiler fails to compile code, it can tell you, did you mean X, Y, Z? The shell can.
+
+Rhys Sullivan (48:53.909)
+in... yeah.
+
+Rhys Sullivan (49:04.53)
+Is the shell not being able to, is the shell not being able to function of not knowing everything a CLI can do? Or is it a function of the CLI has specific knowledge about when you say PR?
+
+Vaibhav (49:05.173)
+There's a contextual information.
+
+Vaibhav (49:19.029)
+The CLI has specific knowledge that it might want to run some sort of computation on in order to give you guidance on what it should do. And that's probably bespoke to every single CLI. And then similarly, if you think of the shell as also a CLI, which it kind of is, like SH and the other shells are just commands you can run, the shell itself should also have knowledge about what it can do to some level of organization. Like I can call it.
+
+I have all these things installed. If you type in the wrong thing or typed in some action, maybe it should just naturally list out. And like if you're building an execution environment, I think this is really possible where like the shell just tells you just what you should do. But then similarly, if you run a, if you run a, you know, like exception handlers are built, like basically the exception handler can live at different places. And if you don't handle it, the thing above you will handle it, but less likely worse than you handled it yourself.
+
+Cause the thing with the innermost call stack has the most information about what it could do in theory. That's kind of what I'm imagining. Like in the world of shell, likely every shell script should have exception handling for invalid input. And if it fails, then he bubbles up to the shell and the shell says, Nope, I have something else I can do instead. And therefore the shell tells you what it can do.
+
+Rhys Sullivan (50:16.73)
+Right.
+
+Vaibhav (50:37.654)
+And if you think of like a standard error code and obviously no one's going to do this because it's where I was like changes to the operating system and like order the shell command that I'm and no one's.
+
+Dex (50:45.006)
+you want more integer error codes? You want non-byte error codes? Good luck, buddy.
+
+Vaibhav (50:48.487)
+Yeah, I want a special error code that we just overtake that says I have returned a thing that's basically a did you mean or some like exception handling thing. And if you think you have a better, if you as my parent have a better context of what the user might've tried to do, you can instead do yours and ignore my output. And I think that would be like a very interesting way to do automatic discovery for any call.
+
+Dex (51:10.825)
+Interesting.
+
+Dex (51:16.504)
+Yeah.
+
+Vaibhav (51:16.563)
+where it's kind of like a smart discovery rather than like just the bare derivatives. And that's a wild idea. I don't know if anyone's gonna go do that. But that'd be my like, I wish I had this.
+
+Dex (51:25.581)
+Okay.
+
+Okay, I see Reese typing out some final thoughts. Let's do a couple questions from the chat and then we'll wrap it up. We've probably got about like eight minutes left. So you wanna do a couple questions and then Reese will let you kind of send us off with your big takeaways.
+
+Rhys Sullivan (51:42.489)
+Yeah, sounds good.
+
+Vaibhav (51:46.197)
+Let's start a couple really fast at beginning. Yeah.
+
+Dex (51:46.552)
+Bye Bob, you got eyes on the chat. Yeah, pick a couple good questions and we can draw some more stuff. This is a very purple board today, I like it.
+
+Vaibhav (51:53.593)
+I think what I think people are asking, like, how does this relate to what Google and Gemini and my quad do with code execution? Is this the same thing? Is this different?
+
+Rhys Sullivan (52:05.595)
+I don't know what Google does with code execution, but Claude does have a code, some form of like execute tools as code. The call out I would maybe make is that there's like a reason we're not all using code mode right now. And part of the reason that I think that is, is because like the supporting infrastructure around it needs to be built.
+
+Bash, like you can't replace Bash immediately with a execute JavaScript tool because of like.
+
+Vaibhav (52:43.395)
+you
+
+Dex (52:44.438)
+It just doesn't have all the things that Bash lets you do built into it yet.
+
+Rhys Sullivan (52:48.411)
+Yeah, you don't get, if you just replace it with a JavaScript tool, you don't get tool search, you don't get TypeScript declarations, you don't get being able to convert OpenAPI, GraphQL, Google Discovery into that format. And so, I actually would probably argue that if you're just going from a set of five tools into the Azure code mode, like the...
+
+Vaibhav (52:57.396)
+you
+
+Vaibhav (53:02.467)
+you
+
+you
+
+you
+
+Rhys Sullivan (53:15.451)
+win isn't that much. But when you're going for agents that can either run servicely or don't require a full VM, and need access to a whole ton of tools, that's where code mode really shines.
+
+Vaibhav (53:19.636)
+you
+
+Vaibhav (53:27.22)
+.
+
+Rhys Sullivan (53:30.843)
+Kinda looks like a duck. Do guys see it?
+
+Dex (53:33.522)
+Okay. Okay, so today bash, there's some overlap and there's some things you can do with code mode without bash. But right now bash lets you do a whole more, a whole lot more. And so like using one off execution basically needs to expand out a little bit before we can really before we can start to rely on it for everything is basically what I'm hearing.
+
+Vaibhav (53:36.212)
+There's a note.
+
+Rhys Sullivan (53:55.984)
+Yeah, and I'll do a small self plug of if you want to try it out, I'm trying to build all the supporting stuff that you need with executor. And so you can use the executor SDK and then you get live reloading of tools. You can import OpenAPI specs, MCP servers, et cetera, and tie credentials to them.
+
+Dex (54:19.126)
+And code mode basically can do all the bash stuff eventually and is just better overall. It has the capability to do more in the long
+
+Rhys Sullivan (54:27.321)
+Yeah, it just...
+
+Vaibhav (54:28.148)
+Yeah.
+
+Rhys Sullivan (54:31.555)
+Yeah, exactly.
+
+Dex (54:33.208)
+Cool.
+
+Vaibhav (54:33.307)
+I mean, the hard part is really the hard part about all this system stuff. like we have giant companies that are built around this. It's just like simulating the virtual environment is like tremendously hard. Think about how big VMware is. Like that's, that's basically what you need to do to enable all of these systems at a foundational level. you need a virtual class system, need a virtual network, virtualized network calls, virtualized sockets, and basically everything your OS can do. You just need to make programmatically available through regular code.
+
+but then just like remap it to like doing something else. You're basically, you're building VMware. Yeah.
+
+Dex (55:03.938)
+At which point you've built an operating system.
+
+Rhys Sullivan (55:08.315)
+So my maybe pushback on that is you can actually represent CLIs in code mode. I don't know the base file operations that bash has are really good. And I maybe question replacing those with code modes, where I really like.
+
+Vaibhav (55:33.812)
+The main difference that I took away.
+
+Rhys Sullivan (55:36.549)
+yeah, where I really like code mode is for, it just gives you a way that you can import any open API, GraphQL, like MCP server into one way that the model really likes to call. And so I viewed a lot more for agents that can.
+
+Vaibhav (55:40.532)
+Thank you.
+
+Vaibhav (55:46.792)
+Yeah. Yes.
+
+Rhys Sullivan (55:58.244)
+Not so much for coding agents, but more for like, like general assistant agents. Yeah, exactly.
+
+Vaibhav (56:02.94)
+Like data analytics, right? Or like other things that you want to do. It's like everything, almost everything has a programmatic API. Anything that you typically build a bespoke SaaS for instead of setting up the whole app, setting up the whole system, just give it a script and it will kind of run the script in a safe execution environment. Is that kind of right, Reese?
+
+Rhys Sullivan (56:21.721)
+Yeah, that's right.
+
+Vaibhav (56:23.474)
+I agree. think that's really cool.
+
+Dex (56:24.898)
+Yeah, okay.
+
+Dex (56:28.846)
+Sweet, okay, final thoughts, Reese. I got your notes up here. Send us away and then we'll tell people where, I mean, you all know where to find me and ViBov on Twitter, or online, et cetera. We'll let Reese share how to get in touch with him if you're interested in this. But yeah, let's hear it.
+
+Rhys Sullivan (56:34.533)
+Yes.
+
+Rhys Sullivan (56:52.047)
+Yeah, so the first thing is MCP, CLI, OpenAPI, GraphQL, and Core Discovery. These are all just tools and you can core tools however you want. You can core these through that. When you convert an MCP server to Bash, the reason you're able to do that is because the MCP server has structure about what it is and what it can do. There's a reason you can't go from a CLI to an MCP server.
+
+And so I would like call two things out there. The first one is like, there's a lot of like,
+
+I'd say kind of outdated information on like MCPs at this point, on like context bloat or like them not being good. And I don't know that they make sense in every single case. And I'll go over that in a little bit. But I just think of them as tool calls. And when you realize that they're just tool calls, you can do whatever you want with them. You can do them through code mode. You can do them through bash. I would also probably like, yeah, exactly, yeah.
+
+Dex (57:51.34)
+It's all just types, right? It's all just schemas and function signatures.
+
+Vaibhav (57:52.212)
+you
+
+Vaibhav (57:56.788)
+you
+
+Rhys Sullivan (57:57.264)
+I would also, as much as I love code mode, I wouldn't overinduct X on it because I think that there's a world where we find a better solution in six months. I can't tell you what that better solution is, but I think that you have to look at the primitives, not the implementation of the primitives. And bash is an implementation of the primitives, code mode is an implementation of the primitives, but the tool calls are primitives.
+
+Vaibhav (58:17.876)
+you
+
+Dex (58:21.912)
+I like it.
+
+Rhys Sullivan (58:23.323)
+Next one is like if you're a company and you're trying to get agents able to call all your things, I would call out that the best thing that you can do is just have a really good open API spec because then you can convert that into a CLI or code mode or whatever the next thing is. Having some structured representation that can be callable is really effective. I called this one out already, like context bloat with MCPs aren't real. Like if you think about, if you think about,
+
+Vaibhav (58:29.813)
+you
+
+Rhys Sullivan (58:53.273)
+taking an API spec and converting it to a CLI, no one complains about how many tools are available in the CLI. Because you want your agents to able to do a bunch of things. And it's more a harness problem, or an implementation problem of what you're giving the agent to execute in, than it is MCP specifically.
+
+Vaibhav (58:56.979)
+Thank
+
+Rhys Sullivan (59:15.461)
+For harness implementers or people making agents, I would try and think of it as managing a tool catalog rather than specifically code mode or bash, because then whatever the next best format is, you can just make your tool catalog callable in that format.
+
+Vaibhav (59:28.129)
+Yeah.
+
+Rhys Sullivan (59:32.506)
+And then the last one that I'll call out is how I'm thinking about the difference between MCPs, APIs, and CLIs. And I would say MCPs are for flows. so there's things that more clients are getting access to around like MCP elicitation, MCP apps. I think that there's a lot more that we'll probably see now that we have good versions of MCP in the next couple of months.
+
+And you can do things like getting user consent for telemetry. That was an example from the Pasell Cloud Code plugin, where they were using a CLI and skills. And then Claude would ask the user, do you want to enable telemetry? Whereas you can do that through MCB elicitation to get real user input.
+
+And then APIs I really think of as for raw data access, and they're really effective. I've got a bunch of API specs added. But also, a lot of the time it's dealing with raw IDs and all this stuff. And then the last one is I'll probably say that CLIs are for humans and not for agents. we've had a really fun, we've had a fun 12 months, but it's a...
+
+Dex (01:00:42.668)
+Wow. Okay. I'll take a look.
+
+Vaibhav (01:00:44.275)
+Hot take, hot take, hot take.
+
+Rhys Sullivan (01:00:54.499)
+I'll read these articles that's like, here's how you make a good CLI. it's like, well, MCP actually solves all these problems around getting user input that you have.
+
+Vaibhav (01:01:04.755)
+You know, I was going to propose an episode for next week and I was going to tell Dexter about this, which is how to build a CLI for agents. This is a hot take.
+
+Dex (01:01:12.801)
+there's a couple articles written about this recently. There's like, people have been writing this more and more.
+
+Vaibhav (01:01:18.033)
+Yeah, we built one that we measured to be pretty good for agents with stats. So that's how was like, it's very interesting. Yeah.
+
+Rhys Sullivan (01:01:18.659)
+Yeah, and the reason that you have-
+
+Dex (01:01:24.494)
+Oh, that'd be a cool topic. Actually, evaling a CLI for agent friendliness is a really interesting story. I'd love to hear that. Do vibe off.
+
+Vaibhav (01:01:30.545)
+Yeah, it's been really interesting. We have a benchmark harness and everything now. Yeah.
+
+Rhys Sullivan (01:01:35.277)
+Alright, I will say I'm looking from the perspective of like the next like six months to twelve months kind of a thing where it's like...
+
+Dex (01:01:35.768)
+Sick.
+
+Dex (01:01:46.947)
+Yep.
+
+Vaibhav (01:01:47.389)
+I mean, also like a really obvious stance for why CLI is for humans is like, think about how we use CLI is we use tab for autocomplete agents don't use tab. It's like fundamentally like the default way to build a CLI and all the tooling around it is dumb. Right.
+
+Rhys Sullivan (01:02:00.902)
+Yeah, but as much as I love the code mode concepts, I'll explicitly call out that all harnesses don't have to implement it like this today. And I think that there's a ton of potential now. But at the same time, the best thing for agents today is CLIs, but I'm pretty unconvinced by them in the long term.
+
+Vaibhav (01:02:21.521)
+Long term, I agree.
+
+Vaibhav (01:02:25.971)
+The hardest part about CLI's long term is they're just not very flexible by default. Like you can only string in string out. That's highly restrictive.
+
+Dex (01:02:26.144)
+Amazing.
+
+Rhys Sullivan (01:02:31.417)
+Yeah.
+
+Rhys Sullivan (01:02:34.927)
+Yeah.
+
+Dex (01:02:37.432)
+Ooh, I like that. I mean, technically you can make a CCLI that only reads JSON on standard N and only outputs JSON, but yes, in general, that's not common.
+
+Vaibhav (01:02:45.373)
+But it's still the type of JSON is there's a reason that we don't like to any type in TypeScript. It's
+
+Rhys Sullivan (01:02:48.581)
+this
+
+Rhys Sullivan (01:02:53.647)
+This reminds me of one last small point of when you control the code mode stuff, you can do proxies to the functions instead of calling the CLIs directly. And when you're dealing with proxies, you can insert mocks, can insert caching, can insert rate limiting. It just gets like, all of these, for me, I had all these problems with bash, where it was like, yeah, this works, but this doesn't feel right. And then code mode kind of solved all of those.
+
+Vaibhav (01:03:22.963)
+mean, bash does not scale. Bash is like the worst after like, if you have a 5,000 line bash script, please delete it and write a Python script or a JavaScript script. don't care what a Go script, I don't care. And like bash is the least scalable system in the world.
+
+Dex (01:03:31.982)
+Yup.
+
+Rhys Sullivan (01:03:32.848)
+Yep.
+
+Dex (01:03:38.816)
+Okay, cool. I think that's great. ViBov, should we do a little outro? I guess I'll go back to sharing. All right, here we go. Amazing. So this week on AI That Works, we talked all about code mode. So we talked about the different ways you can call tools and models. We talked a lot about kind of the, am I really not screen sharing? This is terrible. All right, we're gonna do again. Mario, you need to delete the bad outro this time.
+
+Vaibhav (01:03:44.391)
+Go for it, Tex. I'll let you do it.
+
+Ehem.
+
+Vaibhav (01:03:59.687)
+You're not screen sharing Dex.
+
+Dex (01:04:09.048)
+Thank you. Yeah, and this part. Okay, great. Let me close this. All right, you guys see my screen? Did it go away again? All right, cool. So this week on AI That Works, it all started with this tweet from someone at OpenAI talking about how they had code mode in the CLI. We went really deep into the difference between inline tools, MCPs, CLIs, local scripts, code mode, the different context window models, and what levels of extensibility they give you.
+
+Vaibhav (01:04:09.459)
+and this part.
+
+Vaibhav (01:04:19.027)
+Let's go for it. We're good.
+
+Rhys Sullivan (01:04:19.823)
+Yeah, we can see it.
+
+Dex (01:04:38.594)
+We talked all about why self-documenting CLIs are not enough and we need schemas and input types. We talked all about the things you can do with code mode and why they're so great for output shaping. We talked about bash versus code mode today versus the future. And we had basically just a really good time riffing with Reese here who's been going deep on code mode for what, six plus months now. So it was a really fun chat. I hope you guys enjoy it and let's dig in.
+
+Vaibhav (01:05:06.132)
+All right, thank you everyone. We're going to log off and thank you for good on news.
+
+Dex (01:05:06.606)
+Thanks y'all.
+
+Rhys Sullivan (01:05:09.157)
+Thanks.

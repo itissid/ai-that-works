@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Building a Practical AI Assembly Line",
+    "rationale": "Uses the powerful 'Assembly Line' metaphor to convey a multi-step, multi-tool process that produces a final product. 'Practical' directly addresses the audience's desire for real-world techniques over theory, and the title clearly communicates the benefit of building a robust, end-to-end system."
+  },
+  {
+    "title": "How to Build AI Systems with Self-Critique",
+    "rationale": "This actionable 'how-to' title focuses on the episode's most surprising insight\u2014using an AI to critique and improve another AI's output. It hooks developers by promising a novel solution to a common and difficult problem: making AI-generated content sound authentic."
+  },
+  {
+    "title": "One Giant Prompt or a Chain of AI Tools?",
+    "rationale": "Poses a direct architectural question that developers building with AI constantly face. It contrasts the common 'mega-prompt' approach with the more robust, modular pipeline discussed in the episode, creating immediate relevance and promising a clear, opinionated answer."
+  }
+]

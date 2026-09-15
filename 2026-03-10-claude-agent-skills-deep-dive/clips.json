@@ -1,0 +1,26 @@
+[
+  {
+    "rationale": "This clip provides a crucial, counterintuitive insight into 'Managing Your 'Instruction Budget''. It explains how every subagent or skill description consumes valuable context window space, even if not actively used, leading to performance degradation. This resonates with anyone building or using agents, as context bloat is a common and often hidden problem. It's an 'aha' moment about the hidden cost of too many tools, directly impacting agent reliability and cost.",
+    "start_timestamp": "35:20",
+    "end_timestamp": "36:08",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (35:20.735)\nSo if you have like 500 subagents, all of those are getting bundled in and injected in every single context window. And so you think about context engineering, but like, you look at this one, this has, if you look at the raw, it has a name and a description and then some other like metadata here. but this is basically like, here is the thing that gets advertised to the model. So you want to keep this description pretty small is telling the model, Hey, here's the things you have access to. And the same thing is true of, and so like we talk a lot about like instruction budgets, right? You only have, you know, a couple hundred instructions that the model can follow. Every single subagent you add to your context window is gonna be injected every time. so that's like the instructions about how to use this subagent is part of that instruction budget. So if you have hundreds of subagents, you're now eating into your, now your tools block in your context window is getting longer and longer and it's detracting from its ability to pay attention to the user instructions.\nVaibhav (35:59.092)\nYeah, you get screwed. Yeah.",
+    "hook": "Stop sabotaging your AI agents! Learn how every subagent you add eats into your 'instruction budget' and degrades performance."
+  },
+  {
+    "rationale": "This clip clearly distinguishes between context isolation and instruction modules, two fundamental concepts for effective agent design. It highlights the historical problem of using subagents for both, which led to 'polluting everything,' setting the stage for the evolution of skills. This is a core conceptual 'aha' moment directly addressing the episode's main takeaway: 'Separate instruction modules from context isolation.'",
+    "start_timestamp": "22:13",
+    "end_timestamp": "22:49",
+    "speaker": "Dex",
+    "transcript_excerpt": "Dex (22:13.039)\nNo, well, so it doesn't work. And the thing is, this was the only way you could do the second part of this. So subagents are for, again, context isolation. And then people used it for what I will call instruction modules. Basically, I have a set of instructions that I don't always want to use, but I want to use sometimes. And the best way that Cloud Code exposed back in, I don't know what it was, like August, to bundle instructions was either you could have a slash command where we would have to run in the parent context and you would have all these instructions about like, you know, here's how to commit or here's how to debug our code base. Or you could bundle it in a sub agent, right?\nVaibhav (22:48.510)\nYep, and it just pollutes everything.",
+    "hook": "Are you using subagents wrong? Discover the critical difference between context isolation and instruction modules for AI agents."
+  },
+  {
+    "rationale": "This clip offers strong, actionable advice on managing agent infrastructure across multiple repositories, advocating for a monorepo approach. It's a surprising and counterintuitive take for many multi-repo organizations, but the speakers present a compelling case for why it leads to better agent performance and developer happiness, directly relating to preventing context bloat and improving agent reliability in complex setups.",
+    "start_timestamp": "44:42",
+    "end_timestamp": "45:21",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (44:42.916)\nEveryone should do a monorepo. you haven't done a monorepo, literally fix it today. Go ask Cloud Code to make a giant monorepo. Fix your Git out workflows and you are going to be so much happier.\nDex (44:52.621)\nOkay, so, yes I agree and actually I've even talked to people who run coding agent companies and they're like, they'll go into like big fortune 500 enterprise and they'll be like, if you are not willing to like immediately fast track a project to move everything to a monorepo, then like we don't wanna work with you because you're gonna lose to someone who did basically. Like the benefits are so good that, so yeah, monorepo you just have all your shared stuff in .cloud and like everything just works, it's nice.",
+    "hook": "Monorepo or bust for AI agents? This surprising take could revolutionize your agent infrastructure!"
+  }
+]

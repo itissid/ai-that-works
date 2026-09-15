@@ -12,12 +12,18 @@
 
 <div align="center">
 <h2>🦄 <strong>Next Episode</strong></h2>
-<h3><strong>No Vibes Allowed</strong></h3>
-<p><strong>Tuesday, January 27, 2026 at 10 AM PST</strong></p>
-<p><em>We received great feedback from our previous live coding sessions, so this week we are bringing it back this week by live streaming while we add more features to BAML. We have discussed a lot of topics over the past several months, and we will be digging into the how to put many of these concepts into practice as we build out actual features in the product.
+<h3><strong>Software Factories: Hands on with Real Builders</strong></h3>
+<p><strong>Tuesday, September 8, 2026 at 10 AM PST</strong></p>
+<p><em>We had some really cool unconference talks from hands-on software factory builders, and this week we're gonna bring them on the show to talk about how they build their start up, week in week out, with background agents that get smarter every week.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
 </em></p>
 
-<a href="https://luma.com/no-vibes-allowed-jan-26" target="_blank">
+<a href="https://luma.com/hands-on-software-factories" target="_blank">
 <img src="https://img.shields.io/badge/🦄_REGISTER_NOW-Join_Live_Session-ff4444?style=for-the-badge&logo=calendar" alt="Register Now">
 </a>
 
@@ -101,10 +107,509 @@ Before joining, get familiar with our toolkit:
         <div style="margin-bottom: 2px;">
           <span style="background: #dc3545; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">UPCOMING</span>
         </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-09-08</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#73</strong>: Software Factories: Hands on with Real Builders</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="./2026-09-08-hands-on-software-factories">code</a> • <a href="https://luma.com/hands-on-software-factories">register</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We had some really cool unconference talks from hands-on software factory builders, and this week we're gonna bring them on the show to talk about how they build their start up, week in week out, with background agents that get smarter every week.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-09-01</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#72</strong>: Code Mode for Extensible Software</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=IXe48aIw_X4">watch</a> • <a href="./2026-09-01-code-mode-extensible-software">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Making software extensible has always involved designing good and flexible interfaces (e.g. vs code extensions, iphone apps). But the most flexible interface is code, and today Vaibhav's gonna share some very futuristic ideas on what the next generation of customizable tools looks like.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-08-25</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#71</strong>: Software Factory Design Patterns</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=tGbjIvvYuHE">watch</a> • <a href="./2026-08-25-software-factory-design-patterns">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In this episode, we'll talk about key interfaces and how they fit together in the modern software factory, what you could buy vs build, what you should always own, across compute, dev environment, harness, and orchestration. We'll dig into how sessions / traces / artifacts / plans all become perrs of code in the new forge / system of record for software
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-08-18</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#70</strong>: syncs and A/B testing 200 agents</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=GF7dnSlCM4U">watch</a> • <a href="./2026-08-18-syncs-and-ab-testing-200-agents">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We've got a special two-part episode for you this week! We brought on two guests to tackle two massive technical challenges in production AI:
+
+What actually happens when you spin up 200 agents in parallel to run real A/B tests?
+
+How do you cleanly sync data all the way from raw state, through your agent layer, down to the frontend?
+
+Tune in for practical takeaways on scaling agent infrastructure that works.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-08-11</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#69</strong>: Unconference RECAP</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=fyZ0i4USjgc">watch</a> • <a href="./2026-08-11-unconference-recap">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">On Saturday, August 8th, we are hosting another unconference bringing together some of the brighest minds in AI. This week on the podcast we will be recapping it! What were some of the best takeaways? What did we learn? If you aren't attending the unconference, definitely tune into this episode to see what you missed.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-08-04</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#68</strong>: SlopCodeBench</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=Yh4eL60Ncxs">watch</a> • <a href="./2026-08-04-slop-code-bench">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">On the podcast this week, we will examine a new AI coding benchmark called SlopCodeBench (SCBench), which aims to evaluate how software is truly developed. While typical benchmarks evaluate models using single-shot solutions against specifications, they fail to address the long-term difficulties of software development. Creating an initial solution is simple; the real challenge lies in extending, refactoring, and maintaining code over time. SCBench addresses this gap by requiring frontier models to continually build upon their own previously generated code across multi-checkpoint trajectories.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-07-28</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#67</strong>: Your Model is Already Obsolete</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=Y-I9m5YsAcs">watch</a> • <a href="./2026-07-28-your-model-is-already-obsolete">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In the last month alone: Opus 5, Sonnet 5, Grok 4.5, Kimi K3, GPT-5.6, Gemini 3.6. Any one of them might make your agent smarter or your system cheaper. That's the fun part. The less fun part is that every model you're running in production today just got a month closer to its retirement date.
+
+Model deprecation is one of the only outages you get advance notice of, and teams still manage to take it as a surprise. This week on the podcast we show you how to make model swaps into a non-event instead of a p0.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-07-21</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#66</strong>: No Vibes Allowed - July Edition</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=rTn8Vhdt-Jo">watch</a> • <a href="./2026-07-21-no-vibes-july">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">This week on the podcast we will be hosting another session of our No Vibes Allowed series. Join us to see how everyting we've talked about get implemented in real code to solve real problems in our codebases.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-07-14</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#65</strong>: SOTA Coding Agent Benchmarks</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=X5mI1ZVxaIc">watch</a> • <a href="./2026-07-14-sota-coding-agent-benchmarks">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We've had a lot of benchmarks for coding agents for a long time. We'll talk about the past generation and the new generation, what they're doing differently, as well as... I don't know. come hang it will be good.
+
+Meet the Speakers🧑‍💻​
+
+​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!
+
+​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-07-07</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#64</strong>: agent observability</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=_WLVv1C6-VM">watch</a> • <a href="./2026-07-07-agent-observability">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In this episode, we will dive into AI agent observability and answer a question every production engineer eventually faces: how do you diagnose why an autonomous agent went off the rails three days ago?
+
+When you are dealing with non-deterministic tools, old-school debugging habits like inserting `print("here")` statements fails to scale. We will break down the essentials of modern agent tracking, from implementing structured logging for complex tool calls to establishing robust tracing that allows you to replay and reconstruct an agent's exact decision tree.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-06-23</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#63</strong>: Software Factory for Agent Tools</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=485FGIq8LKM">watch</a> • <a href="./2026-06-23-software-factory-for-agent-tools">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Everyone's obsessed with software factories, and the core of a software factory is a persistent feedback loop - in this episode Vaibhav and Dhilan will showcase a loop they built to test new BAML language features 24/7 and improve the language based on feedback from coding agents trying to implement features.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-06-16</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#62</strong>: Product Specs with AI</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=0LPBw3NO3Jc">watch</a> • <a href="./2026-06-16-product-specs-with-ai">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We've talked a lot about design discussions for planning work with AI and getting leverage before writing the code, but this process has a common pitfall: it combines product decisions (how does it work, what is the user experience) with technical decisions (how do we build it, what patterns do we follow).
+
+This complecting of concerns can cause important questions to be missed. On today's AI that works we'll dig into techniques to split out product vs. technical questions to enable less-technical folks to participate in product specification that is grounded in codebase research, and ensure technical depth is achieved without getting distracted by product questions.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-06-09</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#61</strong>: Hands-on with Fable 5</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=hTkmSVuDMPg">watch</a> • <a href="./2026-06-09-agent-observability">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We had agent observability on the schedule, but Anthropic shipped Fable 5 about twenty minutes before we went live, so we tossed the plan and got hands-on with the new model instead. Zero prep, all live.
+
+This is an unscripted look at exactly how we kick the tires on a fresh model release: take the hardest problem you're already deep in, hand it over, and watch whether it finds leverage you didn't. Vaibhav ran it against an in-progress design doc for the BAML VM's observability layer, Dex ran it against an old race-condition benchmark he keeps around, and we talk through what the model caught, what it missed, and why most model releases are more hype than the value they deliver day to day.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-06-02</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#60</strong>: How to Build AI Agents that Work in Any Language</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=-gFdtc-HbOY">watch</a> • <a href="https://github.com/hellovai/ai-that-works/tree/main/2026-06-02-multilingual-ai-apps">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In this episode, we discuss the challenge of building multilingual AI applications that perform consistently whether your user is interacting in English, Spanish, French, whatever. Can you simply run an English prompt through a basic translator? Or will that break down in production? We'll be breaking down practical engineering strategies for designing flexible, cross-lingual prompt architectures that maintain semantic alignment without forcing you to build and manage separate pipelines for every language.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-05-26</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#59</strong>: No Vibes Allowed: Performance Engineering</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://github.com/ai-that-works/ai-that-works">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">This week on the podcast, we are doing another no vibes allowed episode focusing on performance engineering. We will dive into high-performance engineering on virtual machines to help you maximize efficiency out of your compute infrastructure. When you are deploying heavy LLM workloads or complex pipelines, an unoptimized VM can lead to crippling latency, memory bottlenecks, and ballooning costs that break your application in the real world. We break down practical techniques to configure your environments, manage resources, and eliminate overhead so your models run flawlessly under pressure.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-05-19</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#58</strong>: How AI Agents Can Safely Ship Code to Production</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=gRqb7R4Pcrs">watch</a> • <a href="https://github.com/hellovai/ai-that-works/tree/main/2026-05-19-feature-flag-everything">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">This week, the top headline is vibe coders realizing that they can use feature flags to ship experimental (read: slop) features to production without impacting all customers.
+
+Shipping code is a lot harder when everything is changing all the time. Feature flags can be a good technique to test various things, but how do you set that up? Do you feature flag new models? New prompts? New harnesses? We'll dive into details here and see where feature flags improve your product delivery vs. just giving you an excuse to ship more slop.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-05-12</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#57</strong>: "Code Mode" Deep Dive</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=0dx3j4CmSFw">watch</a> • <a href="./2026-05-12-code-mode-deep-dive">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">On Monday, Pash from OpenAI shared that Codex has a secret "code mode" feature - an alternative to traditional tool calling. There's a lot of debate going on around the best way to give tools to models - skills vs. mcps, CLIs and bash vs custom tools, or letting the model write code for everything. In this episode we're going to cut through the hype and dive deep on the differences and tradeoffs between these methods.
+
+   • What is "code mode" and how does it work
+   • Tradeoffs between MCP vs. Bash+CLI vs. Code mode
+   • Why it matters to agent or harness builders
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-05-05</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#56</strong>: OpenAI tells you not to build your own harness</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=h99bTZTR_IU">watch</a> • <a href="./2026-05-05-openai-tells-you-not-to-build-your-own-harness">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Harness engineering is all the hype now, so on this week on the podcast we're looking back to an article written by OpenAI in February about harness engineering, "Harness engineering: leveraging Codex in an agent-first world". In this article, they claim that the era of "hand-written code" is officially over. We break down their experiment of shipping a million-line product with zero manual coding, shifting the human role from "coder" to "environment designer."
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-04-28</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#55</strong>: No Vibes Allowed - Building Design Docs with AI</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=KCqsoXveqiI">watch</a> • <a href="./2026-04-28-no-vibes-design-docs">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In this month's no vibes allowed episode, Vaibhav will show how he uses AI to make design docs for complicated tasks by building out an actual design doc for a feature in BAML. As always for our no vibes allowed series, we will be solving real problems in real production systems.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-04-21</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#54</strong>: Harness Engineering Without the Hype</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=gX9WpYY61xA">watch</a> • <a href="./2026-04-21-harness-engineering-without-the-hype">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">This week on the pod we are going to cut through the hype around harness engineering and separate the signal from the noise. Join us to watch Dex crash out about this and expose the reality.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-04-14</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#53</strong>: Agentic Coding for Frontend Apps</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=adpUOpW85ns">watch</a> • <a href="./2026-04-14-agentic-coding-for-frontend-apps">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We do a lot of deep research and planning advice for building complex backend systems but in this week's episode, we're gonna talk about ways you can move faster and maintain quality for frontend code.
+
+While backend systems rely on good overall design and tend to be programatically verifiable, frontends require much tighter iteration loops and taste, and these explorations just don't suit themselves to complex up front planning. On the other hand, that shouldn't be an excuse to just regress to yoloing prompts. Good frontend code requires taste, judgement, and is just as vulnerable to a descent into chaotic spaghetti slop.
+
+Similar to our learning tests episode, this chat will cover small tactical side quests you can incorporate into your planning and development workflow to improve your frontend throughput. We'll primarily explore storybook as a vessel for interacting with and previewing UI, and approaches to separate presentation logic from business logic. By the end, you may find yourself wanting to ditch figma altogether and just write the components live.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-04-07</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#52</strong>: SSE Streaming</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=9MFiATinGC0">watch</a> • <a href="https://github.com/hellovai/ai-that-works/tree/main/2026-04-07-sse-streaming">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">This week we build a real-time site summarizer using Server-Sent Events (SSE) streaming. We crawl a website, summarize each page with an LLM using BAML's semantic streaming, and stream partial results back to the browser as they're generated. We cover batched async concurrency, FastAPI SSE endpoints, and BAML's @stream.done/@stream.not_null attributes for controlling what streams and what waits.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-03-31</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#51</strong>: No Vibes Allowed March Edition</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=0rMG-3iiilc">watch</a> • <a href="./2026-03-31-no-vibes-march">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">This week on the podcast is our March episode of our no vibes allowed series! Join us to watch how we implement everything we discuss on a weekly basis in our company's product. Real code, real trade-offs, and real production systems
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-03-24</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#50</strong>: MCP is Dead?</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=z5inaSXkiTU">watch</a> • <a href="https://github.com/hellovai/ai-that-works/tree/main/2026-03-24-mcp-is-dead">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">MCP isn't dead...or is it? This week on the podcast, we'll dive into this debate. What is the state of MCP today?
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-03-17</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#49</strong>: Prompt Injections Guardrails</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=zU8GpxgYDvc">watch</a> • <a href="./2026-03-17-prompt-injections-guardrails">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">A major risk factor in agentic coding is Prompt Injections. Tool output, document retrieval, system prompts all get inputted into the LLM and are all at risk of prompt injections.
+
+This week on the podcast, we're going to cover how to handle this risk. We will discuss how to protect system prompts, avoid hijacking, and implementing ethical guards
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-03-10</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#48</strong>: Claude Agent Skills Deep Dive</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=b5O6gb_Zuk8">watch</a> • <a href="./2026-03-10-claude-agent-skills-deep-dive">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Claude Code has exploded in its abilities over the past 8 months, and it can be hard to keep up. Seemingly overnight, everyone is discussing claude's skills, commands, agents, and subagents, and a lot of the literature out there already assumes you know what these are. This week on the podcast, we're going to go over all of them. We will discuss what each one is, how and when to use it, what the benefits and drawbacks are, and how they fit into the broader context engineering picture.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-03-03</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#47</strong>: PII Redaction and Sensitive Data Scrubbing</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=Ql2gLHWuX7M">watch</a> • <a href="https://github.com/hellovai/ai-that-works/tree/main/2026-03-03-pii-redaction-and-sensitive-data-scrubbing">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">When building generative AI systems, one of the biggest risks companies face is the LLM accidentally exposing PII or PHI to an end user that isn't cleared to see it. This week on the podcast, we'll cover how to fix this problem. We'll discuss what prompting techniques you can use, and more importantly, we'll discuss how you can build evals to get comfortable with shipping these systems to users.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-02-24</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#46</strong>: No Vibes Allowed February</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=YcT7gjzj2TU">watch</a> • <a href="./2026-02-24-no-vibes-february">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In our February edition of our No Vibes Allowed series, we will be coding and shipping real features in our products using all of the concepts we cover on this podcast, including using advanced context engineering and backpressure. Join us to see how these concepts apply to real code and real products.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-02-17</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#45</strong>: AI Content Pipeline Revisited</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=U5Gssat8IUw">watch</a> • <a href="https://github.com/hellovai/ai-that-works/tree/main/2026-02-17-automating-aitw">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">We have another meta episode this week! Several months ago, we did an episode back about automating the pipeline for generating the artifacts and content for this podcast. That pipeline became stale, and so we breathed some life back into it and we're going to discuss the different parts of that pipeline on the podcast.
+
+This episode will discuss everything that goes into bringing you an episode. We'll discuss
+    -  Details of the entire pipeline and tools we use to bring you each episode
+    -  How to get AI to have the right tone in freeform generation and not sound like AI
+    -  Browser agents
+    -  Finding clippable content from the transcript
+    -  Image generation
+    -  How far should automation go?
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-02-10</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#44</strong>: Agentic Backpressure Deep Dive</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=Zx_GOhGik0o">watch</a> • <a href="./2026-02-10-agentic-backpressure-deep-dive">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">In our next installment of advanced coding agent workflows, we'll explore some alternatives to research for improving results from coding agents. Code and web research is great for understanding the current codebase and finding documentation, but neither of these things is as concrete, and can still lead to hallucinations or incorrect assumptions.
+
+In this episode, we'll talk about learning tests and proof-driven-dev - writing small PoC programs and tests that lay the groundwork to confirm understanding of external systems, *before* you get deep into implementation.
+
+This will extend our previous conversation about agentic backpressure and building deterministic feedback loops to help coding agents work more autonomously.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
+        <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-02-03</div>
+        <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#43</strong>: Prompting Is Becoming a Product Surface</div>
+        <div style="font-size: 13px; color: #666;">
+          <a href="https://www.youtube.com/watch?v=qdfwmYTO0Aw">watch</a> • <a href="./2026-02-03-prompting-is-becoming-a-product-surface">code</a>
+        </div>
+      </div>
+    </td><td><div style="padding: 8px 0; line-height: 1.5;">Prompting used to be an engineering problem. Write the right string, tweak it until the model behaves, ship it behind the scenes.
+
+That breaks the moment real users show up. Customers don't think in prompts — they think in goals. They want to explain what they're trying to accomplish, not debug a magic sentence.
+
+So prompting is moving into the product. Interfaces matter. Structure matters. Guardrails and feedback matter. The real work now isn't prompt cleverness — it's building systems that let people express intent in a way software can actually understand and trust.
+</div></td></tr>
+<tr><td>
+      <div style="padding: 8px 0;">
+        <div style="margin-bottom: 2px;">
+          <span style="background: #28a745; color: white; padding: 2px 6px; border-radius: 3px; font-size: 11px; font-weight: bold;">PAST</span>
+        </div>
         <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-01-27</div>
         <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#42</strong>: No Vibes Allowed</div>
         <div style="font-size: 13px; color: #666;">
-          <a href="./2026-01-27-no-vibes-allowed">code</a> • <a href="https://luma.com/no-vibes-allowed-jan-26">register</a>
+          <a href="https://www.youtube.com/watch?v=Xq8VxnGVStg">watch</a> • <a href="./2026-01-27-no-vibes-allowed">code</a>
         </div>
       </div>
     </td><td><div style="padding: 8px 0; line-height: 1.5;">We received great feedback from our previous live coding sessions, so this week we are bringing it back this week by live streaming while we add more features to BAML. We have discussed a lot of topics over the past several months, and we will be digging into the how to put many of these concepts into practice as we build out actual features in the product.
@@ -158,7 +663,7 @@ In this session we'll cover:
         <div style="color: #666; font-size: 13px; margin-bottom: 4px;">2026-01-06</div>
         <div style="font-size: 16px; line-height: 1.3; margin-bottom: 6px;"><strong>#39</strong>: Understanding Latency in AI Applications</div>
         <div style="font-size: 13px; color: #666;">
-          <a href="https://www.youtube.com/watch?v=wadVIkJnjQE">watch</a> • <a href="./2026-01-06-understanding-latency">code</a>
+          <a href="https://www.youtube.com/watch?v=wadVIkJnjQE">watch</a> • <a href="./2026-01-06-latency">code</a>
         </div>
       </div>
     </td><td><div style="padding: 8px 0; line-height: 1.5;">A deep dive into performance engineering for AI applications. We explore all the bottlenecks

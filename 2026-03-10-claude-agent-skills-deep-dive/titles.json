@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Why Adding More Skills Can Make Your AI Dumber",
+    "rationale": "This title uses a provocative 'why' question format. The hook is the counter-intuitive idea that adding capabilities can actually harm performance ('make your AI dumber'), which directly targets the episode's most surprising insight about 'tool bloat'. It speaks to power users who are actively trying to enhance their assistants, forcing them to question a core assumption."
+  },
+  {
+    "title": "Build a Command Center for Your AI Coder",
+    "rationale": "This is an actionable, 'how-to' style title. The hook is the 'Command Center' metaphor, which promises a powerful, organized, and scalable way to manage complex AI workflows. It speaks to developers struggling with multi-repo chaos, offering them a concrete, desirable outcome: control and structure."
+  },
+  {
+    "title": "The Hidden Cost of Giving Your AI More Tools",
+    "rationale": "This title leads with the outcome, framed as a secret revelation. The 'Hidden Cost' hook creates immediate curiosity and urgency, suggesting listeners are unaware of a critical mistake. It perfectly frames the problem of the 'instruction budget' without using jargon, making it compelling for any developer who wants to optimize their tools."
+  }
+]

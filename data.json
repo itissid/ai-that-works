@@ -1,6 +1,655 @@
 {
   "episodes": [
     {
+      "folder": "2026-09-08-hands-on-software-factories",
+      "guid": "aitw-073",
+      "title": "Software Factories: Hands on with Real Builders",
+      "description": "We had some really cool unconference talks from hands-on software factory builders, and this week we're gonna bring them on the show to talk about how they build their start up, week in week out, with background agents that get smarter every week.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/hands-on-software-factories",
+      "eventDate": "2026-09-08T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/playlist?list=PLi60mUelRAbFqfgymVfZttlkIyt0XHZjt",
+        "type": "video/youtube"
+      },
+      "links": {
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-09-08-hands-on-software-factories"
+      },
+      "season": 2,
+      "episode": 73,
+      "isPast": false,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-09-01-code-mode-extensible-software",
+      "guid": "aitw-072",
+      "title": "Code Mode for Extensible Software",
+      "description": "Making software extensible has always involved designing good and flexible interfaces (e.g. vs code extensions, iphone apps). But the most flexible interface is code, and today Vaibhav's gonna share some very futuristic ideas on what the next generation of customizable tools looks like.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/code-mode-extensible-software",
+      "eventDate": "2026-09-01T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=IXe48aIw_X4",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=IXe48aIw_X4",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-09-01-code-mode-extensible-software"
+      },
+      "season": 2,
+      "episode": 72,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-08-25-software-factory-design-patterns",
+      "guid": "aitw-071",
+      "title": "Software Factory Design Patterns",
+      "description": "In this episode, we'll talk about key interfaces and how they fit together in the modern software factory, what you could buy vs build, what you should always own, across compute, dev environment, harness, and orchestration. We'll dig into how sessions / traces / artifacts / plans all become perrs of code in the new forge / system of record for software\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/software-factory-design",
+      "eventDate": "2026-08-25T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=tGbjIvvYuHE",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=tGbjIvvYuHE",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-25-software-factory-design-patterns"
+      },
+      "season": 2,
+      "episode": 71,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-08-18-syncs-and-ab-testing-200-agents",
+      "guid": "aitw-070",
+      "title": "syncs and A/B testing 200 agents",
+      "description": "We've got a special two-part episode for you this week! We brought on two guests to tackle two massive technical challenges in production AI:\n\nWhat actually happens when you spin up 200 agents in parallel to run real A/B tests?\n\nHow do you cleanly sync data all the way from raw state, through your agent layer, down to the frontend?\n\nTune in for practical takeaways on scaling agent infrastructure that works.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/syncs-and-ab-testing",
+      "eventDate": "2026-08-18T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=GF7dnSlCM4U",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=GF7dnSlCM4U",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-18-syncs-and-ab-testing-200-agents"
+      },
+      "season": 2,
+      "episode": 70,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-08-11-unconference-recap",
+      "guid": "aitw-069",
+      "title": "Unconference RECAP",
+      "description": "On Saturday, August 8th, we are hosting another unconference bringing together some of the brighest minds in AI. This week on the podcast we will be recapping it! What were some of the best takeaways? What did we learn? If you aren't attending the unconference, definitely tune into this episode to see what you missed.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/unconf-recap",
+      "eventDate": "2026-08-11T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=fyZ0i4USjgc",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=fyZ0i4USjgc",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-11-unconference-recap"
+      },
+      "season": 2,
+      "episode": 69,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-08-04-slop-code-bench",
+      "guid": "aitw-068",
+      "title": "SlopCodeBench",
+      "description": "On the podcast this week, we will examine a new AI coding benchmark called SlopCodeBench (SCBench), which aims to evaluate how software is truly developed. While typical benchmarks evaluate models using single-shot solutions against specifications, they fail to address the long-term difficulties of software development. Creating an initial solution is simple; the real challenge lies in extending, refactoring, and maintaining code over time. SCBench addresses this gap by requiring frontier models to continually build upon their own previously generated code across multi-checkpoint trajectories.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/slop-code-bench",
+      "eventDate": "2026-08-04T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=Yh4eL60Ncxs",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=Yh4eL60Ncxs",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-08-04-slop-code-bench"
+      },
+      "season": 2,
+      "episode": 68,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-07-28-your-model-is-already-obsolete",
+      "guid": "aitw-067",
+      "title": "Your Model is Already Obsolete",
+      "description": "In the last month alone: Opus 5, Sonnet 5, Grok 4.5, Kimi K3, GPT-5.6, Gemini 3.6. Any one of them might make your agent smarter or your system cheaper. That's the fun part. The less fun part is that every model you're running in production today just got a month closer to its retirement date.\n\nModel deprecation is one of the only outages you get advance notice of, and teams still manage to take it as a surprise. This week on the podcast we show you how to make model swaps into a non-event instead of a p0.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/easy-model-swaps",
+      "eventDate": "2026-07-28T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=Y-I9m5YsAcs",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=Y-I9m5YsAcs",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-28-your-model-is-already-obsolete"
+      },
+      "season": 2,
+      "episode": 67,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-07-21-no-vibes-july",
+      "guid": "aitw-066",
+      "title": "No Vibes Allowed - July Edition",
+      "description": "This week on the podcast we will be hosting another session of our No Vibes Allowed series. Join us to see how everyting we've talked about get implemented in real code to solve real problems in our codebases.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/no-vibes-jul-26",
+      "eventDate": "2026-07-21T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=rTn8Vhdt-Jo",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=rTn8Vhdt-Jo",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-21-no-vibes-july"
+      },
+      "season": 2,
+      "episode": 66,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-07-14-sota-coding-agent-benchmarks",
+      "guid": "aitw-065",
+      "title": "SOTA Coding Agent Benchmarks",
+      "description": "We've had a lot of benchmarks for coding agents for a long time. We'll talk about the past generation and the new generation, what they're doing differently, as well as... I don't know. come hang it will be good.\n\nMeet the Speakers🧑‍💻​\n\n​​Meet Vaibhav Gupta, one of the creators of BAML and YC alum. He spent 10 years in AI performance optimization at places like Google, Microsoft, and D. E. Shaw. He loves diving deep and chatting about anything related to Gen AI and Computer Vision!\n\n​Meet Dex Horthy, founder at HumanLayer and coiner of the term Context Engineering. He spent 10+ years building devops tools at Replicated, Sprout Social and JPL. DevOps junkie turned AI Engineer.\n",
+      "event_link": "https://luma.com/sota-benchmarks",
+      "eventDate": "2026-07-14T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=X5mI1ZVxaIc",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=X5mI1ZVxaIc",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-14-sota-coding-agent-benchmarks"
+      },
+      "season": 2,
+      "episode": 65,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-07-07-agent-observability",
+      "guid": "aitw-064",
+      "title": "agent observability",
+      "description": "In this episode, we will dive into AI agent observability and answer a question every production engineer eventually faces: how do you diagnose why an autonomous agent went off the rails three days ago?\n\nWhen you are dealing with non-deterministic tools, old-school debugging habits like inserting `print(\"here\")` statements fails to scale. We will break down the essentials of modern agent tracking, from implementing structured logging for complex tool calls to establishing robust tracing that allows you to replay and reconstruct an agent's exact decision tree.\n",
+      "event_link": "https://luma.com/aitw-agent-observability",
+      "eventDate": "2026-07-07T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=_WLVv1C6-VM",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=_WLVv1C6-VM",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-07-07-agent-observability"
+      },
+      "season": 2,
+      "episode": 64,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-06-23-software-factory-for-agent-tools",
+      "guid": "aitw-063",
+      "title": "Software Factory for Agent Tools",
+      "description": "Everyone's obsessed with software factories, and the core of a software factory is a persistent feedback loop - in this episode Vaibhav and Dhilan will showcase a loop they built to test new BAML language features 24/7 and improve the language based on feedback from coding agents trying to implement features.\n",
+      "event_link": "https://luma.com/agent-tools-software-factory",
+      "eventDate": "2026-06-23T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=485FGIq8LKM",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=485FGIq8LKM",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-06-23-software-factory-for-agent-tools"
+      },
+      "season": 2,
+      "episode": 63,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-06-16-product-specs-with-ai",
+      "guid": "aitw-062",
+      "title": "Product Specs with AI",
+      "description": "We've talked a lot about design discussions for planning work with AI and getting leverage before writing the code, but this process has a common pitfall: it combines product decisions (how does it work, what is the user experience) with technical decisions (how do we build it, what patterns do we follow).\n\nThis complecting of concerns can cause important questions to be missed. On today's AI that works we'll dig into techniques to split out product vs. technical questions to enable less-technical folks to participate in product specification that is grounded in codebase research, and ensure technical depth is achieved without getting distracted by product questions.\n",
+      "event_link": "https://luma.com/ai-product-specs",
+      "eventDate": "2026-06-16T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=0LPBw3NO3Jc",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=0LPBw3NO3Jc",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-06-16-product-specs-with-ai"
+      },
+      "season": 2,
+      "episode": 62,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-06-09-fable-5",
+      "guid": "aitw-061",
+      "title": "Hands-on with Fable 5",
+      "description": "We had agent observability on the schedule, but Anthropic shipped Fable 5 about twenty minutes before we went live, so we tossed the plan and got hands-on with the new model instead. Zero prep, all live.\n\nThis is an unscripted look at exactly how we kick the tires on a fresh model release: take the hardest problem you're already deep in, hand it over, and watch whether it finds leverage you didn't. Vaibhav ran it against an in-progress design doc for the BAML VM's observability layer, Dex ran it against an old race-condition benchmark he keeps around, and we talk through what the model caught, what it missed, and why most model releases are more hype than the value they deliver day to day.\n",
+      "event_link": "https://luma.com/agent-observability",
+      "eventDate": "2026-06-09T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=hTkmSVuDMPg",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=hTkmSVuDMPg",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-06-09-agent-observability"
+      },
+      "season": 2,
+      "episode": 61,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-06-02-multilingual-ai-apps",
+      "guid": "aitw-060",
+      "title": "How to Build AI Agents that Work in Any Language",
+      "description": "In this episode, we discuss the challenge of building multilingual AI applications that perform consistently whether your user is interacting in English, Spanish, French, whatever. Can you simply run an English prompt through a basic translator? Or will that break down in production? We'll be breaking down practical engineering strategies for designing flexible, cross-lingual prompt architectures that maintain semantic alignment without forcing you to build and manage separate pipelines for every language.\n",
+      "event_link": "https://luma.com/multilingual-ai-apps",
+      "eventDate": "2026-06-02T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=-gFdtc-HbOY",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=-gFdtc-HbOY",
+        "code": "https://github.com/hellovai/ai-that-works/tree/main/2026-06-02-multilingual-ai-apps"
+      },
+      "season": 2,
+      "episode": 60,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-05-26-no-vibes-allowed-performance-engineering",
+      "guid": "aitw-059",
+      "title": "No Vibes Allowed: Performance Engineering",
+      "description": "This week on the podcast, we are doing another no vibes allowed episode focusing on performance engineering. We will dive into high-performance engineering on virtual machines to help you maximize efficiency out of your compute infrastructure. When you are deploying heavy LLM workloads or complex pipelines, an unoptimized VM can lead to crippling latency, memory bottlenecks, and ballooning costs that break your application in the real world. We break down practical techniques to configure your environments, manage resources, and eliminate overhead so your models run flawlessly under pressure.\n",
+      "event_link": "https://luma.com/no-vibes-allowed-performance-eng",
+      "eventDate": "2026-05-26T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/playlist?list=PLi60mUelRAbFqfgymVfZttlkIyt0XHZjt",
+        "type": "video/youtube"
+      },
+      "links": {
+        "code": "https://github.com/ai-that-works/ai-that-works"
+      },
+      "season": 2,
+      "episode": 59,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-05-19-feature-flag-everything",
+      "guid": "aitw-058",
+      "title": "How AI Agents Can Safely Ship Code to Production",
+      "description": "This week, the top headline is vibe coders realizing that they can use feature flags to ship experimental (read: slop) features to production without impacting all customers.\n\nShipping code is a lot harder when everything is changing all the time. Feature flags can be a good technique to test various things, but how do you set that up? Do you feature flag new models? New prompts? New harnesses? We'll dive into details here and see where feature flags improve your product delivery vs. just giving you an excuse to ship more slop.\n",
+      "event_link": "https://luma.com/feature-flag-everything",
+      "eventDate": "2026-05-19T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=gRqb7R4Pcrs",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=gRqb7R4Pcrs",
+        "code": "https://github.com/hellovai/ai-that-works/tree/main/2026-05-19-feature-flag-everything"
+      },
+      "season": 2,
+      "episode": 58,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-05-12-code-mode-deep-dive",
+      "guid": "aitw-057",
+      "title": "\"Code Mode\" Deep Dive",
+      "description": "On Monday, Pash from OpenAI shared that Codex has a secret \"code mode\" feature - an alternative to traditional tool calling. There's a lot of debate going on around the best way to give tools to models - skills vs. mcps, CLIs and bash vs custom tools, or letting the model write code for everything. In this episode we're going to cut through the hype and dive deep on the differences and tradeoffs between these methods.\n\n   • What is \"code mode\" and how does it work\n   • Tradeoffs between MCP vs. Bash+CLI vs. Code mode\n   • Why it matters to agent or harness builders\n",
+      "event_link": "https://luma.com/code-mode-deep-dive",
+      "eventDate": "2026-05-12T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=0dx3j4CmSFw",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=0dx3j4CmSFw",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-12-code-mode-deep-dive"
+      },
+      "season": 2,
+      "episode": 57,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-05-05-openai-tells-you-not-to-build-your-own-harness",
+      "guid": "aitw-056",
+      "title": "OpenAI tells you not to build your own harness",
+      "description": "Harness engineering is all the hype now, so on this week on the podcast we're looking back to an article written by OpenAI in February about harness engineering, \"Harness engineering: leveraging Codex in an agent-first world\". In this article, they claim that the era of \"hand-written code\" is officially over. We break down their experiment of shipping a million-line product with zero manual coding, shifting the human role from \"coder\" to \"environment designer.\"\n",
+      "event_link": "https://luma.com/harness-eng-article-discussion",
+      "eventDate": "2026-05-05T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=h99bTZTR_IU",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=h99bTZTR_IU",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-05-05-openai-tells-you-not-to-build-your-own-harness"
+      },
+      "season": 2,
+      "episode": 56,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-04-28-no-vibes-design-docs",
+      "guid": "aitw-055",
+      "title": "No Vibes Allowed - Building Design Docs with AI",
+      "description": "In this month's no vibes allowed episode, Vaibhav will show how he uses AI to make design docs for complicated tasks by building out an actual design doc for a feature in BAML. As always for our no vibes allowed series, we will be solving real problems in real production systems.\n",
+      "event_link": "https://luma.com/no-vibes-design-docs",
+      "eventDate": "2026-04-28T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=KCqsoXveqiI",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=KCqsoXveqiI",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-28-no-vibes-design-docs"
+      },
+      "season": 2,
+      "episode": 55,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-04-21-harness-engineering-without-the-hype",
+      "guid": "aitw-054",
+      "title": "Harness Engineering Without the Hype",
+      "description": "This week on the pod we are going to cut through the hype around harness engineering and separate the signal from the noise. Join us to watch Dex crash out about this and expose the reality.\n",
+      "event_link": "https://luma.com/harness-eng-hype",
+      "eventDate": "2026-04-21T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=gX9WpYY61xA",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=gX9WpYY61xA",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-21-harness-engineering-without-the-hype"
+      },
+      "season": 2,
+      "episode": 54,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-04-14-agentic-coding-for-frontend-apps",
+      "guid": "aitw-053",
+      "title": "Agentic Coding for Frontend Apps",
+      "description": "We do a lot of deep research and planning advice for building complex backend systems but in this week's episode, we're gonna talk about ways you can move faster and maintain quality for frontend code.\n\nWhile backend systems rely on good overall design and tend to be programatically verifiable, frontends require much tighter iteration loops and taste, and these explorations just don't suit themselves to complex up front planning. On the other hand, that shouldn't be an excuse to just regress to yoloing prompts. Good frontend code requires taste, judgement, and is just as vulnerable to a descent into chaotic spaghetti slop.\n\nSimilar to our learning tests episode, this chat will cover small tactical side quests you can incorporate into your planning and development workflow to improve your frontend throughput. We'll primarily explore storybook as a vessel for interacting with and previewing UI, and approaches to separate presentation logic from business logic. By the end, you may find yourself wanting to ditch figma altogether and just write the components live.\n",
+      "event_link": "https://luma.com/agentic-front-end-coding",
+      "eventDate": "2026-04-14T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=adpUOpW85ns",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=adpUOpW85ns",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-04-14-agentic-coding-for-frontend-apps"
+      },
+      "season": 2,
+      "episode": 53,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-04-07-sse-streaming",
+      "guid": "aitw-052",
+      "title": "SSE Streaming",
+      "description": "This week we build a real-time site summarizer using Server-Sent Events (SSE) streaming. We crawl a website, summarize each page with an LLM using BAML's semantic streaming, and stream partial results back to the browser as they're generated. We cover batched async concurrency, FastAPI SSE endpoints, and BAML's @stream.done/@stream.not_null attributes for controlling what streams and what waits.\n",
+      "event_link": "https://luma.com/evals-revisited",
+      "eventDate": "2026-04-07T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=9MFiATinGC0",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=9MFiATinGC0",
+        "code": "https://github.com/hellovai/ai-that-works/tree/main/2026-04-07-sse-streaming"
+      },
+      "season": 2,
+      "episode": 52,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-03-31-no-vibes-march",
+      "guid": "aitw-051",
+      "title": "No Vibes Allowed March Edition",
+      "description": "This week on the podcast is our March episode of our no vibes allowed series! Join us to watch how we implement everything we discuss on a weekly basis in our company's product. Real code, real trade-offs, and real production systems\n",
+      "event_link": "https://luma.com/no-vibes-allowed-march-26",
+      "eventDate": "2026-03-31T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=0rMG-3iiilc",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=0rMG-3iiilc",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-31-no-vibes-march"
+      },
+      "season": 2,
+      "episode": 51,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-03-24-mcp-is-dead",
+      "guid": "aitw-050",
+      "title": "MCP is Dead?",
+      "description": "MCP isn't dead...or is it? This week on the podcast, we'll dive into this debate. What is the state of MCP today?\n",
+      "event_link": "https://luma.com/is-mcp-dead",
+      "eventDate": "2026-03-24T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=z5inaSXkiTU",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=z5inaSXkiTU",
+        "code": "https://github.com/hellovai/ai-that-works/tree/main/2026-03-24-mcp-is-dead"
+      },
+      "season": 2,
+      "episode": 50,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-03-17-prompt-injections-guardrails",
+      "guid": "aitw-049",
+      "title": "Prompt Injections Guardrails",
+      "description": "A major risk factor in agentic coding is Prompt Injections. Tool output, document retrieval, system prompts all get inputted into the LLM and are all at risk of prompt injections.\n\nThis week on the podcast, we're going to cover how to handle this risk. We will discuss how to protect system prompts, avoid hijacking, and implementing ethical guards\n",
+      "event_link": "https://luma.com/prompt-injection-guardrails",
+      "eventDate": "2026-03-17T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=zU8GpxgYDvc",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=zU8GpxgYDvc",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-17-prompt-injections-guardrails"
+      },
+      "season": 2,
+      "episode": 49,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-03-10-claude-agent-skills-deep-dive",
+      "guid": "aitw-048",
+      "title": "Claude Agent Skills Deep Dive",
+      "description": "Claude Code has exploded in its abilities over the past 8 months, and it can be hard to keep up. Seemingly overnight, everyone is discussing claude's skills, commands, agents, and subagents, and a lot of the literature out there already assumes you know what these are. This week on the podcast, we're going to go over all of them. We will discuss what each one is, how and when to use it, what the benefits and drawbacks are, and how they fit into the broader context engineering picture.\n",
+      "event_link": "https://luma.com/claude-skills-deep-dive",
+      "eventDate": "2026-03-10T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=b5O6gb_Zuk8",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=b5O6gb_Zuk8",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-03-10-claude-agent-skills-deep-dive"
+      },
+      "season": 2,
+      "episode": 48,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-03-03-pii-redaction-and-sensitive-data-scrubbing",
+      "guid": "aitw-047",
+      "title": "PII Redaction and Sensitive Data Scrubbing",
+      "description": "When building generative AI systems, one of the biggest risks companies face is the LLM accidentally exposing PII or PHI to an end user that isn't cleared to see it. This week on the podcast, we'll cover how to fix this problem. We'll discuss what prompting techniques you can use, and more importantly, we'll discuss how you can build evals to get comfortable with shipping these systems to users.\n",
+      "event_link": "https://luma.com/pii-scrubbing",
+      "eventDate": "2026-03-03T18:15:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=Ql2gLHWuX7M",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=Ql2gLHWuX7M",
+        "code": "https://github.com/hellovai/ai-that-works/tree/main/2026-03-03-pii-redaction-and-sensitive-data-scrubbing"
+      },
+      "season": 2,
+      "episode": 47,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-02-24-no-vibes-february",
+      "guid": "aitw-046",
+      "title": "No Vibes Allowed February",
+      "description": "In our February edition of our No Vibes Allowed series, we will be coding and shipping real features in our products using all of the concepts we cover on this podcast, including using advanced context engineering and backpressure. Join us to see how these concepts apply to real code and real products.\n",
+      "event_link": "https://luma.com/no-vibes-allowed-feb",
+      "eventDate": "2026-02-24T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=YcT7gjzj2TU",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=YcT7gjzj2TU",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-24-no-vibes-february"
+      },
+      "season": 2,
+      "episode": 46,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-02-17-automating-aitw",
+      "guid": "aitw-045",
+      "title": "AI Content Pipeline Revisited",
+      "description": "We have another meta episode this week! Several months ago, we did an episode back about automating the pipeline for generating the artifacts and content for this podcast. That pipeline became stale, and so we breathed some life back into it and we're going to discuss the different parts of that pipeline on the podcast.\n\nThis episode will discuss everything that goes into bringing you an episode. We'll discuss\n    -  Details of the entire pipeline and tools we use to bring you each episode\n    -  How to get AI to have the right tone in freeform generation and not sound like AI\n    -  Browser agents\n    -  Finding clippable content from the transcript\n    -  Image generation\n    -  How far should automation go?\n",
+      "event_link": "https://luma.com/ai-content-generation",
+      "eventDate": "2026-02-17T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=U5Gssat8IUw",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=U5Gssat8IUw",
+        "code": "https://github.com/hellovai/ai-that-works/tree/main/2026-02-17-automating-aitw"
+      },
+      "season": 2,
+      "episode": 45,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-02-10-agentic-backpressure-deep-dive",
+      "guid": "aitw-044",
+      "title": "Agentic Backpressure Deep Dive",
+      "description": "In our next installment of advanced coding agent workflows, we'll explore some alternatives to research for improving results from coding agents. Code and web research is great for understanding the current codebase and finding documentation, but neither of these things is as concrete, and can still lead to hallucinations or incorrect assumptions.\n\nIn this episode, we'll talk about learning tests and proof-driven-dev - writing small PoC programs and tests that lay the groundwork to confirm understanding of external systems, *before* you get deep into implementation.\n\nThis will extend our previous conversation about agentic backpressure and building deterministic feedback loops to help coding agents work more autonomously.\n",
+      "event_link": "https://luma.com/agentic-backpressure-deep-dive",
+      "eventDate": "2026-02-10T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=Zx_GOhGik0o",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=Zx_GOhGik0o",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-10-agentic-backpressure-deep-dive"
+      },
+      "season": 2,
+      "episode": 44,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
+      "folder": "2026-02-03-prompting-is-becoming-a-product-surface",
+      "guid": "aitw-043",
+      "title": "Prompting Is Becoming a Product Surface",
+      "description": "Prompting used to be an engineering problem. Write the right string, tweak it until the model behaves, ship it behind the scenes.\n\nThat breaks the moment real users show up. Customers don't think in prompts — they think in goals. They want to explain what they're trying to accomplish, not debug a magic sentence.\n\nSo prompting is moving into the product. Interfaces matter. Structure matters. Guardrails and feedback matter. The real work now isn't prompt cleverness — it's building systems that let people express intent in a way software can actually understand and trust.\n",
+      "event_link": "https://luma.com/prompting-is-a-product-surface",
+      "eventDate": "2026-02-03T18:00:00Z",
+      "event_type": "episode",
+      "media": {
+        "url": "https://www.youtube.com/watch?v=qdfwmYTO0Aw",
+        "type": "video/youtube"
+      },
+      "links": {
+        "youtube": "https://www.youtube.com/watch?v=qdfwmYTO0Aw",
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-02-03-prompting-is-becoming-a-product-surface"
+      },
+      "season": 2,
+      "episode": 43,
+      "isPast": true,
+      "isWorkshop": false
+    },
+    {
       "folder": "2026-01-27-no-vibes-allowed",
       "guid": "aitw-042",
       "title": "No Vibes Allowed",
@@ -9,15 +658,16 @@
       "eventDate": "2026-01-27T18:00:00Z",
       "event_type": "episode",
       "media": {
-        "url": "https://www.youtube.com/playlist?list=PLi60mUelRAbFqfgymVfZttlkIyt0XHZjt",
+        "url": "https://www.youtube.com/watch?v=Xq8VxnGVStg",
         "type": "video/youtube"
       },
       "links": {
+        "youtube": "https://www.youtube.com/watch?v=Xq8VxnGVStg",
         "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-27-no-vibes-allowed"
       },
       "season": 2,
       "episode": 42,
-      "isPast": false,
+      "isPast": true,
       "isWorkshop": false
     },
     {
@@ -63,11 +713,11 @@
       "isWorkshop": false
     },
     {
-      "folder": "2026-01-06-understanding-latency",
+      "folder": "2026-01-06-latency",
       "guid": "aitw-039",
       "title": "Understanding Latency in AI Applications",
       "description": "A deep dive into performance engineering for AI applications. We explore all the bottlenecks\nin agent systems - from prompt caching and token optimization to semantic streaming and UI design.\nLearn how to make your agents feel faster through strategic latency reduction and smart UX choices.\n",
-      "event_link": "https://luma.com/12-factors-to-coding-agents",
+      "event_link": "https://luma.com/baml",
       "eventDate": "2026-01-06T18:00:00Z",
       "event_type": "episode",
       "media": {
@@ -76,7 +726,7 @@
       },
       "links": {
         "youtube": "https://www.youtube.com/watch?v=wadVIkJnjQE",
-        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-06-understanding-latency"
+        "code": "https://github.com/ai-that-works/ai-that-works/tree/main/2026-01-06-latency"
       },
       "season": 2,
       "episode": 39,
@@ -941,15 +1591,15 @@
     }
   ],
   "meta": {
-    "totalEpisodes": 45,
-    "completedEpisodes": 41,
+    "totalEpisodes": 76,
+    "completedEpisodes": 71,
     "upcomingEpisodes": 1,
     "workshops": 3,
     "seasons": [
       1,
       2
     ],
-    "lastUpdated": "2026-01-23T18:27:15.687Z",
+    "lastUpdated": "2026-09-07T13:33:12.132Z",
     "generatedBy": "validate-metadata.ts"
   }
 }

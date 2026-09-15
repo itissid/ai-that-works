@@ -1,0 +1,26 @@
+[
+  {
+    "rationale": "This clip introduces the foundational concept of the entire episode: classifying PII into two distinct categories. It's a crucial 'aha' moment for anyone approaching PII redaction, as it highlights that not all sensitive data should be treated with the same strategy. This directly addresses the 'Classify Your Data' key takeaway and sets the stage for understanding where AI is most effective.",
+    "start_timestamp": "01:47",
+    "end_timestamp": "02:17",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (01:47.183)\nAll right. But while we're here, let's go chat. Everyone that has had to do with PIA data, I think there's two classes of PIA data. And I want to talk about both of them in slightly different ways. Class number one is if you leak it, are, you are legally liable and there's zero risk tolerance for that data. And class two is you would strongly prefer not to leak the data. And I put those, I put those in two slightly different categories because the way that you have to handle them, the way that you think about them,\nDex (02:10.958)\nI sent it to you.\nVaibhav (02:17.396)\nis fundamentally different. And I think that's often the first mistake that people make. They think about everything in a single, in a single class of data.",
+    "hook": "Not all PII is created equal! Learn the critical difference between Class 1 (legal liability) and Class 2 (user trust) data, and why it changes everything about your redaction strategy."
+  },
+  {
+    "rationale": "This clip provides a concrete, relatable example of why traditional regex-based PII redaction falls short and where LLMs truly shine. The challenge of redacting a street address without over-redacting common text is a clear 'aha' moment, illustrating the power of 'generative rules' for complex patterns. This directly relates to the 'PII Redaction is a Spectrum' takeaway, showing how LLMs can narrow the zone of false positives/negatives.",
+    "start_timestamp": "20:30",
+    "end_timestamp": "21:26",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (20:30.175)\nhaving much more higher coverage. So it's proactive, but it's slow and costs money. And obviously it has way more false. It has different kinds of false positive that it allows. So it's not that it's not that why would you do one of them? It's more about you choose the tools at hand based on the kind of system that you're designing. So if you know that you have more malicious actors or you have really broad inputs, you definitely will need some gendered rules to deal with this. Cause right now, for example, how would you mask out a street address?\nDex (21:00.108)\nWhoa!\nVaibhav (21:00.125)\nA street address is like really, really hard to do with some rejects. And like what I would use a general rule to say, like, yeah, exactly. Like it's really, really hard to go do that. Right. But a general rule for removing street addresses, I believe all, a lot of us believe that we could redact street addresses out of system.\nDex (21:07.468)\nwithout also redacting anything with a number followed by text.\nVaibhav (21:26.671)\nphone numbers are another example of like where it works really well.",
+    "hook": "Regex can't handle complex PII like street addresses! Discover how LLMs enable 'generative rules' to proactively mask data that traditional methods miss, narrowing your PII redaction 'zone'."
+  },
+  {
+    "rationale": "This clip addresses a common, counterintuitive question about using an LLM as a 'judge' in a PII redaction pipeline: why would it catch misses if the initial redaction LLM didn't? Vaibhav's explanation that 'checking and labeling are two different tasks' provides a clear, actionable insight into building robust, iterative AI systems. This directly supports the 'Build an Iterative Pipeline' key takeaway by explaining the rationale behind using an LLM as a judge for continuous improvement.",
+    "start_timestamp": "40:50",
+    "end_timestamp": "41:20",
+    "speaker": "Vaibhav",
+    "transcript_excerpt": "Vaibhav (40:50.000)\nWell, I think the best analogy for this is actually like data labellers. like, scale built a whole business model on this, which is, it's fundamentally different for a model to label something than it is for someone, something to check something. Checking and labeling are two different tasks. The redact method is a labeling task. The check method is a check task. You're validating. It's not to say the model cannot catch it. It's just spending intention in different ways to do different kinds of tasks. like humans are very, very similar. Answering a multiple choice question is very different than grading a multiple choice test. So that's why the check-redact method is likely to capture something as an eval system as it won't.",
+    "hook": "Why would your PII 'judge' LLM catch what your 'redactor' LLM missed? It's not about smarter models, it's about different tasks! Learn how to build an iterative eval pipeline with LLMs."
+  }
+]

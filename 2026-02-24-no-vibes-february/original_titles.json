@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Is Your Coding Assistant Sabotaging Your Project?",
+    "rationale": "This title uses a provocative question to hook the listener. It reframes the episode's techniques (learning tests, design reviews, self-critique) as a risk-mitigation strategy, which speaks directly to a developer's fear of shipping AI-generated bugs or technical debt. It's slightly click-baity but accurately represents the theme of ensuring the AI's plan is sound before implementation."
+  },
+  {
+    "title": "The One-Shot PR: A Planning Workflow for AI Coders",
+    "rationale": "This title is in a clear, actionable 'how-to' style. It leads with a powerful and desirable benefit for any developer: a pull request that gets approved without needing major rework. It frames the entire step-by-step workflow (from learning tests to vertical slicing) as the direct method to achieve this highly coveted outcome, making it very compelling."
+  },
+  {
+    "title": "Throw Away Your Design Docs, Ship Better Code",
+    "rationale": "This benefit-driven title highlights the most surprising and counter-intuitive takeaway from the episode. It challenges the conventional wisdom that all documentation is precious. The phrase 'Throw Away' is attention-grabbing and promises a productivity secret, while 'Ship Better Code' anchors it in a tangible, valuable result for developers and engineering leads."
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Can You Outsmart the Model Makers?",
+    "rationale": "This title is a direct question that speaks to the developer's ambition and skepticism. It frames the episode as an underdog story ('you' vs. 'the model makers'), which aligns with the surprising insight that independent developers have a real advantage."
+  },
+  {
+    "title": "Reverse-Engineering AI for Production Systems",
+    "rationale": "This title uses an actionable, slightly provocative frame. 'Reverse-engineering' is a familiar and respected concept for developers, and it directly hints at the key takeaway of spying on official tools to discover the best techniques. It grounds the topic in the podcast's practical, production-focused mission."
+  },
+  {
+    "title": "Why Model Providers Do Your R&D For Free",
+    "rationale": "This title leads with the most surprising and valuable outcome from the episode. It's click-baity but accurate, promising to reveal how the expensive work done by model providers can be used as a free asset by the broader community, which is the core strategic takeaway."
+  }
+]

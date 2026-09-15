@@ -1,0 +1,913 @@
+Viv (00:00.14)
+Yo
+
+Vaibhav (00:00.969)
+We're on time.
+
+Dex (00:01.148)
+What's up, guys? Amazing. We did it, 1.15, or 10.15. What's up?
+
+Vaibhav (00:07.276)
+10 15. We're right on time.
+
+Dex (00:10.876)
+That's a beautiful... Bye Bob, did they upgrade your new mic and also get you a nice webcam now? Is that what's going on over here?
+
+Vaibhav (00:18.39)
+no my face has got better
+
+Viv (00:20.142)
+Dude, you're just stripped out. Just stripped out on the street.
+
+Dex (00:20.474)
+OK, nice.
+
+What's up, guys? We are live. I am live from AI Engineer Miami right now. And our buddies at, we don't do sponsors on this show, but I will give a shout out. Our buddies at CodeRabbit were nice enough to furnish us with their podcast studio for the hour. So we are going to talk.
+
+Vaibhav (00:43.276)
+Thank you CodeRabbit, we use you, we use you in our PRs, they're great.
+
+Dex (00:47.96)
+Okay, alright, take it easy.
+
+Vaibhav (00:50.22)
+No, though, honestly every AI, every team that doesn't have an AI code review bot is freaking dumb. Add that to your code system right now. No, that's not even a hot take, that's just an objectively right take.
+
+Viv (00:51.47)
+me.
+
+Dex (00:52.844)
+We got
+
+Viv (01:00.748)
+Take dropping, nice.
+
+Dex (01:00.774)
+Yeah. Yep.
+
+We got Viv here from Langchain. Viv is one of the, in the last three months, but also since like early, like mid last year, one of the most prolific writers on agent engineering and harness engineering. So welcome Viv.
+
+Viv (01:20.812)
+Yo, thank you guys. you guys. guess, you know, sometimes the yap does pay off. So we're gonna yap in for like six, seven months and like, let's just, let's continue the yap.
+
+Dex (01:29.264)
+Yeah, and next time I'm in New York, I want to hang out. I think last time it didn't work out, but we're going to make that happen.
+
+Viv (01:33.528)
+Dude, I know. I know.
+
+Dex (01:35.728)
+We may or may not have a surprise guest joining us here if he can find his laptop and we don't have too many AV issues. But today is an episode that I really wanted to do because I've been seeing a ton, a ton, ton of discourse about harness engineering on Twitter and on the news. And everyone is diving into this hype cycle. And you know what we do on this show is cut through the hype and cut through the demos and actually get you what is new, what is actually intellectually valued.
+
+and build AI that really works. And so I'm really excited to chat with some people who've been thinking about harnesses in agent engineering for a while. We're going to talk a little bit about where we came from, going all the way back to 2024 in agent engineering and context engineering, and what about harness engineering is new and worth getting excited about? What about harness engineering is kind of just rehashing stuff we've been talking about for years? And hopefully maybe get some tips from some experts on how to do it well.
+
+Sound good, guys?
+
+Vaibhav (02:34.987)
+All right, let's go. Let's do it. Systems Designs Conversation. That's what I'm hearing.
+
+Viv (02:35.886)
+It was It was good.
+
+Dex (02:41.915)
+OK, cool. So I'm going to hop in and share you guys about the whiteboard, right?
+
+Viv (02:46.69)
+Yes, sir.
+
+Vaibhav (02:46.943)
+Yeah, go for it. Pull it up.
+
+Dex (02:50.267)
+I'm to just share the whiteboard tab. But if I do the dumb thing and start screen switching around, please let me know. And I will reshare. Amazing. OK. So I think we talked a lot about agents and context windows and all sorts of fun stuff on this show. And the most basic definition of an agent was
+
+You send a context window full of tool calls and system messages and user messages. And you would take these in. And over and over again, you would send this recursively to an LLM. And the LLM would output the next step, which might be like a tool call.
+
+Vaibhav (03:24.051)
+Yep.
+
+Dex (03:36.315)
+And then your agent, at the time we called them agents, but the agent would then go execute that against some system. They would call an API or read a file or whatever it is. You would put the answer back in.
+
+Viv (03:49.71)
+Bye.
+
+Dex (03:52.572)
+You get the response. And then you would send this to the LM. The LM would send you the next tool call, or maybe eventually it would send you a final answer in this kind of array of kind oh no. All right, hang on. I'm going to put this back over here.
+
+Dex (04:17.43)
+. And yeah, and this was an agent. remember, I think the first agent I built that did this was in April of 2023. And I used Lang chain to like ingest an open API spec and like call an API over and over again. And you would print out the thinking messages and it do the reasoning. And it was like all kinds of stuff that you need a lot of code to do well back in the day. Now a lot of models.
+
+Viv (04:29.464)
+them.
+
+Dex (04:40.765)
+can do this without a ton of code around them. are we all lying? This is kind of like a good definition for a 2024 agent.
+
+Vaibhav (04:50.165)
+Yep.
+
+Viv (04:51.052)
+Yeah, yeah, yeah, I'm with you.
+
+Vaibhav (04:52.477)
+I'd say it's a good definition for just an agent in general, but you can remove the timeline in my opinion, but I think it's probably a good definition there.
+
+Viv (04:56.706)
+Yeah.
+
+Dex (05:03.067)
+OK, cool. And then at a certain point, we had this thing called Cloud Code, right?
+
+which was a really good model. Oops, let's see. We had a model. Thank you. yes. Sorry, thank you. You had your LLM, and then you had your tools, your tool definitions.
+
+Vaibhav (05:19.103)
+Here, here, there's your L1.
+
+Dex (05:33.211)
+is purple like the other one. Yep. You had your tool definitions, and then you had kind of like the tool executions, right?
+
+Vaibhav (05:35.283)
+I got it right here.
+
+Vaibhav (05:45.835)
+They're kind of tied together, yeah, we can say that they're separate, I think. That's fine.
+
+Dex (05:50.587)
+Well, it's like this is like, because these are like JSON schemas, right? And these end up being.
+
+Vaibhav (05:54.444)
+I mean, they could be, they could be just parameters of the function, but I would say that like the fact that these are linked, that you can't really have one without the other.
+
+Dex (06:01.817)
+Yes. And then this was your deterministic code that would actually go run this stuff. And this, at some point, we decided this was called a harness, right?
+
+Vaibhav (06:15.433)
+What? This part? The bottom part?
+
+Dex (06:18.363)
+Yeah, so like the harness was all of the deterministic code that would come in. Hello, welcome. We got Jeff joining us as well. Jeff, get the mic really close to your face because it's super noisy in here.
+
+Viv (06:28.61)
+Yo.
+
+Vaibhav (06:30.495)
+Jeff, always good to see you, great outfit.
+
+Viv (06:32.696)
+and.
+
+Dex (06:34.969)
+told Jeff he actually needs to get you one of these hats. This is his lamb hat from New Zealand.
+
+Vaibhav (06:38.185)
+Dude. shit, Jeff, if you don't get me one, I'm offended.
+
+Viv (06:39.563)
+Yeah.
+
+Viv (06:43.47)
+I will come to New Zealand to collect it as well.
+
+Dex (06:48.239)
+Yeah, I'm going to get his ASV set up. You guys riff on harnesses for a sec.
+
+Vaibhav (06:48.491)
+All right, so.
+
+Vaibhav (06:54.013)
+I mean, I, so I would say what's interesting, at least from my perspective is when I see this stuff, I kind of, I don't know if you agree with it, but like what I do is I just take the first thing and I just like swap this out with like Claude and it's the same thing for me. Like the architecture fundamentally doesn't really change, even though it's using a different intelligence mechanism rather than just pinging a model.
+
+Dex (07:13.531)
+Can you DM me the link? I'm going to stop sharing, by the way, so that, Vaibhav, you want to share?
+
+Viv (07:15.618)
+Yeah. Someone, someone would agree. Someone would also like kind of disagree. Cause I think like there, there is probably a decent mental model where it's like, the first things we were actually doing were basically doing like a bunch of like harness wrapping around chat completions. And like, there was tons of like little plumbing stuff that we had to do. Right. And like all of this actually like define the harness. So like, think tool calling is
+
+Vaibhav (07:19.115)
+One sec.
+
+Viv (07:40.225)
+is basically underlying primitive around all of it, but there's like other stuff as well. So I think like we had like chat completions API and like slowly over time, we like turned into agent API and like, we never really ever discussed when like, Hey, like when did this shift happen? And like, what was like all the stuff that we actually put in the agent API? That's like different. think like one immediate thing from here is like, what happens when you run out of like, okay. So like, it's basically just like a bunch of decisions that we had to make.
+
+Vaibhav (07:40.255)
+Yeah.
+
+Vaibhav (07:58.411)
+What?
+
+Vaibhav (08:02.866)
+Yeah, what's the difference?
+
+Viv (08:09.698)
+Based on like what's going in the context window. Right. think like a lot of this like centers around context engineering, which is like, okay, like I have this like chat completions loop. Like what the hell do I do when I run out of context? Like that's like a decision that someone has to make. I like some API level or like I handle that or like quad code handles that. But like someone either needs to like cut off the top of my message history or like we need to do like compaction offloading, but like the model object itself.
+
+Vaibhav (08:12.19)
+Okay.
+
+Vaibhav (08:22.983)
+Okay.
+
+Vaibhav (08:27.879)
+I see.
+
+Vaibhav (08:33.616)
+action or something yeah
+
+Viv (08:37.582)
+will not even like accept the thing that I'm putting in there. And like it's our job to facilitate that like intelligence. I think this is.
+
+Vaibhav (08:44.976)
+I think what you're, what the heck is wrong with Gerald's audio? I think what you're saying is like the main difference to you is like this agent loop has no batteries included. The right side has batteries included.
+
+Viv (09:01.986)
+Yeah, well, think some of this is batteries, right? And like some of the stuff is like, is it really that complicated batteries? Like what are you even gonna do when you run out of context? It's like, yeah, so I would say like somewhat light batteries, you kind of need to do full stops.
+
+Dex (09:02.723)
+guys sorry
+
+Vaibhav (09:04.339)
+You're back.
+
+Vaibhav (09:17.384)
+Yeah. Well, I would say most of us is systems engineering. When I look at this, Dextra, what I was saying, and Jeff, what I was saying is you have this agent loop over here. From my perspective, all that happened in the last year is you just took this agent loop, you copied and pasted it, you swapped out the LLM call with Claude code calls, and that gave you some nice little benefits in the form of what Viv said. You have all these benefits of it loads a Claude MD for you automatically. You don't have to think about that, so users get that for free.
+
+It gets you context management, like context compression and all these other things, but it kind of still feels like your app is still designed the same way.
+
+Dex (09:54.5)
+OK, so one thing that the harness adds over here is extension points, right? So you have MCPs and Claude MD.
+
+Vaibhav (10:02.25)
+Yes DSL like loading the skill on these I'll add one more over here MCP MCP built in So you don't have to do that work yourself
+
+Dex (10:12.591)
+Yep. yeah, it's basically it's ways to take additional things out of your environment and insert them into the system prompt and make them available as tools and things like this.
+
+And this is kind of where we got to like by the end of 2025, right? I kind of gave it this name and Viv coined this term harness engineering and I did not see that paper or read it. So I tried to coin it as well. And my take was like, harness engineering is not like how do you build a harness, but it was something towards like, how do you engineer on top of the harness that you're given? How do you take the configuration surface area of something like Claude code and bring a
+
+Vaibhav (10:56.138)
+Yeah.
+
+Dex (10:56.189)
+engineering, systems engineering, context engineering approach to how you use the like Harness Plus model, how you use the agent. It's funny, we stopped using the word agent and everyone said uses Harness to mean what we used to, you know what I mean? By the way, Jeff, can you try saying something? I just want to make sure you have your audios working. Yeah, the way I look...
+
+Vaibhav (11:10.034)
+It's the same thing.
+
+Vaibhav (11:20.445)
+shit, he's gonna give us real content. Nice.
+
+Dex (11:20.463)
+way I look at a harness is really the operating systems around the agent and the agent is the while true loop.
+
+Vaibhav (11:32.116)
+Yeah, I don't know, at least what do you guys see as the big difference? Like what other batteries come in when you swap out from an LLM to like, cloud code? Is there other ones?
+
+Dex (11:40.411)
+I don't actually think this is a faithful representation because there's still just an LLM here. The LLM thing is not a separate machine. The Claude code thing is this. It's this part of it.
+
+Vaibhav (11:48.123)
+Eee... Eee...
+
+Viv (11:51.661)
+Yeah.
+
+Vaibhav (11:53.435)
+mean, Claude code just has like.
+
+Viv (11:59.597)
+Yeah. I think that's really important because I feel like the unit that I work backwards from is actually like the model. It's like the LLM and these arrows point at the quad code. This red box, this red diamond here is also the same as this rectangle here, just with tons of opinions in there on how it works. I think actually, this is my mental model, but I think it's really useful to basically work backwards from the model artifact.
+
+Vaibhav (11:59.785)
+interesting. I kind of view it like this.
+
+Viv (12:28.364)
+that the labs are making. And then like, what is the whole like, like Jeff loader OS, but like, what's all the stuff that we're going to put around that to make it do useful work. And there's like tons of like limitations of like this bundle of weights, essentially. It's like basically just like takes tokens in and like it outputs tokens. And like the first version of making that useful was to give it some sort of like execution environment, which is like these like JSON packets that are coming out of it, that actually maps to like me taking an action and like
+
+Vaibhav (12:38.154)
+Mwah!
+
+Viv (12:57.528)
+environment and like running code basically and like we basically extended that mental model to saying like okay it's it's tool calls but it's also like okay this harness will also engineer context into the context window like an expeels and
+
+Vaibhav (13:10.922)
+Can I get everyone's perspective on here really fast? What's another engineering paradigm that perhaps isn't like this, but feels very similar for you guys? Do you guys have one? So then we can like, cause we might, or do you guys think this is truly different than previous engineering systems?
+
+Dex (13:30.939)
+I mean, like, I don't know, how would you compare this to something like temporal, where there is like a very kind of like baked and like specific interface you get to a very complex system that you don't have to like think about so much? Is that a helpful metaphor or is that too different?
+
+Vaibhav (13:47.678)
+For me, feels different. For me, the closest one probably feels more like Tailwind and CSS, Tailwind and like Shad Cian almost. Like the Shad Cian feels like the harness kind of stuff, but like Tailwind is like the very bare primitive. And they're kind of built off of the same thing. They kind of compose in interesting ways. And people generally prefer using Shad Cian over Tailwind directly when you get like built in components, but then you still tweak.
+
+the Tailwind system to go do interesting things for your own personalization.
+
+Dex (14:21.652)
+Interesting. OK, you're reaching in through some interface. The interface is Shad Cien, and it makes the components. But it's very open in the way that you can actually just reach in and change whatever you want about what's happening in the component that's generated.
+
+Vaibhav (14:31.737)
+Exactly. they're all, and it's all the same primitives, if that makes sense. Right? It's all built off of tailwind.
+
+Dex (14:40.07)
+I would say...
+
+I would say the Cloud Code harness is interesting in a way, because I want to get to an interesting point here that made the harness engineering thing different from just agent engineering, which is the idea of RLing a model for a specific harness. If you look at Codex down here on the right, you have apply patch, which is how Codex edits files.
+
+Vaibhav (14:56.328)
+Okay.
+
+Dex (15:12.012)
+and it has this weird syntax of like, you know, it looks like a git patch, right? Have you seen this?
+
+Vaibhav (15:15.983)
+yeah. Yeah, yeah, I have. Codex definitely writes.
+
+Viv (15:19.052)
+Yeah, dude, yeah. We removed this yesterday.
+
+Dex (15:26.138)
+It's like, my god, how do I get this to?
+
+Dex (15:31.598)
+you're having plus line, minus line, minus, dot, dot. looks like a... Yeah. Right. Whereas, Claude Code has this other thing, which is like old string, new string, right? Claude Code has this edit tool, right? And this is just literally like find and replace.
+
+Vaibhav (15:35.133)
+Don't write a git patch, man. We believe you. We know what a git patch looks like.
+
+Vaibhav (15:46.867)
+Yep.
+
+Vaibhav (15:57.736)
+I think it takes in a span as well.
+
+Dex (15:58.169)
+And the problem was like the idea, it's like a file, well the old string is the span that you're targeting.
+
+Vaibhav (16:06.211)
+yeah i think it takes in like a file range because sometimes you have the same thing because if you have like the same string multiple parts but regardless point sense
+
+Dex (16:14.682)
+Oh, I think, I mean, yeah, yeah. Yeah, point stands. And so what you would do is you would go take this, you would take your Claude code, and you would put it in an RL environment, and you would have it solve coding problems, and then you would have some cost function. Oops, let's see.
+
+Dex (16:36.91)
+function that actually gives back pressure. And then the model inside the harness gets better at calling specific tools.
+
+Vaibhav (16:36.967)
+Yeah, they train the model.
+
+Dex (16:49.37)
+Because this was the problem. Before Cloud Code, was sort of like...
+
+We weren't able to, like the models just like people said they weren't good at tool calling. They weren't good at selecting the right tools. They weren't good at passing the right data to the tools. And the way we did this is we made the model. dedicated a huge chunk of the weights in that model to being able to call these tools really, really well. And you can see this in that if you try to use Cloud Code models in the Codex harness, it's complete trash. It does not work. And GPT OSS 120B can call apply
+
+patch really easily, it cannot run an old string, new string. It has no idea how to do it. And this is the thing of building a harness that I think is the new thing that is worth hyping up. And people who are talking about shipping their own harnesses who are doing this are able to build products that are better than what you could do with just context engineering and just agent engineering.
+
+Vaibhav (17:45.129)
+I agree. I agree. Yes, if you own the harness and you own the model, you do have alpha to build a better harness because you can divert the model to prefer that harness. That's like 100 % factually true. Yeah.
+
+Dex (17:57.805)
+OK, I want to introduce another concept that's been kicking around in my head a lot, which is you have the harness and the model, right? And between these two things, you have something like Cloud Code or Codex. And then what we started seeing sometime last year was what I would call the outer harness.
+
+Vaibhav (18:16.615)
+Okay.
+
+Dex (18:17.88)
+And the outer harness may not even look anything like the inner harness. The outer harness could be something like a bash script that says, while true, run Claude code with a prompt, and then print, looped, and just do this forever. It's almost like something that Jeff came up with last year.
+
+Vaibhav (18:29.478)
+Yeah, keep running.
+
+Dex (18:44.836)
+I think Jeff's smiling at me because he doesn't want to talk because he has a lot of echo. Jeff, does that sound right to you? Is outer harness the right word? that is like an orchestration layer. That's the way I look at it. OK. Like, I see an agent as being essentially.
+
+the it's the while true loop with tools registered in. I see an agent harness as being like the orchestration layer around that agent or while true loop that handles permission checks.
+
+handling policy enforcement topics, provisioning of secrets configuration that control the agent. For example, you've got, Cloud Code is interesting because it's both an agent and a harness. So for example, if you want to deploy Cloud Code out, you can do it with the Ansible Playbook. And when you do the Ansible Playbook, it pushes that configuration. The configuration for the harness controls the agent.
+
+really blurred line. They're almost the same thing.
+
+I think the most simplest thing is the while true loop, like inferencing, state machines, turns. And then the harness is anything that wraps around it, like configuration, layer, type topics. And the execution environment, because it's undefined. The execution environment could be local, it could be remote, it could fan out to other. And then this is where we get into Gastown, Ralph, and other things. You have these orchestrators that allocate memory.
+
+Dex (20:22.178)
+to the harness and instructions what need to be done. I think the everything really kind of got good after RLing that that was a huge part but it was also it was also people just remembered the fundamentals these context windows are good for one goal and one activity with the right context and they'll order regress towards that and you'll see a really good implementation of this in Claude code they're continually recycling those context windows.
+
+I like it. Yeah, think this idea of, you're right, there's way more to like, I this is the idea behind Ralph Wiggum in the first place, right, was like, you have, this is the dumbest possible orchestration layer you could possibly have. And it still works pretty well. And so the technique of building deterministic or non-deterministic code around a good harness is incredibly powerful.
+
+Vaibhav (21:18.664)
+You know what's interesting based off what you guys are saying, and I think there's a couple questions in chat that are kind of similar. I think all of these primitives kind of go off this concept that there's a while loop that at some point terminates. And like we had these level one agents, which were very, very basic and directly required you to work with the model. And then we said, okay, well now we're going to bump up intelligence. Well, how do we do that? Well, we take our while loop and inside of the thing that we call, we put another while loop inside of that thing.
+
+Dex (21:19.802)
+And I guess this, yeah, go ahead.
+
+Vaibhav (21:47.913)
+So that thing does more work, right? And like, what's the next thing? I, well, yeah, exactly. Well, I would say like this thing has an environment. That's what made Cloud code. And then we said, you know what, let's add intelligence level 2B. And then we added the environment. And then we also gave sub-agents here, right? And like, what we did was we said, instead of just giving Cloud code a thing, well, the thing I call in Cloud code, I'll give that thing a while loop inside of itself.
+
+Dex (21:48.57)
+you
+
+This is sub-agents too, right?
+
+Dex (22:06.073)
+you
+
+Vaibhav (22:13.67)
+So it basically just gets nested while loops with different layers and every layer of while loop that we add basically gives you a level of abstraction that says I'm a little bit smarter on top because the thing underneath me is doing more work. That's the basic idea of what we're really trying to do here, right? Like a harness is just another while loop that happens to have environmental controls. Then we said sub agents are a harness that has another while loop that has another while loop inside of it. And then someone's going to go and say, you know what, Ralph is pretty good.
+
+What if I put a while loop around the while loop and then you get gas town and all you're really, it's the same concept though. All you're doing is like to basically like abstract away this idea of intelligence. You're just seeing intelligence as defined by work happening autonomously. Well, the core primitive that everything builds off of that is do this again is a while loop.
+
+Dex (22:46.777)
+That's like six wild loops, but.
+
+Vaibhav (23:06.652)
+So you just nest them infinitely and that's how you get more layers. And this I think goes into a question that someone else is saying in the chat, which is like, when does it make sense to build your own harness or environment or like orchestration there? Well, when the while loop that you're operating on is no longer smart enough for your task, well, just add another while loop around it and add some more configuration there. And all of a sudden you've got a little bit smarter of a system that's more bespoke to your thing.
+
+Dex (23:33.645)
+But then you haven't built a harness, you've built an orchestrator. And I guess my question is, when should you build your own harness? My take is, if you are going to RL a model on a specific set of tools that it is not currently good at, call it. Does that sound right?
+
+Vaibhav (23:37.992)
+time.
+
+Vaibhav (23:48.818)
+But I guess if they all, architecturally it all looks like Y loops that fundamentally each one of them calls an API, which itself has its own Y loop and doesn't matter what its Y loop is, they're all the same piece of code. We can call them orchestrators, can call them harnesses, we can call them agents. But the code is always the same at the top layer, just a little bit smarter. I don't know if you guys agree.
+
+Dex (24:14.005)
+so I think there's other interesting concepts in here that we can drill into to pull more out of this. I think Jeff pulled up there's other things that the orchestrator needs to do bidirectionally with the harness, like managing MCPs maybe if you want to keep them outside. The harness can do that itself. There's permissioning stuff, like if you want to ask permissions from the user and then ferry those back. And then Vivus had something that's really interesting to me, which is there's this idea of providing a file system here.
+
+By default, the Cloud Code tools just talk to your file system. And the alternative to, hey, I built a bunch of tools that are not a file system, but they read and write and search data. The alternative to like, OK, I'm going to RL a model on my set of tools is a thing I think that you guys have gone really deep on over there, which is like, or we could just make the other systems look like the tools that the model is RL'd on. And then you don't need to do training and fine tuning of a model. Then all you have to do is make your thing
+
+fit into the tool set the model already is really freaking good at using.
+
+Viv (25:18.638)
+Yeah, yeah. I think there's like one question around this, which is like, okay, like we had, we had like base model and it like stuck that everything. It's like sucked at tool calling. And then like we are out of it or like not weird open AI and like Anthropic are all the models on like particular tool schemas to make them like really good at that. And like there's one question, which is like, if this whole like in context learning thing was like true and like the model's like really, really smart enough to like fit to everything, then like you shouldn't really need to do.
+
+Vaibhav (25:19.783)
+Eww.
+
+Viv (25:49.183)
+You shouldn't really need to do any of that stuff really. You should be able to fit that model intelligence to your task. And that's why I sort of get VibeLabs thing, is like, okay, I'm just gonna keep nesting while loops to high levels of abstraction and it's just a while loop. But the part that I disagree with is the details at each stack matter so importantly that it doesn't, to me, it doesn't make sense if I'm talking to a customer or someone or a builder.
+
+Dex (26:12.665)
+Let's go there.
+
+Viv (26:18.562)
+Hey, like just keep stacking like while loops. Actually, I'd be like, no, like go to the, like the most like simple like harness, which is like the tool calling thing with a file system, right? And like, you should just like grind super hard on the system prompt, the tool design, like how context gets like funneled into the context window. And like, you should totally exhaust all the avenues in this like intelligence one stack before you even think about like adding the second while loop. So it would basically be like,
+
+Vaibhav (26:47.108)
+Interesting.
+
+Viv (26:47.854)
+I'm just going to throw more compute at the problem and it'll fix it. I'm like, or you could sit down with your team and the customer and like figure out like, what are these instruction sets? Like these skills I need to put in here. I think that's it's like the details that matter so much actually. And it's like, yeah. Yeah.
+
+Vaibhav (27:03.107)
+You know what's really funny about that? Like, DashShark can probably attest to this. I was really big on that camp. On that exact same camp like a year ago. I was like, hey, you should learn every single bit about this. But the thing that is prob- Yeah.
+
+Dex (27:14.701)
+You should become an expert prompt engineer, right? You should build perfect intuition about how LLMs process every single token before you go try to fine tune a model. Like, do everything you can with the models you have first. Yeah. Well, so I put RL in the fine tuning camp.
+
+Vaibhav (27:21.851)
+Yeah.
+
+fine tuning is trash. No one should fine tune, in my opinion. Even if you think you should fine tune. RL to me is different than fine tuning, because you're more building a general purpose model rather than a specific purpose model. But I think the big difference for me that...
+
+Dex (27:40.515)
+mean, you could use an RL, you could RL a model to just use YouTube really well, I think.
+
+Viv (27:42.584)
+Yeah, yeah, I agree. There's companies that are doing like vertical RL and like they're like ripping out. Cool.
+
+Vaibhav (27:47.78)
+Yeah, that's fine. Vertical RL is fine, in my opinion. But like, niche RL for like a classification task or something is like not worth it unless you really save money. Like if you're concerned about money or latency, then like train a tiny model and like do like some sort of distillation. But what I was trying to say earlier is like the thing that probably changed for me is there is a big factor now in today's economy where like speed to execution matters a lot.
+
+Dex (28:06.68)
+Yeah.
+
+Vaibhav (28:12.679)
+And the benefit of using like an intelligence two or a to be layer, in my opinion, is that you get to have reaped the benefits much sooner and then actually decide where you spend your time context engineering. like, like I come from like high performance optimization, mostly writing low level assembly code. And the hardest part is not actually writing assembly. When we did that work, the hardest part is picking the part of the code that should be written in assembly. And that's all vibes. There's no objective way to know that. Cause you can't survey the code realistically. You just have to be like,
+
+Dex (28:38.888)
+Hahaha.
+
+Vaibhav (28:42.695)
+I'm pretty sure this is a good use of time and like I'm pretty sure if I handwrite this I can beat the compiler All right, and most people probably can't beat the compiler for most situations even extreme experts because compilers are really damn good But every now and then you're like I understand something about the data pattern I sense something more about cache locality that I know the compiler cannot generalize and Therefore I should handwrite the assembly and I'll whoop its ass
+
+Dex (28:57.185)
+OK, so in.
+
+Dex (29:08.819)
+And this metaphor, like, beating the compiler is beating a Frontier Labs RLD model, basically. It's like, should rarely ever... Or like, their ability to define tools.
+
+Vaibhav (29:15.799)
+No, it's not even that. It's beating the Frontier Labs, like 40 person or 50 person engineering team who's sitting there like evalying Claude code every single day, trying to make it slightly better and their compaction team and their like tool definition team. It's like, do you think you have alpha over that time? It's time compression over anything else.
+
+Dex (29:33.998)
+Yeah, and so every now and then.
+
+you might reach in and say, I need to change the definition, the declaration string of this tool, or I need to change the response that comes back. I need to my own custom compaction because I know for this specific set of problems, and even maybe based on my eval, that it is worth me breaking from the happy path of what the compiler, the OpenAI or Cloud Code team of 40 or 50 engineers is compiling, problem solving and user information into how to
+
+the highest performance harness in this case.
+
+Vaibhav (30:10.937)
+Yeah, it's like Chang, right? Like Chang worked on React for a while. You all saw like pretext, the thing going on on Twitter for a while where he made that thing. And like most people cannot do that, not because they can't do it, but because it takes a level of creativity to recognize that that is worth doing. Right? It's, it's not just abilities based. It's like ability to see the thing that is worth spending time on and having the time to spend on it.
+
+Dex (30:17.186)
+Yep.
+
+Viv (30:18.594)
+Yeah.
+
+Vaibhav (30:33.831)
+to go do that kind of thing. So like for harness engineering and context engineering, I view it the same way. Like 90 % of your prompts, I bet you an LLM will write a prompt. You can write a JSON spec or like some type definition or something, and it'll mostly work. And then you're like, holy cow, this system needs to go from like 90 % or like 80 % to like 99.8 % because we're in a financial regulation. And this thing is the final thing that we use for filing taxes for our customers. And we can't fuck up. And then you spend all your team's energy on that part.
+
+Dex (31:01.443)
+There's a.
+
+Vaibhav (31:03.323)
+but not on all the other harnessing journey everywhere else in your company.
+
+Dex (31:06.839)
+And you build an eval for it first, right?
+
+Vaibhav (31:08.825)
+Yes, of course. If you really need that high level of accuracy, don't waste, don't waste time trying to understand the system without building like some sort of evaluation loop. Cause how do even know you got better?
+
+Dex (31:18.433)
+Yeah. We got a good question from Kevin in the chat about the bitter lesson and thinking you're better at co-design for agents is hubris. I think that's a whole other episode, honestly. We talked a little bit about this in the MCP debate thing. I mean, you want to draw the bitter lesson thing and why we've been ignoring it for the last year and a half?
+
+Vaibhav (31:31.663)
+it's not.
+
+Vaibhav (31:42.105)
+I mean, I think in a world where stuff is moving really fast, the best thing, like very akin to what Viv said, like the way to gain the most alpha is by being one of the best people in the industry at something. And to do that, you just have to be better. Like Anthropic just hires regular engineers. It's not like these engineers are like spawned out of magic. They're just regular engineers that get jobs there that are working on this stuff, like you, like us, like anyone else. So like you can do better than them because you're the same kind of individual.
+
+Dex (32:01.238)
+Yeah.
+
+Dex (32:08.408)
+All right.
+
+Vaibhav (32:11.802)
+That's my take.
+
+Dex (32:12.12)
+I'm to give you my take, which is basically whenever someone says to me, what about the bitter lesson? This is, by the way, the voice I assume that you're saying that to me, and this is the face I hear and the voice I hear when you say this.
+
+Vaibhav (32:24.096)
+Hahaha!
+
+Viv (32:25.048)
+Yes. He had a runny nose.
+
+Vaibhav (32:27.558)
+Yeah.
+
+Dex (32:27.926)
+Here's how I think this works. Basically, you have a specific model that has a specific performance level on a specific set of tasks. And by naive prompting, you can get it to be some percent accurate on this group of tasks. And then you do some context engineering, and you get it to be a little bit better on all those tasks. And then, of course, as we know, new model comes along. Let get this slide to advance. Let's see.
+
+New model comes along, and it's better at most of those tasks. Every once in a while, it's worse at certain tasks. But most of the time, it just makes all of the code you wrote completely irrelevant. But you can immediately go do more context engineering and make it better. Dan Schipper calls this basically like, and this is why that matters, but he calls it surfing the models. I think this is a really important concept. Yes, the models will keep getting smarter, and nothing you do now will be relevant in a year. But also, if you can keep doing this, you can use the models better.
+
+Vaibhav (33:00.868)
+And you do it again. Exactly.
+
+Dex (33:22.724)
+than the models can get smarter. Like you can learn to use them faster than they can release another model every six months. And so you will always be five to 10 % ahead.
+
+Vaibhav (33:24.419)
+Exactly.
+
+Vaibhav (33:29.112)
+Also the, the principles constantly apply. I performance engineering is probably the best analogy for this. Cause like hardware has gotten infinitely better when I first started coding. Like it is so much faster today than it used to be like 10 years, 10, 15 years ago. But guess what? They paid performance engineers a lot more today than they used to pay 10 years ago. Like the, but exactly. And it's so much harder to find people that are good at it.
+
+Dex (33:50.872)
+Because it's so much higher leverage.
+
+Vaibhav (33:57.231)
+And the best people at it are people that have been doing it for a while. And you just can't make this stuff up. Experience makes the biggest difference here. And there will be people right now. Go ahead.
+
+Dex (34:06.196)
+Viv, know you've been writing a lot on this lately. I'm curious if you want to screen share something you've written recently that you think is relevant and walk through. We're going to make you write a bunch of diagrams from scratch. But if you have something you think would be relevant that you want to share and walk us through, I'd be interested to get your take. Because I know we actually probably disagree on a couple of these things.
+
+Viv (34:20.302)
+Good job.
+
+Viv (34:27.79)
+Yeah, yeah. Let me, let me just go.
+
+Vaibhav (34:28.87)
+All right. While you pull, there's some interesting questions in chat of like, how do you know where you spend your time? To be completely honest, I think Amazon has this great leadership principle called leaders. Great leaders are right a lot. Like skill issue. Like hopefully we're all right in what we're spending time on. Hopefully you're right on what you're spending time on. And if not, hopefully you can, you can get data really quickly, revert and like go on the direction that is correct. And like that muscle is really, yeah, or learn so you can make the better decision in the future.
+
+Dex (34:43.736)
+Hahaha.
+
+Dex (34:54.092)
+or at least learn.
+
+Vaibhav (34:58.52)
+I wish we had a golden orb. Sadly, Claude code is not there yet. We're just asking what should I do next. Another while loop.
+
+Dex (35:02.648)
+You don't necessarily need the golden orb.
+
+What you'd kind of do is you build an intuition for making things as easy to delete. That's the skill is like designing so it's easy to delete and thinking about like if what I'm building now is that adding capability to the model. Cool. What happens when the model advances? Does that new capability become a tech debt? Well, if you surface that product capability to a user, you've now hamstrung because people expect
+
+this feature to exist as a product substrate but it's no longer needed because the models got better so what you do is you develop that intuition about being easy to delete and being very careful what you expose to users and that's where a lot of time should be spent.
+
+And I also think the bitter lesson was coined and defined and suffered in a time, like the idea, right, is like you write a bunch of code around a model to make it better, and then the model gets better and all your code is irrelevant and you wasted all that time. That was designed and like discovered in a time when code was really fricking expensive. Like if you have a decent eval or you have the ability to create new evals fairly quickly, you have a skill at that, then the
+
+code is actually not that hard to write. I we have frickin' auto research now. So like, I don't think you should be so concerned about writing a bunch of code that is irrelevant in six months, because half the people writing these like, you know, lights off slop factories are gonna be, up throwing out half their code base in six months anyways.
+
+Viv (36:30.562)
+good luck.
+
+Vaibhav (36:42.878)
+Viv, can you share your full screen instead of just this part because it makes the YouTube recording easier? Thank you. Sorry. Mario, can cut that out. But you're awesome. I think I agree. Yeah.
+
+Viv (36:43.15)
+Thank you guys.
+
+Dex (36:43.51)
+I don't know.
+
+Viv (36:46.367)
+yeah. Yeah.
+
+Dex (36:52.332)
+Thanks, Mario. Well, a vibe app and VIV. Let's explore. I think there's somewhere halfway between it. Like, every engineer needs to build an agent.
+
+and do their first tool registration, play with the system prompt. But that's not necessarily where you're gonna spend your time for the business. But if you don't understand the inner components, then how are you gonna be able to work at the next level of abstraction? So everyone needs to work at the most basic things and rebuild the engine, rebuild Claude code. And like the source code of Claude code leaked, go look at it. Codec source code is there. The next level from there is looking at the technique
+
+Vaibhav (37:22.981)
+Okay.
+
+Dex (37:36.427)
+techniques of how they and why they're recycling, the context windows and how they do the explore tool or the plan tool and the plan tool goes to a different type of model or maybe if you look at Claude code how it does is this command safe it delegates down to haiku for example learning that tricks all those tricks and like gain an understanding of the techniques and tricks before you start going to like level three type harness
+
+Vaibhav (37:59.398)
+It's kind of like we...
+
+Dex (38:07.05)
+where that stuff happens for you automatically. A weird way I kind of look at this is you start the most fundamental level, which is your programming in C and you're mallocing memory to the array. And next thing you know, you've got these things called subagents. Subagents are really just disposable heaps of memory. And if you look at the Claude code code base from the right lens, there's three built Erlang and they're just doing pointer to pointer passing using file names. It's just message.
+
+Vaibhav (38:28.421)
+I agree, that's the right projection.
+
+Dex (38:36.25)
+passing backwards and forwards. And understanding those things at that level is going to be very important for every engineer. I like it. All right, Viv. Sorry, go ahead, Vaibhav.
+
+Vaibhav (38:44.645)
+I think what's interesting about that, oh, actually, let's do VIF things. I was going say, the only two cents I was going to add there is, you know how we have leak code with data structures 101? You just got to learn the data structures 101 for building an agent. If you don't know those, like...
+
+Viv (38:49.486)
+Very good.
+
+Dex (38:59.352)
+Absolutely.
+
+Vaibhav (39:00.343)
+It's just going to be hard to talk software like fundamentally, if you don't know what a sub agent is, like if you don't even know like principally what it is down the hood to some degree, Jeff, that hat keeps all the wisdom into Jeff. but I think that's the biggest difference. Like people really just need to do those one-on-one courses. And sadly, I don't think there is really.
+
+Dex (39:12.6)
+Ha
+
+Viv (39:17.998)
+Yeah.
+
+Dex (39:18.562)
+Yeah, that's how he keeps it safe in his brain.
+
+Vaibhav (39:28.867)
+We're all discovering this kind of at the same time.
+
+Viv (39:31.564)
+Yeah, I think it moves really fast too. Like it's like you need the primitives, but also like if you want to be at frontier, like you have to be like on the edge, just like trying a bunch of stuff essentially and like seeing kind of what breaks and okay, let me give like quick spiel. I would love for you guys like kind of disagree with it because like that would be sick. Yeah, so I think like this is actually super related to what Jeff said. So I think like basically the way that I think about it is like I have like model object basically and I have like goal.
+
+Vaibhav (39:42.138)
+Yeah.
+
+Vaibhav (39:45.901)
+Let's see this post.
+
+Dex (39:46.848)
+Yeah, let's hear it. Let's go.
+
+Viv (40:00.527)
+Right? like agent needs to do like something for me and I have like model and like my job as a harness engineer is just like bridge that gap. Essentially, this can be like layer one. This can be like a while loop on top of my while loop or like, actually like, don't even care like how it happens, but like there's primitives that we've roughly settled on that we think makes one of this stuff work. And I think it's like working backwards from agent behavior. And that's like wrapping the model into.
+
+Vaibhav (40:09.381)
+Cool. Yeah.
+
+Viv (40:29.454)
+What do I need to put around the model to get that behavior? That to me is a super useful mental model. And it's like, okay, I need to work with real data directly. That's like file system. I need to execute code. was the first, okay, this JSON string means I'm gonna go and execute this Python code. I'm gonna return the context back to the model. So this is React. There's like infrastructure, which is like, okay, I need permissions. I need all that sort of stuff. Okay, like sandboxes, like perms, all that sort of stuff.
+
+And I think like there's, there's like maybe like one more layer of this, which is we, there's, sort of this like double thing that happens right now, which is like, code is really, really easy to produce, but I have a bunch of like alpha in my harness. And like both of those can't exactly be true at the same time in my mind. Like if really good code is really easy to produce, which I don't think it is, then you should be totally okay.
+
+in the next version of like the model to throw all that stuff away and just do the right thing for your problem like at this time, right? If like code is super easy to generate, then just like throw it away and like.
+
+Dex (41:32.205)
+Yup.
+
+Vaibhav (41:39.861)
+Yeah, you should. In my opinion.
+
+Dex (41:40.46)
+Well, especially if you can make a good eval, because your eval becomes the ultimate deterministic spec. The model can just write new code, see if it did better on the eval or not, and keep adding more deterministic. This is like the core behind auto research, right?
+
+Viv (41:55.289)
+Dude, yes. So I think like maybe like, there's one more thing I'll add, which is like super related to this. One is like, basically to me, like harness engineering is all about wrapping the model to do useful work on like some tasks that I care about. Like I think there's like some talk about like general purpose agent, like there's not general purpose agent. Like I actually like, don't even know what that means. I just know like, there's like work that I need to do or like that my customers need to do. And like, I need to build a machine learning system to like make that work possible.
+
+Vaibhav (41:56.036)
+like.
+
+Vaibhav (42:14.573)
+You
+
+Viv (42:22.306)
+Like I actually don't even care if it sucks at everything else because like I'm just selling to my customers, like this thing basically. And I think like what Dex just said, this is what I'm most bullish on, which is like auto research and like evals are basically encoding the behavior that I need this agent to do. like, the easiest leverage thing I can do right now is like edit the harness and like what editing the harness basically is, like, what skills do I need? What system prompts do I need? Like what context engineering stuff do I need?
+
+And like, if we really are a bitter lesson pill, then my evals encode the behavior that I want if they're good evals. And like, maybe I get them from like production traces and like, they're really, really good. And like, I fit my harness to like make those evals pass. And like, if we get really smart models, then this should be easy actually. And like, we should be able to use evals to produce them.
+
+Vaibhav (43:10.693)
+I disagree. think this is the thing. So I said this, the principle of evals being done is...
+
+I agree with that. This is how code should be written. You should build metrics, and then you basically just optimize around the metrics. But the part I disagree with is that if code is easy, this is easy. Because I don't think coding is the hard part about this. So when I look at the best engineers I've ever worked with, the skill set that they really have is they have this thing called what I call long horizon for humans, where they can basically look far ahead into the future and be like,
+
+And the thing that they suggest is going to outlive a lot of things. So like some of the best engineers in this domain are like.
+
+And video game engineers get a lot of crap for this, but their games last for a long time and their code is pretty good. like, obviously the S3 and the EC2 team is similar. Their code lasts for a long time. Embedded systems engineers, their code lasts for a long time. They're able to predict systems and architectures that outlive them. And the hard part about the system that has never been coding, it's been like designing the system that will be still like the invariance of the system that will hold true today.
+
+of a system that will hold through six months from now or a year from now when you've added five new features that now need to compose together. And that is really hard.
+
+Dex (44:31.294)
+in general.
+
+I in general agree. think some of your examples are not great because you're talking about code that is not changed. There's a difference between shipping an embedded system where it's like, OK, this needs to serve its purpose for the lifetime of the hardware. Or like, hey, this video game is going to be in circulation for 10 years. But it's not actually changing every week over time. Some of those examples were good, though, of that idea of people who can design the architecture of something like EC2 or S3, which will the API won't change, but it will be constantly available.
+
+internally over time and it needs to like that sort of thing outlasting the developer. You don't...
+
+Vaibhav (45:05.645)
+Well, hopefully not. Hopefully the core algorithms you write don't get evolved. for example, like Git's core abstraction is so beautiful that it really hasn't evolved since it was created. The Linux core abstract, the Unix.
+
+Dex (45:19.211)
+beautiful is the word I would use, but yes Git has a good abstraction in it.
+
+Vaibhav (45:22.467)
+Well, okay, well, okay, like coding is art to me. So it's totally different. But that's how I look at it, sadly. It incites an emotion, sadly, and unlike most artwork. But when I look at like, with like the Unix philosophy of like, you do simple instruction that compose with a pipe operator, that thing composed and that principle withheld itself. That's why some of these people are like legendary engineers. Because most people can't come up, it's not, everyone can code that.
+
+Dex (45:28.364)
+guys.
+
+Vaibhav (45:52.835)
+But not everyone can invent that. And it's not like it was hidden. Exactly. And the philosophy engineering is what makes evals hard. It's not that evals are hard to code up. It's like, how do you look at a problem like, this is what I'm going to define as the eval for this problem. This is the right metric.
+
+Dex (45:55.083)
+can invent the Unix philosophy.
+
+Dex (46:05.417)
+man.
+
+Dex (46:10.263)
+We're going to have to call this episode philosophy engineering.
+
+Vaibhav (46:13.806)
+Dude, honestly, what I feel like the coding is mostly evolved into.
+
+Dex (46:21.015)
+quickly play with this. It's actually harnesses now, and even workflows. It's potentially too soon to lock in. I've been playing around with ideas of Loom and what's next after Ralph, and there's Gastowns, and there's Claude Codes, and there's Codexes, and people are building their G-stacks and stuff on top.
+
+The biggest risk is it kind of can shape how you think and encode your way of work.
+
+And that changes everything starts going, OK, how do I build with loops with me, for example, sequential loops. then so that's essentially taking the unique computer, like single processor. And you look at like Yagi. Yagi's like, let's do everything from the 1990s with parallel computer and figuring out what we're going to do with parallel computers with loops and workflows. And that shapes how he thinks is in his direction and I my direction in his direction.
+
+Vaibhav (47:15.172)
+you
+
+Dex (47:23.577)
+look at like Gary and like the skills is the operating system and these are these all shape how you think and it starts reinforcing your worldviews on how it should be. Meanwhile the models are working in a completely different direction to your worldviews. So it's almost it's almost too soon to lock in particular things but people ask like Jeff how do you build these days and it's like I'm still randomly making stuff up and trying different things because I don't want
+
+Vaibhav (47:52.996)
+Yes, I agree.
+
+Dex (47:53.45)
+want to lock in a particular way. This is Simon Wilson's advice too. Simon is always saying things like, you need to constantly be trying things that you don't think will work or that feel dumb or that feel futuristic or whatever it is. Because every once in a while, it will work. And this is how you keep your understanding of what models are capable of today.
+
+Vaibhav (47:58.915)
+Yeah.
+
+Vaibhav (48:16.502)
+I agree. Being flexible is one of the most useful skill sets right now. I think adapting your engineering workflow and thinking is so fucking hard.
+
+Dex (48:27.951)
+Yep. Answer question in the chat. This will be published on YouTube. We send the videos out Monday morning. If you're on this event, you will get an update in the email. Also, guys, I have 10 % on my laptop, and this is the only laptop hooked up to AV here. So we should probably think about wrapping it up. Viv, I don't know. We like to interrupt each other on this show. So if you had kind of like a final point you wanted to make in terms of harness building, I would love to get you in.
+
+Vaibhav (48:42.079)
+Hahaha
+
+Vaibhav (48:49.176)
+Yeah. Come on.
+
+Viv (48:53.784)
+Dude, yeah, okay, maybe like a throw out to like chat also to you guys. Cause like, I totally agree. I think it's like, we don't exactly know like what primitives are gonna be super useful like four or five months from now. And I think actually that's like one of the reasons why like pie type of stuff like really took off because it's like, it's super simple and like there's no opinions actually in terms of like the primitives that you're gonna use. And.
+
+Like you basically like bring tasks and like you're supposed to like self evolve the harness building process to like fit to your task. Basically. I how you do that might be like you chat with Pi and like it builds stuff for you or like you pointed a bunch of evals and then like auto research like self discovers. like, what do you guys maybe think about like those two things? I'm like super bullish on one use case, which is like, I know Vybaz is like evals are.
+
+Vaibhav (49:45.442)
+interesting.
+
+Viv (49:49.507)
+Like the whole point is like you make something that transcends this like harness, like agent building process. I'm not sure of another camp, is like, it sounds to me like that's sort of like wishful thinking to me at least. I'm like, actually what we should do right now and like not be super like, paralyzed by like bitter lesson stuff or like we'll never figure this out. It's basically like take really unopinionated harness, take like tasks plus like production traces, like eval sets and just like fit them.
+
+and then look at it as a human and try to improve it basically. And I want to get maybe your takes on that. I think that is the best way maybe today at least, given what the models are to build stuff.
+
+Vaibhav (50:26.988)
+I'm aligned.
+
+I'm a lion. The while loop having a human in the loop is a great process of making it way smarter. That's a great way to inject intelligence in that part of the layer.
+
+Dex (50:39.125)
+Yeah, and think we do a lot of big brain engineering on this show sometimes. And I think there's something to be said for a lot of people are trying to over-engineer stuff. And how do we automate this thing that I could do in a day? Great, automate it. But if it would take you five seconds and you would get the same result, then why are you spending a week trying to automate it kind of thing?
+
+Vaibhav (50:45.443)
+Just look at the dim.
+
+Vaibhav (51:02.275)
+Just look at the damn thing. Like look at the damn data. Actually, I think that's a mistake that many people make when they do any sort of context engineering or harness engineering or this eval loop that Viv is talking about. They never look at the data. They're just like, Claude, figure it out. And I see this all the time.
+
+Viv (51:03.032)
+Yeah.
+
+Viv (51:17.144)
+Dude.
+
+Viv (51:21.966)
+Yeah, well maybe like maybe a quick question. So like real quick on this eval thing, I think like auto research is sick, but have you guys ever like, I like when people post like the auto research things and you go and like you sort of like debug them and then you look at them you're like, dude, like we've just like overfit to the entire eval set and this will like completely like not generalize.
+
+Vaibhav (51:23.907)
+And Jeff's laughing because it sounds like he's... What do you think babe?
+
+Dex (51:45.655)
+you
+
+Viv (51:46.127)
+Like the second after it's like, you look at like the prompt that the auto-reacher thing like created, it's like, oh, it like basically enumerated like 60 if else cases and like just put those in the system prompt, like whatever it's those like, I'm like, you know, yeah, it works. works. We have to look at the data. Like, yeah.
+
+Vaibhav (51:57.144)
+Yep. And it works!
+
+Dex (52:01.375)
+It's like the people who cheat on Terminal Bench, right? The Terminal Bench system prompt with all the solutions embedded in or whatever.
+
+Vaibhav (52:09.347)
+Oh, that's funny. mean, have you guys, you know what orchestration that I think we're going to end up with? Have you guys ever seen like Facebook or Google's deployment system inside of their engineering teams? They do something really elegant, is what they end up, like what Google and Facebook end up doing is they say every engineer pushes code to prod and they do an automatic rollout for like up to 1 % of traffic slowly. And they slowly scale it up. But every engineer, when you push a feature at the prod,
+
+has a metric tied to their feature. And at least when I was there like super early in 2015, if you did not hit, I am at my desk effectively on the button, your feature did not go out with the release. They wanted you looking at the metric at the point of release. Cause if shit hit the fan, you could just hit no and undo. And like, that's kind of what you need in this agent loop where it's like, you want that metric, you need prod data. Cause if you don't have prod data, you'll overfit to like the wrong thing. But then you need something to be like ship it.
+
+measure it and just like run that forever and put a human in loop if you want super high intelligence. Well, hopefully your humans are super high intelligence on your team.
+
+Dex (53:16.725)
+Yeah, Jeff? I don't know. I remember the days of having a release master. And if you weren't there when the release master says your stuff's going out, and you weren't there with an emergency bottle of scotch when your never-will-fuck-up happens, like, that's how it used to work. There was someone figuring it out, the features out. You had to be all hands on deck when it happened. And you needed an emergency bottle of scotch to apologize when you made a mistake.
+
+Vaibhav (53:26.85)
+Yeah.
+
+Vaibhav (53:30.231)
+You
+
+Yeah.
+
+Viv (53:46.904)
+Bring back the Scotch.
+
+Dex (53:48.993)
+Yeah, bring back Scotch-driven development. Amazing. Guys, I think I'm All right, one last question. Let's go.
+
+Vaibhav (53:52.172)
+Scott, yeah. Ballmer had it right all along. I have one question I think we should end on. I think it's a good one. The question we should ask on, which is, it is a really good question in chat, which is, what advice would you give to young people who are getting into coding, software engineering, and AI? Is it still worth learning how to code the traditional way? Should they learn something else? Should they pair program? From everyone, actually. OK, Jeff, you go first.
+
+Dex (54:14.87)
+that's Fundamentals that they should learn, they should understand the tool calling loop at the most fundamental level. They should be able to draw a sequence diagram showing how the inferencing works. They should be able to design a tool. They should be able to be able to teach someone at that level. And that's the new skill. That's not even someone getting brand new into engineering.
+
+shockingly a large amount of engineers right now cannot even do that. You're not a senior engineer unless you can teach these primitives. From there the fundamentals still matter.
+
+Learn into why things like functors exist if you're in functional programming. Learn about ports and adapters or hexagonal architecture and learn why it's not needed when you're doing functional programming. Learn about things like property-based testing and all these other things. Think about library design, like these agents copy and paste bad patterns everywhere in the code base. So what you want to do is think very carefully
+
+about software modularity. And like the old topics of clean code and soled, they're still important as ever. Over to you, Viv.
+
+Viv (55:39.299)
+Yeah, I'm down. I obviously echo everything Jeff said, of course, but I think like one maybe like practical thing for me is like, like if you're like maybe like not doing CS or like graduating with CS, I would say like just like pick like one thing in AI that you're like really kind of like down with or like passionate about and just like, I was gonna go ham on that, like maybe write a blog about it and like post it on Twitter and like some random people will see it if you like do that loop enough times and then you can like
+
+branch out from there. I think it's like, I'm, I'm like a big proponent of like depth driven learning like today with AI, because like you can actually like go super deep and you can become like, you can become like top 20 % if you like grind on something for like a month or like two months if it's like narrow enough. And I think like doing that, and I'll also say like posting about it on Twitter acts like wherever you feel comfortable. That's like a great way to like meet cool people and like get, get good feedback along with like learning the like learn the basics.
+
+Dex (56:36.886)
+As a junior, you have to manifest your luck surface. And exactly that, you need to write in your blog and you share ideas. And that is really important. if you want to be an entrepreneur, start building your distribution and your mailing list now, today. Because identify yourself as a builder, and then there going to be other people doing the same. And then you become friends with those builders, and they're all on the same journey together. Really important.
+
+Amazing. Guys, this has been a blast. We got a drop because I'm at 2 % battery. Thanks, Viv.
+
+Vaibhav (57:11.191)
+Dex, give me your learning value before you hop off and maybe you'll die off in the middle of your sentence.
+
+Dex (57:15.562)
+My learning value, I don't know, pair program more. There's a ton of intuition in all this stuff. Obviously, knowing how context windows and OLMs work under the hood is super important. But I think that everyone's discovering weird new corners of this space. And you should go explore together with people and learn what they're learning and share your learnings. That's the fastest way to grow. And that's why I love hanging out with people like you. So thank you all so much for a great episode. This was a blast. I'm going let Vybrov get the outro. Viv, thank you so much. Jeff, thank you so much. And we'll see you all next week.
+
+Vaibhav (57:46.189)
+All right, everyone, this episode is going to be a ton of fun. We're going to go through and talk about all sorts of things ranging from context engineering to harness engineering to what sort of things you should learn in this world of software engineering. We're excited to have Viv over from Langchain and then Jeff, who is one of the creators of the Ralph Wilcom Loop. I hope you guys learn a lot. Let's get started. Adios, amigos.
+
+Dex (57:46.357)
+Cheers, guys.
